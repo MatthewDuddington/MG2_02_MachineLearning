@@ -8,7 +8,6 @@ public class PacmanMovement : TileMove
     public enum PowerUp { NONE, GHOST };
     //public enum Direction { left, right, up, down, none };
     Vector2 moveVec2;
-    Vector2 moveVec3;
     Vector2 actualVec2;
 
     public Transform destTransform;
@@ -41,36 +40,44 @@ public class PacmanMovement : TileMove
 
 
         moveVecText.text = "MoveVec: "+moveVec2;
-        moveTo(dest, speed);
+
+        Vector2 dir = dest - this.transform.position;
 
         // recheck the keys for a new movement
         if (transform.position == dest)
         {
-            if (this.isValidMove(moveVec2))
+            if (true)
             {
-                moveVec3 = moveVec2;
-                dest = this.transform.position + (Vector3)moveVec3;
+                print("work");
+                if (Input.GetKey(KeyCode.RightArrow) && isValidMove(Vector2.right))
+                {
+                    moveVec2 = new Vector2(1, 0);
+                }
+                else if (Input.GetKey(KeyCode.LeftArrow) && isValidMove(-Vector2.right))
+                {
+                    moveVec2 = new Vector2(-1, 0);
+                }
+                else if (Input.GetKey(KeyCode.UpArrow) && isValidMove(Vector2.up))
+                {
+                    moveVec2 = new Vector2(0, 1);
+                }
+                else if (Input.GetKey(KeyCode.DownArrow) && isValidMove(-Vector2.up))
+                {
+                    moveVec2 = new Vector2(0, -1);
+                }
+
+            }
+            if (isValidMove(moveVec2 + dir))
+            {
+                dest = this.transform.position + (Vector3)moveVec2;
+
             }
         }
         // Gets the offset from the destination to the current postion (change in direction)
-        Vector2 dir = dest - this.transform.position;
 
 
-        if (Input.GetKey(KeyCode.RightArrow) && isValidMove(Vector2.right))
-        {
-            moveVec2 = new Vector2(1, 0);
-        }
-        else if (Input.GetKey(KeyCode.LeftArrow) && isValidMove(-Vector2.right))
-        {
-            moveVec2 = new Vector2(-1, 0);
-        }
-        else if (Input.GetKey(KeyCode.UpArrow) && isValidMove(Vector2.up))
-        {
-            moveVec2 = new Vector2(0, 1);
-        }
-        else if (Input.GetKey(KeyCode.DownArrow)&& isValidMove(-Vector2.up))
-        {
-            moveVec2 = new Vector2(0, -1);
-        }
+        
+        moveTo(dest, speed);
+
     }
 }
