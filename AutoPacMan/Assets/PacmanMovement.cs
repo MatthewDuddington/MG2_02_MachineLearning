@@ -11,22 +11,20 @@ public class PacmanMovement : TileMove
     Vector2 actualVec2;
     Rigidbody2D rb;
     Animator anim;
+    float destTimer;
 
     public Transform destTransform;
 
     public Text moveVecText;
     public Text actualVecText;
 
-    // speed variable to contorl how fast pacman moves
     public float speed = 0.4f;
     // destination varaible, where pacman is going
     Vector3 dest = Vector3.zero;
-    //  private PowerUp powerup = Pacman.PowerUp.NONE;
     private int score = 0;
 
     void Start()
     {
-        // set the destination to the current position (starting position) of pacman
         dest = transform.position;
         rb = GetComponent<Rigidbody2D>();
         anim = GetComponent<Animator>();
@@ -35,6 +33,7 @@ public class PacmanMovement : TileMove
 
     void Update() 
     {
+        //rotations and animation setting
         if (transform.position != dest)
         {
             if (moveVec2 == Vector2.right)
@@ -53,22 +52,35 @@ public class PacmanMovement : TileMove
             {
                 rb.rotation = 90;
             }
-            anim.Play("Pac_Move");
+            if (anim.GetCurrentAnimatorStateInfo(0).IsName("Pac_Idle"))
+            {
+                anim.Play("Pac_Move");
+                destTimer = 0;
+            }
         }
         else
         {
+            destTimer += Time.deltaTime;
+        }
+
+        if (destTimer >= 0.061f)
+        {
+            print("stopped!");
             anim.Play("Pac_Idle");
         }
-        destTransform.position = dest;
-        //Input
 
+        //
+        //visual guide for dest position -- debug only.
+        destTransform.position = dest;
+
+
+        //Input
         //raw input
         actualVec2 = new Vector2(Input.GetAxisRaw("Horizontal"), Input.GetAxisRaw("Vertical"));
         actualVecText.text = "Actual: "+actualVec2;
-
-
         moveVecText.text = "MoveVec: "+moveVec2;
 
+        //bug fix
         Vector2 dir = dest - this.transform.position;
 
         // recheck the keys for a new movement
@@ -76,20 +88,19 @@ public class PacmanMovement : TileMove
         {
             if (true)
             {
-                print("work");
-                if (Input.GetKey(KeyCode.RightArrow) && isValidMove(Vector2.right))
+                if ((Input.GetKey(KeyCode.RightArrow) || Input.GetKey(KeyCode.D)) && isValidMove(Vector2.right))
                 {
                     moveVec2 = new Vector2(1, 0);
                 }
-                else if (Input.GetKey(KeyCode.LeftArrow) && isValidMove(-Vector2.right))
+                else if ((Input.GetKey(KeyCode.LeftArrow)  || Input.GetKey(KeyCode.A)) && isValidMove(-Vector2.right))
                 {
                     moveVec2 = new Vector2(-1, 0);
                 }
-                else if (Input.GetKey(KeyCode.UpArrow) && isValidMove(Vector2.up))
+                else if ((Input.GetKey(KeyCode.UpArrow)  || Input.GetKey(KeyCode.W)) && isValidMove(Vector2.up))
                 {
                     moveVec2 = new Vector2(0, 1);
                 }
-                else if (Input.GetKey(KeyCode.DownArrow) && isValidMove(-Vector2.up))
+                else if ((Input.GetKey(KeyCode.DownArrow) || Input.GetKey(KeyCode.S)) && isValidMove(-Vector2.up))
                 {
                     moveVec2 = new Vector2(0, -1);
                 }
