@@ -9,6 +9,8 @@ public class PacmanMovement : TileMove
     //public enum Direction { left, right, up, down, none };
     Vector2 moveVec2;
     Vector2 actualVec2;
+    Rigidbody2D rb;
+    Animator anim;
 
     public Transform destTransform;
 
@@ -26,11 +28,37 @@ public class PacmanMovement : TileMove
     {
         // set the destination to the current position (starting position) of pacman
         dest = transform.position;
+        rb = GetComponent<Rigidbody2D>();
+        anim = GetComponent<Animator>();
 
     }
 
     void Update() 
     {
+        if (transform.position != dest)
+        {
+            if (moveVec2 == Vector2.right)
+            {
+                rb.rotation = 0;
+            }
+            if (moveVec2 == -Vector2.up)
+            {
+                rb.rotation = -90;
+            }
+            if (moveVec2 == -Vector2.right)
+            {
+                rb.rotation = 180;
+            }
+            if (moveVec2 == Vector2.up)
+            {
+                rb.rotation = 90;
+            }
+            anim.Play("Pac_Move");
+        }
+        else
+        {
+            anim.Play("Pac_Idle");
+        }
         destTransform.position = dest;
         //Input
 
