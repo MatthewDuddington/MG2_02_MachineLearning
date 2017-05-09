@@ -6,6 +6,7 @@ public class PacmanMovement : TileMove
 {
 
     public enum PowerUp { NONE, GHOST };
+    public int score = 0;
     //public enum Direction { left, right, up, down, none };
     Vector2 moveVec2;
     Vector2 actualVec2;
@@ -21,7 +22,6 @@ public class PacmanMovement : TileMove
     public float speed = 0.4f;
     // destination varaible, where pacman is going
     Vector3 dest = Vector3.zero;
-    private int score = 0;
 
     void Start()
     {
@@ -31,7 +31,19 @@ public class PacmanMovement : TileMove
 
     }
 
-    void Update() 
+    void OnTriggerEnter2D(Collider2D col)
+    {
+        print("ASDF");
+
+        if (col.gameObject.tag == "Dot")
+        {
+            Destroy(col.gameObject);
+            score += 10;
+            transform.GetChild(0).GetComponent<AudioSource>().Play();
+        }
+    }
+    
+    void Update()
     {
         //rotations and animation setting
         if (transform.position != dest)
@@ -69,6 +81,19 @@ public class PacmanMovement : TileMove
             anim.Play("Pac_Idle");
         }
 
+
+        //warp
+
+        if (transform.position.x < -15.5f)
+        {
+            transform.position = new Vector2(transform.position.x + 31f, transform.position.y);
+            dest = new Vector3(Mathf.Round(transform.position.x)-0.5f, Mathf.Round(transform.position.y), 0);
+        }
+        if (transform.position.x > 15.5f)
+        {
+            transform.position = new Vector2(transform.position.x - 31f, transform.position.y);
+            dest = new Vector3(Mathf.Round(transform.position.x)+0.5f, Mathf.Round(transform.position.y), 0);
+        }
         //
         //visual guide for dest position -- debug only.
         destTransform.position = dest;
@@ -77,8 +102,8 @@ public class PacmanMovement : TileMove
         //Input
         //raw input
         actualVec2 = new Vector2(Input.GetAxisRaw("Horizontal"), Input.GetAxisRaw("Vertical"));
-        actualVecText.text = "Actual: "+actualVec2;
-        moveVecText.text = "MoveVec: "+moveVec2;
+        actualVecText.text = "Actual: " + actualVec2;
+        moveVecText.text = "MoveVec: " + moveVec2;
 
         //bug fix
         Vector2 dir = dest - this.transform.position;
@@ -92,11 +117,11 @@ public class PacmanMovement : TileMove
                 {
                     moveVec2 = new Vector2(1, 0);
                 }
-                else if ((Input.GetKey(KeyCode.LeftArrow)  || Input.GetKey(KeyCode.A)) && isValidMove(-Vector2.right))
+                else if ((Input.GetKey(KeyCode.LeftArrow) || Input.GetKey(KeyCode.A)) && isValidMove(-Vector2.right))
                 {
                     moveVec2 = new Vector2(-1, 0);
                 }
-                else if ((Input.GetKey(KeyCode.UpArrow)  || Input.GetKey(KeyCode.W)) && isValidMove(Vector2.up))
+                else if ((Input.GetKey(KeyCode.UpArrow) || Input.GetKey(KeyCode.W)) && isValidMove(Vector2.up))
                 {
                     moveVec2 = new Vector2(0, 1);
                 }
@@ -115,7 +140,7 @@ public class PacmanMovement : TileMove
         // Gets the offset from the destination to the current postion (change in direction)
 
 
-        
+
         moveTo(dest, speed);
 
     }
