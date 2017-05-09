@@ -36,9 +36,10 @@ sysinfo.txt
 *.csproj
 *.sln
 *.suo
-MG2_02_MachineLearning/Library/
-MG2_02_MachineLearning/Temp/
-MG2_02_MachineLearning/Builds/
+
+AutoPacMan/Library/
+AutoPacMan/Temp/
+AutoPacMan/Builds/
 Assembly-CSharp.csproj.FilesWrittenAbsolute.txt
 Assembly-CSharp.dll
 Assembly-CSharp.dll.mdb
