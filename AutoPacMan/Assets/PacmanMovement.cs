@@ -5,6 +5,7 @@ using UnityEngine.UI;
 public class PacmanMovement : TileMove
 {
     public enum PowerUp { NONE, GHOST };
+
     public GhostStateChanger gsc;
     public bool isAlive = true;
     bool extraBool = false;
@@ -39,9 +40,25 @@ public class PacmanMovement : TileMove
             score += 10;
             transform.GetChild(0).GetComponent<AudioSource>().Play();
         }
+        if (col.gameObject.tag == "PowerPellet")
+        {
+            Destroy(col.gameObject);
+            score += 100;
+            gsc.Scare();
+            transform.GetChild(0).GetComponent<AudioSource>().Play();
+        }
         if (col.gameObject.tag == "Ghost")
         {
-            isAlive = false;
+            if (col.GetComponent<Ghost2>().myState == Ghost2.Statey.Scared)
+            {
+                score += 200;
+                transform.GetChild(0).GetComponent<AudioSource>().Play();
+                col.GetComponent<Ghost2>().Eaten();
+            }
+            else
+            {
+                isAlive = false;
+            }
         }
     }
 

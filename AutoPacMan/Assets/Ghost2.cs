@@ -25,6 +25,7 @@ public class Ghost2 : TileMove
     public Transform targetTileGraphic;
     public Vector2 moveChecker;
     public Transform moveCheckerGraphic;
+    Vector2 startPosition;
 
 
     public Vector2 moveVec = new Vector2(1, 0); //start right.
@@ -40,6 +41,7 @@ public class Ghost2 : TileMove
     void Start()
     {
         anim = GetComponent<Animator>();
+        startPosition = transform.position;
         moveChecker = transform.position;
         intersections = GameObject.FindGameObjectsWithTag("Intersection");
         for (int i = 0; i < intersections.Length; i++)
@@ -333,25 +335,16 @@ public class Ghost2 : TileMove
         }
         else
         {
-            if (myGhostColour == GhostColour.Red)
-            {
-                transform.position = new Vector2(12.5f, 18f);
-            }
-            if (myGhostColour == GhostColour.Pink)
-            {
-                transform.position = new Vector2(-12.5f, 18f);
-            }
-            if (myGhostColour == GhostColour.Blue)
-            {
-                transform.position = new Vector2(12.5f, -10f);
-            }
-            if (myGhostColour == GhostColour.Orange)
-            {
-                transform.position = new Vector2(-12.5f, -10f);
-            }
+            transform.position = startPosition;
             moveChecker = transform.position;
 
         }
+    }
+
+    public void Eaten()
+    {
+        transform.position = startPosition;
+        moveChecker = transform.position;
     }
 
     void MoveChecker()
@@ -466,7 +459,7 @@ public class Ghost2 : TileMove
 
                     moveChecker += moveVec;
                 }
-                
+
             }
 
         }
