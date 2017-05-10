@@ -4,7 +4,14 @@ using UnityEngine;
 
 public class PerceptionMap : MonoBehaviour {
 
-  public enum perceptableObject { Empty, Wall, PacMan, Dot, Power, Ghost };
+  public enum perceptableObject {
+    Empty = 0,
+    Wall = -1,
+    PacMan = 0,
+    Dot = 1,
+    Power = 2,
+    Ghost = -5
+  };
 
   public int mapSizeX = 28;
   public int mapSizeY = 31;
@@ -27,7 +34,7 @@ public class PerceptionMap : MonoBehaviour {
     BuildMap ();
   }
 
-  public void BuildMap() {
+  private void BuildMap() {
     // Collision check each grid reference and record the tile type found there
     for (int x = 0; x < mapSizeX; x++) {
       for (int y = 0; y < mapSizeY; y++) {
