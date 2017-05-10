@@ -8,6 +8,7 @@ public class GhostStateChanger : MonoBehaviour {
     public Ghost2[] ghosts;
     int asdf = 0;
     public Text text;
+    public float stateTimer;
 
     void Start()
     {
@@ -15,6 +16,10 @@ public class GhostStateChanger : MonoBehaviour {
     }
     void Update()
     {
+        if (ghosts[0].myState != Ghost2.Statey.Scared)
+        {
+            stateTimer += Time.deltaTime;
+        }
         if (Input.GetKeyDown(KeyCode.O))
         {
             if (asdf != 2)
