@@ -56,6 +56,10 @@ public class PacmanMovement : TileMove
                 transform.GetChild(0).GetComponent<AudioSource>().Play();
                 col.GetComponent<Ghost2>().Eaten();
             }
+            if (col.GetComponent<Ghost2>().myState == Ghost2.Statey.Eaten)
+            {
+                //e
+            }
             else
             {
                 isAlive = false;
