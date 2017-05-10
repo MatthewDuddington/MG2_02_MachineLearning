@@ -29,6 +29,7 @@ public class Ghost2 : TileMove
 
     public Vector2 moveVec = new Vector2(1, 0); //start right.
     public float speed = 0.2f;
+    public float scaredSpeed;
 
 
     public GameObject[] intersections;
@@ -120,6 +121,10 @@ public class Ghost2 : TileMove
                     anim.Play("Pink_Down");
                 }
             }
+            else
+            {
+                anim.Play("Red_Scared_Up");
+            }
         }
         if (myGhostColour == GhostColour.Blue)
         {
@@ -159,6 +164,10 @@ public class Ghost2 : TileMove
                     anim.Play("Blue_Down");
                 }
             }
+            else
+            {
+                anim.Play("Red_Scared_Up");
+            }
         }
         if (myGhostColour == GhostColour.Orange)
         {
@@ -196,6 +205,10 @@ public class Ghost2 : TileMove
                 {
                     anim.Play("Orange_Down");
                 }
+            }
+            else
+            {
+                anim.Play("Red_Scared_Up");
             }
         }
         if (myState == Statey.Scared)
@@ -298,7 +311,11 @@ public class Ghost2 : TileMove
 
 
         MoveChecker();
-        moveTo(moveChecker, speed);
+
+        if (myState != Statey.Scared)
+            moveTo(moveChecker, speed);
+        else
+            moveTo(moveChecker, scaredSpeed);
     }
 
     void MoveChecker()

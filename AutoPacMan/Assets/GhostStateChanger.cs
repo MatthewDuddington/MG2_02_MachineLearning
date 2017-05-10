@@ -6,25 +6,50 @@ using UnityEngine.UI;
 public class GhostStateChanger : MonoBehaviour {
 
     public Ghost2[] ghosts;
+    int asdf = 0;
     public Text text;
+
+    void Start()
+    {
+        Ting();
+    }
     void Update()
     {
         if (Input.GetKeyDown(KeyCode.O))
         {
-            foreach (Ghost2 g in ghosts)
+            if (asdf != 2)
             {
-                if (g.myState == Ghost2.Statey.Chase)
-                {
-                    g.myState = Ghost2.Statey.Corner;
-                    text.text = "Corner";
-                }
-                else
-                {
-                    g.myState = Ghost2.Statey.Chase;
-                    text.text = "Chase";
-                }
+                asdf++;
+                Ting();
+            }
+            else
+            {
+                asdf = 0;
+                Ting();
             }
         }
 
+    }
+
+    void Ting()
+    {
+        foreach (Ghost2 g in ghosts)
+        {
+            if (asdf == 0)
+            {
+                g.myState = Ghost2.Statey.Chase;
+                text.text = "Chase";
+            }
+            if (asdf == 1)
+            {
+                g.myState = Ghost2.Statey.Corner;
+                text.text = "Corner";
+            }
+            if (asdf == 2)
+            {
+                g.myState = Ghost2.Statey.Scared;
+                text.text = "Scared";
+            }
+        }
     }
 }

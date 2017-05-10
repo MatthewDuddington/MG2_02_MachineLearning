@@ -17627,6 +17627,7 @@ MonoBehaviour:
   moveCheckerGraphic: {fileID: 607754999}
   moveVec: {x: 1, y: 0}
   speed: 0.18
+  scaredSpeed: 0.09
   intersections: []
   intersectionsPos:
   - {fileID: 0}
@@ -23497,6 +23498,7 @@ MonoBehaviour:
   moveCheckerGraphic: {fileID: 579821591}
   moveVec: {x: 1, y: 0}
   speed: 0.18
+  scaredSpeed: 0.09
   intersections: []
   intersectionsPos:
   - {fileID: 0}
@@ -42713,6 +42715,7 @@ MonoBehaviour:
   moveCheckerGraphic: {fileID: 1547993951}
   moveVec: {x: 1, y: 0}
   speed: 0.18
+  scaredSpeed: 0.09
   intersections: []
   intersectionsPos:
   - {fileID: 0}
@@ -52520,6 +52523,7 @@ MonoBehaviour:
   moveCheckerGraphic: {fileID: 28248053}
   moveVec: {x: 1, y: 0}
   speed: 0.18
+  scaredSpeed: 0.09
   intersections: []
   intersectionsPos:
   - {fileID: 0}
