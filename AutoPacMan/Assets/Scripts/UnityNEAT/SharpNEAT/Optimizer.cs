@@ -10,8 +10,8 @@ using System.IO;
 
 public class Optimizer : MonoBehaviour {
 
-    const int NUM_INPUTS = 5;
-    const int NUM_OUTPUTS = 2;
+    const int NUM_INPUTS = 25;  // Set to the number of tiles in the input perception window
+    const int NUM_OUTPUTS = 4;  // Up, Down, Left, Right
 
     public int Trials;
     public float TrialDuration;
