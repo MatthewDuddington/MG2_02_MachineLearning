@@ -12,7 +12,7 @@ public class GhostStateChanger : MonoBehaviour {
 
     void Start()
     {
-        Ting();
+        //Ting();
     }
     void Update()
     {
@@ -20,35 +20,100 @@ public class GhostStateChanger : MonoBehaviour {
         {
             stateTimer += Time.deltaTime;
         }
-        if (Input.GetKeyDown(KeyCode.O))
+        if (stateTimer < 7)
+        {
+            foreach (Ghost2 g in ghosts)
+            {
+                g.myState = Ghost2.Statey.Corner;
+                text.text = "Corner";
+            }
+        }
+        if (stateTimer > 7 && stateTimer < 27)
+        {
+            foreach (Ghost2 g in ghosts)
+            {
+                g.myState = Ghost2.Statey.Chase;
+                text.text = "Chase";
+            }
+        }
+        if (stateTimer > 27 && stateTimer < 34)
+        {
+            foreach (Ghost2 g in ghosts)
+            {
+                g.myState = Ghost2.Statey.Corner;
+                text.text = "Corner";
+            }
+        }
+        if (stateTimer > 34 && stateTimer < 54)
+        {
+            foreach (Ghost2 g in ghosts)
+            {
+                g.myState = Ghost2.Statey.Chase;
+                text.text = "Chase";
+            }
+        }
+        if (stateTimer > 54 && stateTimer < 59)
+        {
+            foreach (Ghost2 g in ghosts)
+            {
+                g.myState = Ghost2.Statey.Corner;
+                text.text = "Corner";
+            }
+        }
+        if (stateTimer > 59 && stateTimer < 79)
+        {
+            foreach (Ghost2 g in ghosts)
+            {
+                g.myState = Ghost2.Statey.Chase;
+                text.text = "Chase";
+            }
+        }
+        if (stateTimer > 79 && stateTimer < 84)
+        {
+            foreach (Ghost2 g in ghosts)
+            {
+                g.myState = Ghost2.Statey.Corner;
+                text.text = "Corner";
+            }
+        }
+        if (stateTimer >84)
+        {
+            foreach (Ghost2 g in ghosts)
+            {
+                g.myState = Ghost2.Statey.Chase;
+                text.text = "Chase";
+            }
+        }
+       /* if (Input.GetKeyDown(KeyCode.O))
         {
             if (asdf != 2)
             {
                 asdf++;
-                Ting();
+                //Ting();
             }
             else
             {
                 asdf = 0;
-                Ting();
+               // Ting();
             }
         }
+        * */
 
     }
 
-    void Ting()
+  /*  void Ting()
     {
         foreach (Ghost2 g in ghosts)
         {
             if (asdf == 0)
             {
-                g.myState = Ghost2.Statey.Chase;
-                text.text = "Chase";
+                g.myState = Ghost2.Statey.Corner;
+                text.text = "Corner";
             }
             if (asdf == 1)
             {
-                g.myState = Ghost2.Statey.Corner;
-                text.text = "Corner";
+                g.myState = Ghost2.Statey.Chase;
+                text.text = "Chase";
             }
             if (asdf == 2)
             {
@@ -56,5 +121,5 @@ public class GhostStateChanger : MonoBehaviour {
                 text.text = "Scared";
             }
         }
-    }
+    }*/
 }
