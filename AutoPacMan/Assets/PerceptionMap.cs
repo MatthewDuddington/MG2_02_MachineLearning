@@ -61,6 +61,7 @@ public class PerceptionMap : MonoBehaviour {
     }
   }
 
+  // Function for the Neural Net to read in input data from in the form of an int representation
   public int ReadMap(int x, int y) {
     if (x > mapSizeX - 1 || y > mapSizeY - 1) { Debug.LogError ("Map reference attempting to be read is out of bounds"); }
     return map [x, y];
@@ -72,5 +73,14 @@ public class PerceptionMap : MonoBehaviour {
     return 
   }
   */
+
+  public void DeclarePosition(Vector2 objectPosition, perceptableObject objectType) {
+    //TODO Calculate the grid position of the object based on its world position
+    // Can the PacMan and Ghosts provide a grid tile centre position to this to negate their movement offsets?
+    int gridReferenceX;
+    int gridReferenceY;
+
+    map [gridReferenceX, gridReferenceY] = (int)objectType;
+  }
 
 }
