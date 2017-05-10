@@ -4,6 +4,7 @@ using UnityEngine.UI;
 
 public class PacmanMovement : TileMove
 {
+  private Vector4 aiInputVector = new Vector4(0,0,0,0);  // Stores the value being input by the PacManLearningController. Mapped as: Right, Left, Up, Down
 
     public enum PowerUp { NONE, GHOST };
     //public enum Direction { left, right, up, down, none };
@@ -88,23 +89,25 @@ public class PacmanMovement : TileMove
         {
             if (true)
             {
-                if ((Input.GetKey(KeyCode.RightArrow) || Input.GetKey(KeyCode.D)) && isValidMove(Vector2.right))
+                if ((aiInputVector.x = 1) || (Input.GetKey(KeyCode.RightArrow) || Input.GetKey(KeyCode.D)) && isValidMove(Vector2.right))
                 {
                     moveVec2 = new Vector2(1, 0);
                 }
-                else if ((Input.GetKey(KeyCode.LeftArrow)  || Input.GetKey(KeyCode.A)) && isValidMove(-Vector2.right))
+                else if ((aiInputVector.y = 1) || (Input.GetKey(KeyCode.LeftArrow)  || Input.GetKey(KeyCode.A)) && isValidMove(-Vector2.right))
                 {
                     moveVec2 = new Vector2(-1, 0);
                 }
-                else if ((Input.GetKey(KeyCode.UpArrow)  || Input.GetKey(KeyCode.W)) && isValidMove(Vector2.up))
+                else if ((aiInputVector.z = 1) || (Input.GetKey(KeyCode.UpArrow)  || Input.GetKey(KeyCode.W)) && isValidMove(Vector2.up))
                 {
                     moveVec2 = new Vector2(0, 1);
                 }
-                else if ((Input.GetKey(KeyCode.DownArrow) || Input.GetKey(KeyCode.S)) && isValidMove(-Vector2.up))
+                else if ((aiInputVector.w = 1) || (Input.GetKey(KeyCode.DownArrow) || Input.GetKey(KeyCode.S)) && isValidMove(-Vector2.up))
                 {
                     moveVec2 = new Vector2(0, -1);
                 }
 
+                // Reset the input vector after resolving it
+                aiInputVector = new Vector4 (0, 0, 0, 0);
             }
             if (isValidMove(moveVec2 + dir))
             {
@@ -118,5 +121,10 @@ public class PacmanMovement : TileMove
         
         moveTo(dest, speed);
 
+    }
+
+    // PacManLearningController passes in the decided input using this function
+    public void SetAiInputVector(Vector4 inputVector) {
+      aiInputVector = inputVector;
     }
 }
