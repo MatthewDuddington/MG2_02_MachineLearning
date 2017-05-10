@@ -40,6 +40,8 @@ sysinfo.txt
 AutoPacMan/Library/
 AutoPacMan/Temp/
 AutoPacMan/Builds/
+AutoPacMan/Assets/Scripts/UnityNEAT/Examples/
+
 Assembly-CSharp.csproj.FilesWrittenAbsolute.txt
 Assembly-CSharp.dll
 Assembly-CSharp.dll.mdb
