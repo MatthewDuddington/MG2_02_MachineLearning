@@ -1,6 +1,6 @@
 fileFormatVersion: 2
 guid: 0f3430ad997558a4a9b5588a3bb559a6
-timeCreated: 1494450554
+timeCreated: 1494459394
 licenseType: Free
 TextureImporter:
   fileIDToRecycleName:
@@ -812,110 +812,6 @@ TextureImporter:
       outline: []
       tessellationDetail: 0
     - serializedVersion: 2
-      name: 52631_50
-      rect:
-        serializedVersion: 2
-        x: 135
-        y: 159
-        width: 4
-        height: 5
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      tessellationDetail: 0
-    - serializedVersion: 2
-      name: 52631_51
-      rect:
-        serializedVersion: 2
-        x: 141
-        y: 159
-        width: 4
-        height: 5
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      tessellationDetail: 0
-    - serializedVersion: 2
-      name: 52631_52
-      rect:
-        serializedVersion: 2
-        x: 149
-        y: 159
-        width: 4
-        height: 5
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      tessellationDetail: 0
-    - serializedVersion: 2
-      name: 52631_53
-      rect:
-        serializedVersion: 2
-        x: 155
-        y: 159
-        width: 4
-        height: 5
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      tessellationDetail: 0
-    - serializedVersion: 2
-      name: 52631_54
-      rect:
-        serializedVersion: 2
-        x: 166
-        y: 161
-        width: 4
-        height: 5
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      tessellationDetail: 0
-    - serializedVersion: 2
-      name: 52631_55
-      rect:
-        serializedVersion: 2
-        x: 172
-        y: 161
-        width: 4
-        height: 5
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      tessellationDetail: 0
-    - serializedVersion: 2
-      name: 52631_56
-      rect:
-        serializedVersion: 2
-        x: 182
-        y: 158
-        width: 4
-        height: 5
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      tessellationDetail: 0
-    - serializedVersion: 2
-      name: 52631_57
-      rect:
-        serializedVersion: 2
-        x: 188
-        y: 158
-        width: 4
-        height: 5
-      alignment: 0
-      pivot: {x: 0.5, y: 0.5}
-      border: {x: 0, y: 0, z: 0, w: 0}
-      outline: []
-      tessellationDetail: 0
-    - serializedVersion: 2
       name: 52631_58
       rect:
         serializedVersion: 2
@@ -1144,6 +1040,19 @@ TextureImporter:
         y: 232
         width: 11
         height: 10
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      tessellationDetail: 0
+    - serializedVersion: 2
+      name: 52631_50
+      rect:
+        serializedVersion: 2
+        x: 133
+        y: 153
+        width: 14
+        height: 14
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}

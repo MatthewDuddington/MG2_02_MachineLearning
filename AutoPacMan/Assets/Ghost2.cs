@@ -89,9 +89,13 @@ public class Ghost2 : TileMove
                         anim.Play("Red_Down");
                     }
                 }
-                else
+                else if(myState == Statey.Scared)
                 {
                     anim.Play("Red_Scared_Up");
+                }
+                else if (myState == Statey.Eaten)
+                {
+                    anim.Play("Red_Eaten");
                 }
             }
             if (myGhostColour == GhostColour.Pink)
@@ -123,9 +127,13 @@ public class Ghost2 : TileMove
                         anim.Play("Pink_Down");
                     }
                 }
-                else
+                else if (myState == Statey.Scared)
                 {
                     anim.Play("Red_Scared_Up");
+                }
+                else if (myState == Statey.Eaten)
+                {
+                    anim.Play("Red_Eaten");
                 }
             }
             if (myGhostColour == GhostColour.Blue)
@@ -165,9 +173,13 @@ public class Ghost2 : TileMove
                         anim.Play("Blue_Down");
                     }
                 }
-                else
+                else if (myState == Statey.Scared)
                 {
                     anim.Play("Red_Scared_Up");
+                }
+                else if (myState == Statey.Eaten)
+                {
+                    anim.Play("Red_Eaten");
                 }
             }
             if (myGhostColour == GhostColour.Orange)
@@ -206,12 +218,16 @@ public class Ghost2 : TileMove
                         anim.Play("Orange_Down");
                     }
                 }
-                else
+                else if (myState == Statey.Scared)
                 {
                     anim.Play("Red_Scared_Up");
                 }
+                else if (myState == Statey.Eaten)
+                {
+                    anim.Play("Red_Eaten");
+                }
             }
-            if (myState == Statey.Scared)
+            if (myState == Statey.Scared && transform.position == (Vector3)targetTile)
             {
                 targetTileGraphic.position = targetTile = new Vector2(Random.Range(-12f, 12f), Random.Range(-10f, 18f));
             }
@@ -352,6 +368,7 @@ public class Ghost2 : TileMove
     {
         //transform.position = startPosition;
         //moveChecker = transform.position;
+        print("i got eaten!");
         myState = Statey.Eaten; 
     }
 
