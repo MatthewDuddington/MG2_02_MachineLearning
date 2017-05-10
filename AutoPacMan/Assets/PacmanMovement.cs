@@ -5,6 +5,7 @@ using UnityEngine.UI;
 public class PacmanMovement : TileMove
 {
     public enum PowerUp { NONE, GHOST };
+    public GhostStateChanger gsc;
     public bool isAlive = true;
     bool extraBool = false;
     public int score = 0;
@@ -150,6 +151,7 @@ public class PacmanMovement : TileMove
             if (!isAlive && !extraBool)
             {
                 Invoke("Reset", 3f);
+                gsc.stateTimer = 0;
                 extraBool = true;
             }
         }

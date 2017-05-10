@@ -17616,7 +17616,7 @@ CircleCollider2D:
   m_UsedByEffector: 0
   m_Offset: {x: 0, y: 0}
   serializedVersion: 2
-  m_Radius: 0.4
+  m_Radius: 0.7
 --- !u!114 &609864402
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -23487,7 +23487,7 @@ CircleCollider2D:
   m_UsedByEffector: 0
   m_Offset: {x: 0, y: 0}
   serializedVersion: 2
-  m_Radius: 0.4
+  m_Radius: 0.7
 --- !u!114 &751322694
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -42609,7 +42609,7 @@ CircleCollider2D:
   m_UsedByEffector: 0
   m_Offset: {x: 0, y: 0}
   serializedVersion: 2
-  m_Radius: 0.4
+  m_Radius: 0.7
 --- !u!114 &1410735997
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -43588,6 +43588,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d193e084cdc90a1479d8bd91aa82c78f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  gsc: {fileID: 1581643945}
   isAlive: 1
   score: 0
   moveVec2: {x: 0, y: 0}
@@ -47519,6 +47520,7 @@ MonoBehaviour:
   - {fileID: 751322691}
   - {fileID: 1764636900}
   text: {fileID: 1016338320}
+  stateTimer: 0
 --- !u!1 &1585618151
 GameObject:
   m_ObjectHideFlags: 0
@@ -52513,7 +52515,7 @@ CircleCollider2D:
   m_UsedByEffector: 0
   m_Offset: {x: 0, y: 0}
   serializedVersion: 2
-  m_Radius: 0.4
+  m_Radius: 0.7
 --- !u!114 &1764636903
 MonoBehaviour:
   m_ObjectHideFlags: 0

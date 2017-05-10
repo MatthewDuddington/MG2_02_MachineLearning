@@ -331,6 +331,27 @@ public class Ghost2 : TileMove
             else
                 moveTo(moveChecker, scaredSpeed);
         }
+        else
+        {
+            if (myGhostColour == GhostColour.Red)
+            {
+                transform.position = new Vector2(12.5f, 18f);
+            }
+            if (myGhostColour == GhostColour.Pink)
+            {
+                transform.position = new Vector2(-12.5f, 18f);
+            }
+            if (myGhostColour == GhostColour.Blue)
+            {
+                transform.position = new Vector2(12.5f, -10f);
+            }
+            if (myGhostColour == GhostColour.Orange)
+            {
+                transform.position = new Vector2(-12.5f, -10f);
+            }
+            moveChecker = transform.position;
+
+        }
     }
 
     void MoveChecker()
