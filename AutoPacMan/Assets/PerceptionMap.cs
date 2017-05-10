@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class PerceptionMap : MonoBehaviour {
 
-  enum perceptableObject { Empty, Wall, PacMan, Dot, Power, Ghost };
+  public enum perceptableObject { Empty, Wall, PacMan, Dot, Power, Ghost };
 
   public int mapSizeX = 28;
   public int mapSizeY = 31;
@@ -77,8 +77,8 @@ public class PerceptionMap : MonoBehaviour {
   public void DeclarePosition(Vector2 objectPosition, perceptableObject objectType) {
     //TODO Calculate the grid position of the object based on its world position
     // Can the PacMan and Ghosts provide a grid tile centre position to this to negate their movement offsets?
-    int gridReferenceX;
-    int gridReferenceY;
+    int gridReferenceX = 0;
+    int gridReferenceY = 0;
 
     map [gridReferenceX, gridReferenceY] = (int)objectType;
   }
