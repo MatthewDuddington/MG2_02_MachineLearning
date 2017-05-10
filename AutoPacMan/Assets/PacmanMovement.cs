@@ -20,6 +20,7 @@ public class PacmanMovement : TileMove
 
     public Text moveVecText;
     public Text actualVecText;
+    public Text scoreText;
 
     public float speed = 0.4f;
     // destination varaible, where pacman is going
@@ -64,6 +65,7 @@ public class PacmanMovement : TileMove
 
     void Update()
     {
+        scoreText.text = ""+score;
         if (isAlive)
         {
             //rotations and animation setting

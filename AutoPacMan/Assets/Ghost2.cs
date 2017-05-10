@@ -15,7 +15,7 @@ public class Ghost2 : TileMove
     public enum GhostColour { Red, Orange, Blue, Pink };
     public GhostColour myGhostColour;
 
-    public enum Statey { Chase, Corner, Scared };
+    public enum Statey { Chase, Corner, Scared, Eaten };
     public Statey myState;
 
 
@@ -70,8 +70,7 @@ public class Ghost2 : TileMove
                 {
                     targetTileGraphic.position = targetTile = new Vector2(12.5f, 20f);
                 }
-
-                if (myState != Statey.Scared)
+                if (myState != Statey.Scared && myState != Statey.Eaten)
                 {
                     if (moveVec == Vector2.right)
                     {
@@ -105,8 +104,7 @@ public class Ghost2 : TileMove
                 {
                     targetTileGraphic.position = targetTile = new Vector2(-12.5f, 20f);
                 }
-
-                if (myState != Statey.Scared)
+                if (myState != Statey.Scared && myState != Statey.Eaten)
                 {
                     if (moveVec == Vector2.right)
                     {
@@ -148,8 +146,7 @@ public class Ghost2 : TileMove
                 {
                     targetTileGraphic.position = targetTile = new Vector2(12.5f, -12f);
                 }
-
-                if (myState != Statey.Scared)
+                if (myState != Statey.Scared && myState != Statey.Eaten)
                 {
                     if (moveVec == Vector2.right)
                     {
@@ -190,8 +187,7 @@ public class Ghost2 : TileMove
                 {
                     targetTileGraphic.position = targetTile = new Vector2(-12.5f, -12f);
                 }
-
-                if (myState != Statey.Scared)
+                if (myState != Statey.Scared && myState != Statey.Eaten)
                 {
                     if (moveVec == Vector2.right)
                     {
@@ -218,6 +214,15 @@ public class Ghost2 : TileMove
             if (myState == Statey.Scared)
             {
                 targetTileGraphic.position = targetTile = new Vector2(Random.Range(-12f, 12f), Random.Range(-10f, 18f));
+            }
+            if (myState == Statey.Eaten)
+            {
+                targetTileGraphic.position = targetTile = new Vector2(0.5f,8f);
+
+                if(transform.position == new Vector3(0.5f, 8f,0))
+                {
+                    myState = Statey.Chase;
+                }
             }
 
             moveCheckerGraphic.position = moveChecker;
@@ -328,10 +333,12 @@ public class Ghost2 : TileMove
 
             MoveChecker();
 
-            if (myState != Statey.Scared)
+            if (myState == Statey.Chase || myState == Statey.Corner)
                 moveTo(moveChecker, speed);
-            else
+            else if (myState == Statey.Scared)
                 moveTo(moveChecker, scaredSpeed);
+            else if (myState == Statey.Eaten)
+                moveTo(moveChecker, speed*2);
         }
         else
         {
@@ -343,8 +350,9 @@ public class Ghost2 : TileMove
 
     public void Eaten()
     {
-        transform.position = startPosition;
-        moveChecker = transform.position;
+        //transform.position = startPosition;
+        //moveChecker = transform.position;
+        myState = Statey.Eaten; 
     }
 
     void MoveChecker()

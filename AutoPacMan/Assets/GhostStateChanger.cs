@@ -33,64 +33,88 @@ public class GhostStateChanger : MonoBehaviour {
             {
                 foreach (Ghost2 g in ghosts)
                 {
-                    g.myState = Ghost2.Statey.Corner;
-                    text.text = "Corner";
+                    if (g.myState != Ghost2.Statey.Eaten)
+                    {
+                        g.myState = Ghost2.Statey.Corner;
+                        text.text = "Corner";
+                    }
                 }
             }
             if (stateTimer > 7 && stateTimer < 27)
             {
                 foreach (Ghost2 g in ghosts)
                 {
-                    g.myState = Ghost2.Statey.Chase;
-                    text.text = "Chase";
+                    if (g.myState != Ghost2.Statey.Eaten)
+                    {
+                        g.myState = Ghost2.Statey.Chase;
+                        text.text = "Chase";
+                    }
                 }
             }
             if (stateTimer > 27 && stateTimer < 34)
             {
                 foreach (Ghost2 g in ghosts)
                 {
-                    g.myState = Ghost2.Statey.Corner;
-                    text.text = "Corner";
+                    if (g.myState != Ghost2.Statey.Eaten)
+                    {
+                        g.myState = Ghost2.Statey.Corner;
+                        text.text = "Corner";
+                    }
                 }
             }
             if (stateTimer > 34 && stateTimer < 54)
             {
                 foreach (Ghost2 g in ghosts)
                 {
-                    g.myState = Ghost2.Statey.Chase;
-                    text.text = "Chase";
+                    if (g.myState != Ghost2.Statey.Eaten)
+                    {
+                        g.myState = Ghost2.Statey.Chase;
+                        text.text = "Chase";
+                    }
                 }
             }
             if (stateTimer > 54 && stateTimer < 59)
             {
                 foreach (Ghost2 g in ghosts)
                 {
-                    g.myState = Ghost2.Statey.Corner;
-                    text.text = "Corner";
+                    if (g.myState != Ghost2.Statey.Eaten)
+                    {
+                        g.myState = Ghost2.Statey.Corner;
+                        text.text = "Corner";
+                    }
                 }
             }
             if (stateTimer > 59 && stateTimer < 79)
             {
                 foreach (Ghost2 g in ghosts)
                 {
-                    g.myState = Ghost2.Statey.Chase;
-                    text.text = "Chase";
+                    if (g.myState != Ghost2.Statey.Eaten)
+                    {
+                        g.myState = Ghost2.Statey.Chase;
+                        text.text = "Chase";
+                    }
                 }
             }
             if (stateTimer > 79 && stateTimer < 84)
             {
                 foreach (Ghost2 g in ghosts)
                 {
-                    g.myState = Ghost2.Statey.Corner;
-                    text.text = "Corner";
+                    if (g.myState != Ghost2.Statey.Eaten)
+                    {
+                        g.myState = Ghost2.Statey.Corner;
+                        text.text = "Corner";
+                    }
                 }
             }
             if (stateTimer > 84)
             {
                 foreach (Ghost2 g in ghosts)
                 {
-                    g.myState = Ghost2.Statey.Chase;
-                    text.text = "Chase";
+                    if (g.myState != Ghost2.Statey.Eaten)
+                    {
+                        g.myState = Ghost2.Statey.Chase;
+                        text.text = "Chase";
+                    }
                 }
             }
         }
