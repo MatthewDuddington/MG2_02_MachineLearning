@@ -4,11 +4,9 @@ using UnityEngine.UI;
 
 public class PacmanMovement : TileMove
 {
-
     public enum PowerUp { NONE, GHOST };
     public int score = 0;
-    //public enum Direction { left, right, up, down, none };
-    Vector2 moveVec2;
+    public Vector2 moveVec2;
     Vector2 actualVec2;
     Rigidbody2D rb;
     Animator anim;
@@ -28,7 +26,6 @@ public class PacmanMovement : TileMove
         dest = transform.position;
         rb = GetComponent<Rigidbody2D>();
         anim = GetComponent<Animator>();
-
     }
 
     void OnTriggerEnter2D(Collider2D col)
@@ -42,7 +39,7 @@ public class PacmanMovement : TileMove
             transform.GetChild(0).GetComponent<AudioSource>().Play();
         }
     }
-    
+
     void Update()
     {
         //rotations and animation setting
@@ -77,7 +74,7 @@ public class PacmanMovement : TileMove
 
         if (destTimer >= 0.061f)
         {
-            print("stopped!");
+           // print("stopped!");
             anim.Play("Pac_Idle");
         }
 
@@ -87,12 +84,12 @@ public class PacmanMovement : TileMove
         if (transform.position.x < -15.5f)
         {
             transform.position = new Vector2(transform.position.x + 31f, transform.position.y);
-            dest = new Vector3(Mathf.Round(transform.position.x)-0.5f, Mathf.Round(transform.position.y), 0);
+            dest = new Vector3(Mathf.Round(transform.position.x) - 0.5f, Mathf.Round(transform.position.y), 0);
         }
         if (transform.position.x > 15.5f)
         {
             transform.position = new Vector2(transform.position.x - 31f, transform.position.y);
-            dest = new Vector3(Mathf.Round(transform.position.x)+0.5f, Mathf.Round(transform.position.y), 0);
+            dest = new Vector3(Mathf.Round(transform.position.x) + 0.5f, Mathf.Round(transform.position.y), 0);
         }
         //
         //visual guide for dest position -- debug only.
@@ -111,30 +108,28 @@ public class PacmanMovement : TileMove
         // recheck the keys for a new movement
         if (transform.position == dest)
         {
-            if (true)
-            {
-                if ((Input.GetKey(KeyCode.RightArrow) || Input.GetKey(KeyCode.D)) && isValidMove(Vector2.right))
-                {
-                    moveVec2 = new Vector2(1, 0);
-                }
-                else if ((Input.GetKey(KeyCode.LeftArrow) || Input.GetKey(KeyCode.A)) && isValidMove(-Vector2.right))
-                {
-                    moveVec2 = new Vector2(-1, 0);
-                }
-                else if ((Input.GetKey(KeyCode.UpArrow) || Input.GetKey(KeyCode.W)) && isValidMove(Vector2.up))
-                {
-                    moveVec2 = new Vector2(0, 1);
-                }
-                else if ((Input.GetKey(KeyCode.DownArrow) || Input.GetKey(KeyCode.S)) && isValidMove(-Vector2.up))
-                {
-                    moveVec2 = new Vector2(0, -1);
-                }
 
+            if ((Input.GetKey(KeyCode.RightArrow) || Input.GetKey(KeyCode.D)) && isValidMove(Vector2.right))
+            {
+                moveVec2 = new Vector2(1, 0);
             }
+            else if ((Input.GetKey(KeyCode.LeftArrow) || Input.GetKey(KeyCode.A)) && isValidMove(-Vector2.right))
+            {
+                moveVec2 = new Vector2(-1, 0);
+            }
+            else if ((Input.GetKey(KeyCode.UpArrow) || Input.GetKey(KeyCode.W)) && isValidMove(Vector2.up))
+            {
+                moveVec2 = new Vector2(0, 1);
+            }
+            else if ((Input.GetKey(KeyCode.DownArrow) || Input.GetKey(KeyCode.S)) && isValidMove(-Vector2.up))
+            {
+                moveVec2 = new Vector2(0, -1);
+            }
+
+
             if (isValidMove(moveVec2 + dir))
             {
                 dest = this.transform.position + (Vector3)moveVec2;
-
             }
         }
         // Gets the offset from the destination to the current postion (change in direction)
