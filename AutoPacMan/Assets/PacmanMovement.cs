@@ -145,19 +145,19 @@ public class PacmanMovement : TileMove
             if (transform.position == dest)
             {
 
-                if ((aiInputVector.x = 1) || (Input.GetKey(KeyCode.RightArrow) || Input.GetKey(KeyCode.D)) && isValidMove(Vector2.right))
+                if ((aiInputVector.x == 1) || (Input.GetKey(KeyCode.RightArrow) || Input.GetKey(KeyCode.D)) && isValidMove(Vector2.right))
                 {
                     moveVec2 = new Vector2(1, 0);
                 }
-                else if ((aiInputVector.y = 1) || (Input.GetKey(KeyCode.LeftArrow) || Input.GetKey(KeyCode.A)) && isValidMove(-Vector2.right))
+                else if ((aiInputVector.y == 1) || (Input.GetKey(KeyCode.LeftArrow) || Input.GetKey(KeyCode.A)) && isValidMove(-Vector2.right))
                 {
                     moveVec2 = new Vector2(-1, 0);
                 }
-                else if ((aiInputVector.z = 1) || (Input.GetKey(KeyCode.UpArrow) || Input.GetKey(KeyCode.W)) && isValidMove(Vector2.up))
+                else if ((aiInputVector.z == 1) || (Input.GetKey(KeyCode.UpArrow) || Input.GetKey(KeyCode.W)) && isValidMove(Vector2.up))
                 {
                     moveVec2 = new Vector2(0, 1);
                 }
-                else if ((aiInputVector.w = 1) || (Input.GetKey(KeyCode.DownArrow) || Input.GetKey(KeyCode.S)) && isValidMove(-Vector2.up))
+                else if ((aiInputVector.w == 1) || (Input.GetKey(KeyCode.DownArrow) || Input.GetKey(KeyCode.S)) && isValidMove(-Vector2.up))
                 {
                     moveVec2 = new Vector2(0, -1);
                 }
