@@ -14,6 +14,7 @@ public class Ghost2 : TileMove
     public float stateTimer;
     public enum GhostColour { Red, Orange, Blue, Pink };
     public GhostColour myGhostColour;
+    bool canTurnBool = true;
 
     public enum Statey { Chase, Corner, Scared, Eaten };
     public Statey myState;
@@ -72,6 +73,7 @@ public class Ghost2 : TileMove
                 }
                 if (myState != Statey.Scared && myState != Statey.Eaten)
                 {
+                    canTurnBool = true;
                     if (moveVec == Vector2.right)
                     {
                         anim.Play("Red_Right");
@@ -89,9 +91,14 @@ public class Ghost2 : TileMove
                         anim.Play("Red_Down");
                     }
                 }
-                else if(myState == Statey.Scared)
+                else if(myState == Statey.Scared && canTurnBool)
                 {
                     anim.Play("Red_Scared_Up");
+                    if (isValidMove(-moveVec))
+                    {
+                        moveVec = -moveVec;
+                    }
+                    canTurnBool = false;
                 }
                 else if (myState == Statey.Eaten)
                 {
@@ -110,6 +117,8 @@ public class Ghost2 : TileMove
                 }
                 if (myState != Statey.Scared && myState != Statey.Eaten)
                 {
+                    canTurnBool = true;
+
                     if (moveVec == Vector2.right)
                     {
                         anim.Play("Pink_Right");
@@ -127,9 +136,14 @@ public class Ghost2 : TileMove
                         anim.Play("Pink_Down");
                     }
                 }
-                else if (myState == Statey.Scared)
+                else if (myState == Statey.Scared && canTurnBool)
                 {
                     anim.Play("Red_Scared_Up");
+                    if (isValidMove(-moveVec))
+                    {
+                        moveVec = -moveVec;
+                    }
+                    canTurnBool = false;
                 }
                 else if (myState == Statey.Eaten)
                 {
@@ -156,6 +170,8 @@ public class Ghost2 : TileMove
                 }
                 if (myState != Statey.Scared && myState != Statey.Eaten)
                 {
+                    canTurnBool = true;
+
                     if (moveVec == Vector2.right)
                     {
                         anim.Play("Blue_Right");
@@ -173,9 +189,14 @@ public class Ghost2 : TileMove
                         anim.Play("Blue_Down");
                     }
                 }
-                else if (myState == Statey.Scared)
+                else if (myState == Statey.Scared && canTurnBool)
                 {
                     anim.Play("Red_Scared_Up");
+                    if (isValidMove(-moveVec))
+                    {
+                        moveVec = -moveVec;
+                    }
+                    canTurnBool = false;
                 }
                 else if (myState == Statey.Eaten)
                 {
@@ -201,6 +222,8 @@ public class Ghost2 : TileMove
                 }
                 if (myState != Statey.Scared && myState != Statey.Eaten)
                 {
+                    canTurnBool = true;
+
                     if (moveVec == Vector2.right)
                     {
                         anim.Play("Orange_Right");
@@ -218,16 +241,21 @@ public class Ghost2 : TileMove
                         anim.Play("Orange_Down");
                     }
                 }
-                else if (myState == Statey.Scared)
+                else if (myState == Statey.Scared && canTurnBool)
                 {
                     anim.Play("Red_Scared_Up");
+                    if (isValidMove(-moveVec))
+                    {
+                        moveVec = -moveVec;
+                    }
+                    canTurnBool = false;
                 }
                 else if (myState == Statey.Eaten)
                 {
                     anim.Play("Red_Eaten");
                 }
             }
-            if (myState == Statey.Scared && transform.position == (Vector3)targetTile)
+            if (myState == Statey.Scared && transform.position == (Vector3)moveChecker)
             {
                 targetTileGraphic.position = targetTile = new Vector2(Random.Range(-12f, 12f), Random.Range(-10f, 18f));
             }
@@ -268,7 +296,6 @@ public class Ghost2 : TileMove
 
                     if (isValidMove(Vector2.up) && upDistance < rightDistance && upDistance < downDistance && upDistance < leftDistance)
                     {
-                        print("go up!");
                         if (moveVec != Vector2.down)
                         {
                             moveVec = Vector2.up;
@@ -288,7 +315,6 @@ public class Ghost2 : TileMove
                     }
                     if (isValidMove(Vector2.down) && downDistance < rightDistance && downDistance < upDistance && downDistance < leftDistance)
                     {
-                        print("go down!");
                         if (moveVec != Vector2.up)
                         {
                             moveVec = Vector2.down;         //all good.
@@ -307,7 +333,7 @@ public class Ghost2 : TileMove
                     }
                     if (isValidMove(Vector2.right) && rightDistance < upDistance && rightDistance < downDistance && rightDistance < leftDistance)
                     {
-                        print("go right!");
+
                         if (moveVec != Vector2.left)
                         {
                             moveVec = Vector2.right;
@@ -326,7 +352,6 @@ public class Ghost2 : TileMove
                     }
                     if (isValidMove(Vector2.left) && leftDistance < rightDistance && leftDistance < downDistance && leftDistance < upDistance)
                     {
-                        print("go left!");
                         if (moveVec != Vector2.right)
                         {
                             moveVec = Vector2.left;
@@ -360,16 +385,24 @@ public class Ghost2 : TileMove
         {
             transform.position = startPosition;
             moveChecker = transform.position;
-
         }
+    }
+
+    public void Restart()
+    {
+        transform.position = startPosition;
+        moveChecker = transform.position;
     }
 
     public void Eaten()
     {
-        //transform.position = startPosition;
-        //moveChecker = transform.position;
         print("i got eaten!");
-        myState = Statey.Eaten; 
+        myState = Statey.Eaten;
+
+        if(isValidMove(-moveVec))       //turn around when you get eaten -- looks nice.
+        {
+            moveVec = -moveVec;
+        }
     }
 
     void MoveChecker()

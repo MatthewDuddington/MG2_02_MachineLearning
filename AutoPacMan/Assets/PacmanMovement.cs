@@ -69,6 +69,10 @@ public class PacmanMovement : TileMove
 
     void Update()
     {
+        if (Input.GetKeyDown(KeyCode.R))
+        {
+            Application.LoadLevel(Application.loadedLevel);
+        }
         scoreText.text = ""+score;
         if (isAlive)
         {
@@ -170,6 +174,7 @@ public class PacmanMovement : TileMove
         else
         {
             rb.rotation = 0;
+            moveVec2 = Vector2.zero;
             anim.Play("Pac_Dead");
             if (!isAlive && !extraBool)
             {
