@@ -64,6 +64,8 @@ public class PerceptionMap : MonoBehaviour {
           // If no collider hit, then assume empty map space
           map[x,y] = (int)perceptableObject.Empty;
         }
+
+        print(map[x,y]);
       }
     }
   }

@@ -203,6 +203,7 @@ public class PacmanMovement : TileMove
     // PacManLearningController passes in the decided input using this function
     public void SetAiInputVector(Vector4 inputVector) 
     {
+        Debug.Log ("Setting input vector: " + inputVector);
         aiInputVector = inputVector;
     }
 }
