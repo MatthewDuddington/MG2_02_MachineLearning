@@ -1,6 +1,6 @@
 fileFormatVersion: 2
 guid: 734dfd90660d4074b8d2832f55efca34
-timeCreated: 1494298226
+timeCreated: 1494528350
 licenseType: Free
 TextureImporter:
   fileIDToRecycleName:
@@ -123,6 +123,14 @@ TextureImporter:
     allowsAlphaSplitting: 0
     overridden: 0
   - buildTarget: WebGL
+    maxTextureSize: 2048
+    textureFormat: -1
+    textureCompression: 2
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+  - buildTarget: iPhone
     maxTextureSize: 2048
     textureFormat: -1
     textureCompression: 2
