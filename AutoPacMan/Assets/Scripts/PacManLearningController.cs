@@ -6,8 +6,8 @@ public class PacManLearningController : UnitController {
   bool IsRunning;
   IBlackBox box;
 
-  public PerceptionMap myPerceptionMap;
-  public PacmanMovement myPacmanMovement;
+  public PerceptionMap myPerceptionMap;  // Provides the neural network with integer representation of the game map
+  public PacmanMovement myPacmanMovement;  // Link to Luke's PacMan controll class
   public int windowWidth = 7;
   public int windowHeight = 7;
 
@@ -31,6 +31,8 @@ public class PacManLearningController : UnitController {
 
       ISignalArray outputArray = box.OutputSignalArray;  // Number of outputs is defined in the Optimizer class
 
+      // Check which output pin has 'won', i.e. has the highest probability value attached
+      // Send PacMan a vector telling it which direction to try and travel if it can
       if (outputArray [4] > outputArray [0] && outputArray [4] > outputArray [1] && outputArray [4] > outputArray [2] && outputArray [4] > outputArray [3]) {
         // myPacmanMovement.SetAiInputVector(new Vector4 (0,0,0,0);  // Don't need to turn this on, as it always resets anyway?
       } else if (outputArray [0] > outputArray [1] && outputArray [0] > outputArray [2] && outputArray [0] > outputArray [3]) {
