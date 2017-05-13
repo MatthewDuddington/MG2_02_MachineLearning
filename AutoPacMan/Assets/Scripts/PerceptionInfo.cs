@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class PerceptionInfo : MonoBehaviour {
 
-  static PerceptionInfo Get;  // Easy access to the perception info class instance (no singleton check)
+  static public PerceptionInfo Get;  // Easy access to the perception info class instance (no singleton check)
 
   Vector2[] ValidDestinationTiles;  // [x,y] positions of all possible tiles PacMan can choose to travel into
 
