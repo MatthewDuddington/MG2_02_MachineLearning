@@ -41,13 +41,17 @@ public class PacmanMovement : TileMove
     {
         if (col.gameObject.tag == "Dot")
         {
-            Destroy(col.gameObject);
+            col.gameObject.SetActive(false);
+            pacChecker.GetNextClosestDot();
+          //  Destroy(col.gameObject);
             score += 10;
             transform.GetChild(0).GetComponent<AudioSource>().Play();
         }
         if (col.gameObject.tag == "PowerPellet")
         {
-            Destroy(col.gameObject);
+          //  Destroy(col.gameObject);
+            col.gameObject.SetActive(false);
+
             score += 100;
             gsc.Scare();
             transform.GetChild(0).GetComponent<AudioSource>().Play();

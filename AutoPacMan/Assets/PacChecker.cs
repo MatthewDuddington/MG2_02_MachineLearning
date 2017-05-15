@@ -6,6 +6,10 @@ public class PacChecker : MonoBehaviour {
 
     public bool[,] wallPerception;
     public GameObject[] checkers;
+    public Transform[] emptyTiles;
+
+    public Transform[] dots;
+    public Transform closestDot;
 
 
     void Start()
@@ -14,9 +18,34 @@ public class PacChecker : MonoBehaviour {
 
 
     }
+    Transform GetClosestEnemy(Transform[] enemies)
+    {
+        Transform tMin = null;
+        float minDist = Mathf.Infinity;
+        Vector3 currentPos = transform.position;
+        foreach (Transform t in enemies)
+        {
+            if (t.gameObject.active)
+            {
+                float dist = Vector3.Distance(t.position, currentPos);
+                if (dist < minDist)
+                {
+                    tMin = t;
+                    minDist = dist;
+                }
+            }
+        }
+        return tMin;
+    }
 
+    public void GetNextClosestDot()
+    {
+        closestDot = GetClosestEnemy(dots);
+    }
     public void WallCheck() //called by pacMovement;
     {
+        // padre forgive me, for i have sinned.
+
         wallPerception[0, 0] = checkers[0].GetComponent<IndividualWallChecker>().hitting;
         wallPerception[1, 0] = checkers[1].GetComponent<IndividualWallChecker>().hitting;
         wallPerception[2, 0] = checkers[2].GetComponent<IndividualWallChecker>().hitting;
