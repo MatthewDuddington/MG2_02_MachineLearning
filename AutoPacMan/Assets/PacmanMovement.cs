@@ -7,7 +7,8 @@ public class PacmanMovement : TileMove
     private Vector4 aiInputVector = new Vector4(0,0,0,0);  // Stores the value being input by the PacManLearningController. Mapped as: Right, Left, Up, Down  
 
     public enum PowerUp { NONE, GHOST };
-    PacChecker pacChecker;
+    public GameObject checkers;
+    public PacChecker pacChecker;
     public GhostStateChanger gsc;
     public bool isAlive = true;
     bool extraBool = false;
@@ -125,8 +126,8 @@ public class PacmanMovement : TileMove
             }
             if (transform.position.x > 15.5f)
             {
-                transform.position = new Vector2(transform.position.x - 31f, transform.position.y);
-                dest = new Vector3(Mathf.Round(transform.position.x) + 0.5f, Mathf.Round(transform.position.y), 0);
+               // transform.position = new Vector2(transform.position.x - 31f, transform.position.y);
+               // dest = new Vector3(Mathf.Round(transform.position.x) + 0.5f, Mathf.Round(transform.position.y), 0);
             }
             //
             //visual guide for dest position -- debug only.
@@ -166,13 +167,17 @@ public class PacmanMovement : TileMove
                 }
 
                 // Reset the input vector after resolving it
-                aiInputVector = new Vector4 (0, 0, 0, 0);
+                aiInputVector = new Vector4(0, 0, 0, 0);
 
 
                 if (isValidMove(moveVec2 + dir))
                 {
                     dest = this.transform.position + (Vector3)moveVec2;
                 }
+            }
+            else
+            {
+               // checkers.gameObject.SetActive(false);
             }
             // Gets the offset from the destination to the current postion (change in direction)
 
