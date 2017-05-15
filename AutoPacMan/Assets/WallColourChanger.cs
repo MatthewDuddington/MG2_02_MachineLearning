@@ -21,10 +21,10 @@ public class WallColourChanger : MonoBehaviour {
             foreach (Transform child in transform)
             {
                 //makes a lightshow!!
-              //  child.GetComponent<SpriteRenderer>().color = new Color(Random.Range(0f,1f),Random.Range(0f,1f),Random.Range(0f,1f),1);
+                child.GetComponent<SpriteRenderer>().color = new Color(Random.Range(0f,1f),Random.Range(0f,1f),Random.Range(0f,1f),1);
 
                 //sets to 1 colour.
-                child.GetComponent<SpriteRenderer>().color = zing;
+                //child.GetComponent<SpriteRenderer>().color = zing;
             }
         }
     }

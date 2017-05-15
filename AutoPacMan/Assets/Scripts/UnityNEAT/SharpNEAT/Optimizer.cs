@@ -43,10 +43,10 @@ public class Optimizer : MonoBehaviour {
         xmlConfig.LoadXml(textAsset.text);
         experiment.SetOptimizer(this);
 
-        experiment.Initialize("Car Experiment", xmlConfig.DocumentElement, NUM_INPUTS, NUM_OUTPUTS);
+        experiment.Initialize("PacMan Experiment", xmlConfig.DocumentElement, NUM_INPUTS, NUM_OUTPUTS);
 
-        champFileSavePath = Application.persistentDataPath + string.Format("/{0}.champ.xml", "car");
-        popFileSavePath = Application.persistentDataPath + string.Format("/{0}.pop.xml", "car");       
+        champFileSavePath = Application.persistentDataPath + string.Format("/{0}.champ.xml", "pacman");
+        popFileSavePath = Application.persistentDataPath + string.Format("/{0}.pop.xml", "pacman");       
 
         print(champFileSavePath);
 	}
@@ -78,7 +78,7 @@ public class Optimizer : MonoBehaviour {
     public void StartEA()
     {        
         Utility.DebugLog = true;
-        Utility.Log("Starting PhotoTaxis experiment");
+        Utility.Log("Starting Auto PacMan experiment");
         // print("Loading: " + popFileLoadPath);
         _ea = experiment.CreateEvolutionAlgorithm(popFileSavePath);
         startTime = DateTime.Now;
