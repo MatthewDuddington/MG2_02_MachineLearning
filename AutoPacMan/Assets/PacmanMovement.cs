@@ -7,7 +7,8 @@ public class PacmanMovement : TileMove
     private Vector4 aiInputVector = new Vector4(0,0,0,0);  // Stores the value being input by the PacManLearningController. Mapped as: Right, Left, Up, Down  
 
     public enum PowerUp { NONE, GHOST };
-
+    public GameObject checkers;
+    public PacChecker pacChecker;
     public GhostStateChanger gsc;
     public bool isAlive = true;
     bool extraBool = false;
@@ -33,19 +34,24 @@ public class PacmanMovement : TileMove
         dest = transform.position;
         rb = GetComponent<Rigidbody2D>();
         anim = GetComponent<Animator>();
+        pacChecker = GetComponent<PacChecker>();
     }
 
     void OnTriggerEnter2D(Collider2D col)
     {
         if (col.gameObject.tag == "Dot")
         {
-            Destroy(col.gameObject);
+            col.gameObject.SetActive(false);
+            pacChecker.GetNextClosestDot();
+          //  Destroy(col.gameObject);
             score += 10;
             transform.GetChild(0).GetComponent<AudioSource>().Play();
         }
         if (col.gameObject.tag == "PowerPellet")
         {
-            Destroy(col.gameObject);
+          //  Destroy(col.gameObject);
+            col.gameObject.SetActive(false);
+
             score += 100;
             gsc.Scare();
             transform.GetChild(0).GetComponent<AudioSource>().Play();
@@ -124,8 +130,8 @@ public class PacmanMovement : TileMove
             }
             if (transform.position.x > 15.5f)
             {
-                transform.position = new Vector2(transform.position.x - 31f, transform.position.y);
-                dest = new Vector3(Mathf.Round(transform.position.x) + 0.5f, Mathf.Round(transform.position.y), 0);
+               // transform.position = new Vector2(transform.position.x - 31f, transform.position.y);
+               // dest = new Vector3(Mathf.Round(transform.position.x) + 0.5f, Mathf.Round(transform.position.y), 0);
             }
             //
             //visual guide for dest position -- debug only.
@@ -144,6 +150,8 @@ public class PacmanMovement : TileMove
             // recheck the keys for a new movement
             if (transform.position == dest)
             {
+                //does the sexy 2d array of bools;
+                pacChecker.WallCheck();
 
                 if ((aiInputVector.x == 1) || (Input.GetKey(KeyCode.RightArrow) || Input.GetKey(KeyCode.D)) && isValidMove(Vector2.right))
                 {
@@ -163,13 +171,17 @@ public class PacmanMovement : TileMove
                 }
 
                 // Reset the input vector after resolving it
-                aiInputVector = new Vector4 (0, 0, 0, 0);
+                aiInputVector = new Vector4(0, 0, 0, 0);
 
 
                 if (isValidMove(moveVec2 + dir))
                 {
                     dest = this.transform.position + (Vector3)moveVec2;
                 }
+            }
+            else
+            {
+               // checkers.gameObject.SetActive(false);
             }
             // Gets the offset from the destination to the current postion (change in direction)
 
