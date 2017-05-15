@@ -11,6 +11,8 @@ public class PacChecker : MonoBehaviour {
     public Transform[] dots;
     public Transform closestDot;
 
+    public Transform redGhost, pinkGhost, orangeGhost, blueGhost;
+
 
     void Start()
     {
