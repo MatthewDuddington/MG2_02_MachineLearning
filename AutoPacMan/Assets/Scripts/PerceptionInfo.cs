@@ -79,9 +79,10 @@ public class PerceptionInfo : MonoBehaviour {
 
   public double[] Walls {
     get { 
-      double[] returnData = new int[WallPerceptionWindow.Length];
+      double[] returnData = new double[WallPerceptionWindow.Length];
       for (int i = 0; i < WallPerceptionWindow.Length; i++) {
-        returnData [i] = (int)WallPerceptionWindow [i];
+        if (WallPerceptionWindow [i]) { returnData [i] = 1.0; }
+        else { returnData [i] = 0.0; }
       }
       return returnData;
     }
@@ -89,7 +90,7 @@ public class PerceptionInfo : MonoBehaviour {
 
   public double[] Dot {
     get {
-      double[] returnData = new int[2];
+      double[] returnData = new double[2];
       returnData [0] = closestDot.x;
       returnData [1] = closestDot.y;
       return returnData;
@@ -98,7 +99,7 @@ public class PerceptionInfo : MonoBehaviour {
 
   public double[] Ghosts {
     get {
-      double[] returnData = new int[8];
+      double[] returnData = new double[8];
       returnData [0] = ghostA.x;
       returnData [1] = ghostA.y;
       returnData [2] = ghostB.x;
