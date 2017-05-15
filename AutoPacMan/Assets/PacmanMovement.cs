@@ -7,7 +7,7 @@ public class PacmanMovement : TileMove
     private Vector4 aiInputVector = new Vector4(0,0,0,0);  // Stores the value being input by the PacManLearningController. Mapped as: Right, Left, Up, Down  
 
     public enum PowerUp { NONE, GHOST };
-
+    PacChecker pacChecker;
     public GhostStateChanger gsc;
     public bool isAlive = true;
     bool extraBool = false;
@@ -33,6 +33,7 @@ public class PacmanMovement : TileMove
         dest = transform.position;
         rb = GetComponent<Rigidbody2D>();
         anim = GetComponent<Animator>();
+        pacChecker = GetComponent<PacChecker>();
     }
 
     void OnTriggerEnter2D(Collider2D col)
@@ -144,6 +145,8 @@ public class PacmanMovement : TileMove
             // recheck the keys for a new movement
             if (transform.position == dest)
             {
+                //does the sexy 2d array of bools;
+                pacChecker.WallCheck();
 
                 if ((aiInputVector.x == 1) || (Input.GetKey(KeyCode.RightArrow) || Input.GetKey(KeyCode.D)) && isValidMove(Vector2.right))
                 {
