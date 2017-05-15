@@ -6,28 +6,28 @@ public class PerceptionInfo : MonoBehaviour {
 
   static public PerceptionInfo Get;  // Easy access to the perception info class instance (no singleton check)
 
-  Vector2[] ValidDestinationTiles;  // [x,y] positions of all possible tiles PacMan can choose to travel into
+  private Vector2[] ValidDestinationTiles;  // [x,y] positions of all possible tiles PacMan can choose to travel into
 
 
   // INPUT VECTORS
   // x    -1 Down to +1 Up      (Crunching between 25 and 1?)
   // y    -1 Left to +1 Right   (Crunching between 28 and 1?)
   // We could use inverse square to emphasise importance of closer proximities?
-  Vector2 closestDot;
-  Vector2 ghostA;
-  Vector2 ghostB;
-  Vector2 ghostC;
-  Vector2 ghostD;
+  private Vector2 closestDot;
+  private Vector2 ghostA;
+  private Vector2 ghostB;
+  private Vector2 ghostC;
+  private Vector2 ghostD;
 
-  bool[] WallPerceptionWindow;
+  private bool[] WallPerceptionWindow;
 
 
   // ERROR INFO POINTS
-  int totalTilesToDestination;
-  int totalTilesEnteredOnWayToDestination;
+  private int totalTilesToDestination;
+  private int totalTilesEnteredOnWayToDestination;
 
-  int totalDotsThatWereRemaining;
-  int totalDotsEatenOnWayToDestination;
+  private int totalDotsThatWereRemaining;
+  private int totalDotsEatenOnWayToDestination;
 
 
 	void Start () {
@@ -42,7 +42,7 @@ public class PerceptionInfo : MonoBehaviour {
 	}
 	
 
-	static void UpdatePerception () {
+	public static void UpdatePerception () {
     // Refresh closest dot
 
     // Refresh ghosts positions
@@ -51,7 +51,7 @@ public class PerceptionInfo : MonoBehaviour {
   }
 
 
-  void UpdateErrorCheckInfo() {
+  public void UpdateErrorCheckInfo() {
     // Refresh number of tiles to destination
     //SetTilesToDestination ( LukesAwesomeFunction() );
 
@@ -59,22 +59,60 @@ public class PerceptionInfo : MonoBehaviour {
     //SetDotsRemaining ( LukesOtherAwesomeFunction() );
   }
   
-  void SetTilesToDestination(int tilesToDestination) {
+  private void SetTilesToDestination(int tilesToDestination) {
     totalTilesToDestination = tilesToDestination;
   }
 
   // Call from some external class to increase tiles entered counter
-  void TileEntered() {
+  public void TileEntered() {
     totalTilesEnteredOnWayToDestination++;
   }
   
-  void SetDotsRemaining(int dotsRemaining) {
+  private void SetDotsRemaining(int dotsRemaining) {
     totalDotsThatWereRemaining = dotsRemaining;
   }
 
   // Call from some external class to increase dots eaten counter
-  void DotEaten() {
+  public void DotEaten() {
     totalDotsEatenOnWayToDestination++;
+  }
+
+  public double[] Walls {
+    get { 
+      double[] returnData = new int[WallPerceptionWindow.Length];
+      for (int i = 0; i < WallPerceptionWindow.Length; i++) {
+        returnData [i] = (int)WallPerceptionWindow [i];
+      }
+      return returnData;
+    }
+  }
+
+  public double[] Dot {
+    get {
+      double[] returnData = new int[2];
+      returnData [0] = closestDot.x;
+      returnData [1] = closestDot.y;
+      return returnData;
+    }
+  }
+
+  public double[] Ghosts {
+    get {
+      double[] returnData = new int[8];
+      returnData [0] = ghostA.x;
+      returnData [1] = ghostA.y;
+      returnData [2] = ghostB.x;
+      returnData [3] = ghostB.y;
+      returnData [4] = ghostC.x;
+      returnData [5] = ghostC.y;
+      returnData [6] = ghostD.x;
+      returnData [7] = ghostD.y;
+      return returnData;
+    }
+  }
+
+  public Vector2 GetValidDestination(int destinationIndex) {
+    return ValidDestinationTiles [destinationIndex];
   }
 
 }
