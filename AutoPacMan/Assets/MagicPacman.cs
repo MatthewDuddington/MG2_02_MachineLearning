@@ -64,7 +64,7 @@ public class MagicPacman : TileMove
 
             PacAI.tilesToGoThrough = tilesPassedThrough;
             tilesPassedThrough = 0;
-            gameObject.SetActive(false);
+           // gameObject.SetActive(false);
 
         }
 
