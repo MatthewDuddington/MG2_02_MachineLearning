@@ -116,4 +116,8 @@ public class PerceptionInfo : MonoBehaviour {
     return ValidDestinationTiles [destinationIndex];
   }
 
+  public void UpdateSurroundingDestinationTileList(int tileIndex, Vector2 tilePosition) {
+    ValidDestinationTiles[tileIndex] = tilePosition;
+  }
+
 }

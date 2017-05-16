@@ -10,6 +10,8 @@ public class IndividualWallChecker : MonoBehaviour {
     SpriteRenderer spr;
     public Transform[] walls;
 
+    public Vector2 positionOfTileUnderMe;
+
     void Start()
     {
         spr = GetComponent<SpriteRenderer>();
@@ -63,6 +65,8 @@ public class IndividualWallChecker : MonoBehaviour {
             spr.sprite = bad;
         }
 
+        outsideMap ();
+
     }
     void OnTriggerStay2D(Collider2D col)
     {
@@ -73,5 +77,11 @@ public class IndividualWallChecker : MonoBehaviour {
             spr.sprite = good;
         }
 
+        positionOfTileUnderMe = col.transform.position;
+
+    }
+
+    void outsideMap() {
+        positionOfTileUnderMe = Vector2.one * - 1;
     }
 }
