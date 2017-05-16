@@ -2,13 +2,13 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PacmanAI : TileMove
+public class MagicPacman : TileMove
 {
-    public int tilesToGoThrough;
-    public GameObject magicPacman;
+    public int tilesPassedThrough = 0;
     [Header("Animator")]
     Animator anim;
     public PacmanMovement Pacman;
+    public PacmanAI PacAI;
 
     [Header("Colour / States")]
     bool canTurnBool = true;
@@ -35,10 +35,8 @@ public class PacmanAI : TileMove
 
     void OnEnable()
     {
-        PerceptionInfo.Get.UpdatePerception();
-
-        moveCheckerGraphic.transform.position = transform.position;
-        moveChecker = moveCheckerGraphic.position;
+        transform.position = PacAI.transform.position;
+        moveChecker = moveCheckerGraphic.position = (Vector2)PacAI.transform.position;
     }
     void Start()
     {
@@ -53,59 +51,20 @@ public class PacmanAI : TileMove
         }
     }
 
-    void OnTriggerEnter2D(Collider2D col)
-    {
-        if (col.gameObject.tag == "Dot")
-        {
-            col.gameObject.SetActive(false);
-            //  Destroy(col.gameObject);
-            score += 10;
-            transform.GetChild(0).GetComponent<AudioSource>().Play();
-            PerceptionInfo.Get.DotEaten();
-        }
-        if (col.gameObject.tag == "PowerPellet")
-        {
-            //  Destroy(col.gameObject);
-            col.gameObject.SetActive(false);
-
-            score += 100;
-            gsc.Scare();
-            transform.GetChild(0).GetComponent<AudioSource>().Play();
-        }
-        if (col.gameObject.tag == "Ghost")
-        {
-            if (col.GetComponent<Ghost2>().myState == Ghost2.Statey.Scared)
-            {
-                score += 200;
-                transform.GetChild(0).GetComponent<AudioSource>().Play();
-                col.GetComponent<Ghost2>().Eaten();
-            }
-            if (col.GetComponent<Ghost2>().myState == Ghost2.Statey.Eaten)
-            {
-                //e
-            }
-            else
-            {
-                PacManBrain.Get.LearnFromDesision();
-                Application.LoadLevel(Application.loadedLevel);
-               // Pacman.isAlive = false;
-            }
-        }
-    }
-
-
     void LateUpdate()
     {
         if (transform.position == targetTileGraphic.position)
         {
             //hit end final tile!!!
-            print("HIT THAT BAD BOY");
+            //print("HIT THAT BAD BOY");
 
-            magicPacman.SetActive(true);
+            //PacManBrain.Get.LearnFromDesision();
 
-            PacManBrain.Get.LearnFromDesision();
+            //PerceptionInfo.Get.UpdatePerception();
 
-            PerceptionInfo.Get.UpdatePerception();
+            PacAI.tilesToGoThrough = tilesPassedThrough;
+            tilesPassedThrough = 0;
+            gameObject.SetActive(false);
 
         }
 
@@ -113,7 +72,7 @@ public class PacmanAI : TileMove
     // Update is called once per frame
     void Update()
     {
-        if (Pacman.isAlive)
+        if (true)
         {
             anim.Play("Pac_Move");
 
@@ -245,6 +204,8 @@ public class PacmanAI : TileMove
     {
         if (moveChecker == (Vector2)transform.position)         //every time he hits a tile
         {
+            tilesPassedThrough++;
+
             PerceptionInfo.Get.TileSurvived();
             //if you can, move forward
             if (isValidMove(moveVec))

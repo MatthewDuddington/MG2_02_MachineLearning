@@ -96,7 +96,4 @@ public class TileMove : MonoBehaviour {
         }
         return false;
     }
-
-
-
 }

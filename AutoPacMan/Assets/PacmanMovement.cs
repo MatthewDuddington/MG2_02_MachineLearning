@@ -135,8 +135,8 @@ public class PacmanMovement : TileMove
             }
             if (transform.position.x > 15.5f)
             {
-               // transform.position = new Vector2(transform.position.x - 31f, transform.position.y);
-               // dest = new Vector3(Mathf.Round(transform.position.x) + 0.5f, Mathf.Round(transform.position.y), 0);
+                transform.position = new Vector2(transform.position.x - 31f, transform.position.y);
+                dest = new Vector3(Mathf.Round(transform.position.x) + 0.5f, Mathf.Round(transform.position.y), 0);
             }
             //
             //visual guide for dest position -- debug only.

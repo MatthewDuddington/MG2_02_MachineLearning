@@ -2463,6 +2463,7 @@ MonoBehaviour:
   bad: {fileID: 21300090, guid: 734dfd90660d4074b8d2832f55efca34, type: 3}
   hitting: 0
   walls: []
+  positionOfTileUnderMe: {x: 0, y: 0}
 --- !u!212 &39831705
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -6110,6 +6111,7 @@ MonoBehaviour:
   bad: {fileID: 21300090, guid: 734dfd90660d4074b8d2832f55efca34, type: 3}
   hitting: 0
   walls: []
+  positionOfTileUnderMe: {x: 0, y: 0}
 --- !u!212 &113119466
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -7976,6 +7978,7 @@ MonoBehaviour:
   bad: {fileID: 21300090, guid: 734dfd90660d4074b8d2832f55efca34, type: 3}
   hitting: 0
   walls: []
+  positionOfTileUnderMe: {x: 0, y: 0}
 --- !u!212 &144403261
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -11134,6 +11137,7 @@ MonoBehaviour:
   bad: {fileID: 21300090, guid: 734dfd90660d4074b8d2832f55efca34, type: 3}
   hitting: 0
   walls: []
+  positionOfTileUnderMe: {x: 0, y: 0}
 --- !u!212 &202884350
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -12567,6 +12571,7 @@ MonoBehaviour:
   bad: {fileID: 21300090, guid: 734dfd90660d4074b8d2832f55efca34, type: 3}
   hitting: 0
   walls: []
+  positionOfTileUnderMe: {x: 0, y: 0}
 --- !u!212 &220847558
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -12806,6 +12811,7 @@ MonoBehaviour:
   bad: {fileID: 21300090, guid: 734dfd90660d4074b8d2832f55efca34, type: 3}
   hitting: 0
   walls: []
+  positionOfTileUnderMe: {x: 0, y: 0}
 --- !u!212 &225018453
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -15797,6 +15803,7 @@ MonoBehaviour:
   bad: {fileID: 21300090, guid: 734dfd90660d4074b8d2832f55efca34, type: 3}
   hitting: 0
   walls: []
+  positionOfTileUnderMe: {x: 0, y: 0}
 --- !u!212 &282618086
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -17694,6 +17701,7 @@ MonoBehaviour:
   bad: {fileID: 21300090, guid: 734dfd90660d4074b8d2832f55efca34, type: 3}
   hitting: 0
   walls: []
+  positionOfTileUnderMe: {x: 0, y: 0}
 --- !u!212 &324403170
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -19121,6 +19129,7 @@ MonoBehaviour:
   bad: {fileID: 21300090, guid: 734dfd90660d4074b8d2832f55efca34, type: 3}
   hitting: 0
   walls: []
+  positionOfTileUnderMe: {x: 0, y: 0}
 --- !u!212 &345336894
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -24018,6 +24027,7 @@ MonoBehaviour:
   bad: {fileID: 21300090, guid: 734dfd90660d4074b8d2832f55efca34, type: 3}
   hitting: 0
   walls: []
+  positionOfTileUnderMe: {x: 0, y: 0}
 --- !u!212 &455383835
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -24192,6 +24202,7 @@ MonoBehaviour:
   bad: {fileID: 21300090, guid: 734dfd90660d4074b8d2832f55efca34, type: 3}
   hitting: 0
   walls: []
+  positionOfTileUnderMe: {x: 0, y: 0}
 --- !u!212 &458059356
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -24666,6 +24677,7 @@ MonoBehaviour:
   bad: {fileID: 21300090, guid: 734dfd90660d4074b8d2832f55efca34, type: 3}
   hitting: 0
   walls: []
+  positionOfTileUnderMe: {x: 0, y: 0}
 --- !u!212 &467639898
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -32401,6 +32413,7 @@ MonoBehaviour:
   bad: {fileID: 21300090, guid: 734dfd90660d4074b8d2832f55efca34, type: 3}
   hitting: 0
   walls: []
+  positionOfTileUnderMe: {x: 0, y: 0}
 --- !u!212 &602018373
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -33920,6 +33933,7 @@ MonoBehaviour:
   bad: {fileID: 21300090, guid: 734dfd90660d4074b8d2832f55efca34, type: 3}
   hitting: 0
   walls: []
+  positionOfTileUnderMe: {x: 0, y: 0}
 --- !u!212 &626320971
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -35496,6 +35510,7 @@ MonoBehaviour:
   bad: {fileID: 21300090, guid: 734dfd90660d4074b8d2832f55efca34, type: 3}
   hitting: 0
   walls: []
+  positionOfTileUnderMe: {x: 0, y: 0}
 --- !u!212 &648629420
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -40086,6 +40101,7 @@ MonoBehaviour:
   bad: {fileID: 21300090, guid: 734dfd90660d4074b8d2832f55efca34, type: 3}
   hitting: 0
   walls: []
+  positionOfTileUnderMe: {x: 0, y: 0}
 --- !u!212 &726602603
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -44771,6 +44787,7 @@ MonoBehaviour:
   bad: {fileID: 21300090, guid: 734dfd90660d4074b8d2832f55efca34, type: 3}
   hitting: 0
   walls: []
+  positionOfTileUnderMe: {x: 0, y: 0}
 --- !u!212 &790444634
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -45453,6 +45470,7 @@ MonoBehaviour:
   bad: {fileID: 21300090, guid: 734dfd90660d4074b8d2832f55efca34, type: 3}
   hitting: 0
   walls: []
+  positionOfTileUnderMe: {x: 0, y: 0}
 --- !u!212 &813719981
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -46816,6 +46834,7 @@ MonoBehaviour:
   bad: {fileID: 21300090, guid: 734dfd90660d4074b8d2832f55efca34, type: 3}
   hitting: 0
   walls: []
+  positionOfTileUnderMe: {x: 0, y: 0}
 --- !u!212 &845317349
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -51359,6 +51378,7 @@ MonoBehaviour:
   bad: {fileID: 21300090, guid: 734dfd90660d4074b8d2832f55efca34, type: 3}
   hitting: 0
   walls: []
+  positionOfTileUnderMe: {x: 0, y: 0}
 --- !u!212 &918271836
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -52767,6 +52787,7 @@ MonoBehaviour:
   bad: {fileID: 21300090, guid: 734dfd90660d4074b8d2832f55efca34, type: 3}
   hitting: 0
   walls: []
+  positionOfTileUnderMe: {x: 0, y: 0}
 --- !u!212 &943773169
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -54890,6 +54911,7 @@ MonoBehaviour:
   bad: {fileID: 21300090, guid: 734dfd90660d4074b8d2832f55efca34, type: 3}
   hitting: 0
   walls: []
+  positionOfTileUnderMe: {x: 0, y: 0}
 --- !u!212 &979066516
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -57014,6 +57036,7 @@ MonoBehaviour:
   bad: {fileID: 21300090, guid: 734dfd90660d4074b8d2832f55efca34, type: 3}
   hitting: 0
   walls: []
+  positionOfTileUnderMe: {x: 0, y: 0}
 --- !u!212 &1015785433
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -59970,6 +59993,7 @@ MonoBehaviour:
   bad: {fileID: 21300090, guid: 734dfd90660d4074b8d2832f55efca34, type: 3}
   hitting: 0
   walls: []
+  positionOfTileUnderMe: {x: 0, y: 0}
 --- !u!212 &1064343667
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -60761,6 +60785,7 @@ MonoBehaviour:
   bad: {fileID: 21300090, guid: 734dfd90660d4074b8d2832f55efca34, type: 3}
   hitting: 0
   walls: []
+  positionOfTileUnderMe: {x: 0, y: 0}
 --- !u!212 &1083771442
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -63107,6 +63132,7 @@ MonoBehaviour:
   bad: {fileID: 21300090, guid: 734dfd90660d4074b8d2832f55efca34, type: 3}
   hitting: 0
   walls: []
+  positionOfTileUnderMe: {x: 0, y: 0}
 --- !u!212 &1130733984
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -64722,6 +64748,7 @@ MonoBehaviour:
   bad: {fileID: 21300090, guid: 734dfd90660d4074b8d2832f55efca34, type: 3}
   hitting: 0
   walls: []
+  positionOfTileUnderMe: {x: 0, y: 0}
 --- !u!212 &1151052714
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -65118,6 +65145,7 @@ MonoBehaviour:
   bad: {fileID: 21300090, guid: 734dfd90660d4074b8d2832f55efca34, type: 3}
   hitting: 0
   walls: []
+  positionOfTileUnderMe: {x: 0, y: 0}
 --- !u!212 &1154339094
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -67926,6 +67954,7 @@ MonoBehaviour:
   bad: {fileID: 21300090, guid: 734dfd90660d4074b8d2832f55efca34, type: 3}
   hitting: 0
   walls: []
+  positionOfTileUnderMe: {x: 0, y: 0}
 --- !u!212 &1219791820
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -70127,6 +70156,7 @@ MonoBehaviour:
   bad: {fileID: 21300090, guid: 734dfd90660d4074b8d2832f55efca34, type: 3}
   hitting: 0
   walls: []
+  positionOfTileUnderMe: {x: 0, y: 0}
 --- !u!212 &1260425598
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -73896,6 +73926,7 @@ MonoBehaviour:
   bad: {fileID: 21300090, guid: 734dfd90660d4074b8d2832f55efca34, type: 3}
   hitting: 0
   walls: []
+  positionOfTileUnderMe: {x: 0, y: 0}
 --- !u!212 &1335718609
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -77598,6 +77629,7 @@ MonoBehaviour:
   bad: {fileID: 21300090, guid: 734dfd90660d4074b8d2832f55efca34, type: 3}
   hitting: 0
   walls: []
+  positionOfTileUnderMe: {x: 0, y: 0}
 --- !u!212 &1395498948
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -79430,6 +79462,7 @@ MonoBehaviour:
   bad: {fileID: 21300090, guid: 734dfd90660d4074b8d2832f55efca34, type: 3}
   hitting: 0
   walls: []
+  positionOfTileUnderMe: {x: 0, y: 0}
 --- !u!212 &1429014827
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -81138,6 +81171,30 @@ MonoBehaviour:
   - {fileID: 1626367109}
   - {fileID: 1335718605}
   - {fileID: 726602599}
+  - {fileID: 648629417}
+  - {fileID: 1965271208}
+  - {fileID: 455383832}
+  - {fileID: 1740895246}
+  - {fileID: 1606521606}
+  - {fileID: 1130733981}
+  - {fileID: 39831702}
+  - {fileID: 1661695542}
+  - {fileID: 1634708213}
+  - {fileID: 225018450}
+  - {fileID: 1015785430}
+  - {fileID: 626320968}
+  - {fileID: 1219791817}
+  - {fileID: 2002305396}
+  - {fileID: 1151052711}
+  - {fileID: 2042796542}
+  - {fileID: 1395498945}
+  - {fileID: 602018370}
+  - {fileID: 1429014824}
+  - {fileID: 1154339091}
+  - {fileID: 458059353}
+  - {fileID: 113119463}
+  - {fileID: 1480141075}
+  - {fileID: 1883632464}
   emptyTiles:
   - {fileID: 1322906991}
   - {fileID: 514337758}
@@ -81689,6 +81746,7 @@ MonoBehaviour:
   pinkGhost: {fileID: 0}
   orangeGhost: {fileID: 0}
   blueGhost: {fileID: 0}
+  windowSize: 7
 --- !u!114 &1462893549
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -81706,6 +81764,7 @@ MonoBehaviour:
   targetTileGraphic: {fileID: 67017134}
   moveChecker: {x: 0, y: 0}
   moveCheckerGraphic: {fileID: 1540740989}
+  gsc: {fileID: 1581643945}
   moveVec: {x: 1, y: 0}
   speed: 0.18
   intersections: []
@@ -82562,6 +82621,7 @@ MonoBehaviour:
   bad: {fileID: 21300090, guid: 734dfd90660d4074b8d2832f55efca34, type: 3}
   hitting: 0
   walls: []
+  positionOfTileUnderMe: {x: 0, y: 0}
 --- !u!212 &1480141078
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -89104,6 +89164,7 @@ MonoBehaviour:
   bad: {fileID: 21300090, guid: 734dfd90660d4074b8d2832f55efca34, type: 3}
   hitting: 0
   walls: []
+  positionOfTileUnderMe: {x: 0, y: 0}
 --- !u!212 &1606521609
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -90253,6 +90314,7 @@ MonoBehaviour:
   bad: {fileID: 21300090, guid: 734dfd90660d4074b8d2832f55efca34, type: 3}
   hitting: 0
   walls: []
+  positionOfTileUnderMe: {x: 0, y: 0}
 --- !u!212 &1626367113
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -90811,6 +90873,7 @@ MonoBehaviour:
   bad: {fileID: 21300090, guid: 734dfd90660d4074b8d2832f55efca34, type: 3}
   hitting: 0
   walls: []
+  positionOfTileUnderMe: {x: 0, y: 0}
 --- !u!212 &1634708216
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -92234,6 +92297,7 @@ MonoBehaviour:
   bad: {fileID: 21300090, guid: 734dfd90660d4074b8d2832f55efca34, type: 3}
   hitting: 0
   walls: []
+  positionOfTileUnderMe: {x: 0, y: 0}
 --- !u!212 &1661695545
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -95937,6 +96001,7 @@ MonoBehaviour:
   bad: {fileID: 21300090, guid: 734dfd90660d4074b8d2832f55efca34, type: 3}
   hitting: 0
   walls: []
+  positionOfTileUnderMe: {x: 0, y: 0}
 --- !u!212 &1740895249
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -101011,6 +101076,7 @@ MonoBehaviour:
   bad: {fileID: 21300090, guid: 734dfd90660d4074b8d2832f55efca34, type: 3}
   hitting: 0
   walls: []
+  positionOfTileUnderMe: {x: 0, y: 0}
 --- !u!212 &1819765425
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -104890,6 +104956,7 @@ MonoBehaviour:
   bad: {fileID: 21300090, guid: 734dfd90660d4074b8d2832f55efca34, type: 3}
   hitting: 0
   walls: []
+  positionOfTileUnderMe: {x: 0, y: 0}
 --- !u!212 &1883632467
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -104999,6 +105066,7 @@ MonoBehaviour:
   bad: {fileID: 21300090, guid: 734dfd90660d4074b8d2832f55efca34, type: 3}
   hitting: 0
   walls: []
+  positionOfTileUnderMe: {x: 0, y: 0}
 --- !u!212 &1888947131
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -105557,6 +105625,50 @@ SpriteRenderer:
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
+--- !u!1 &1900679271
+GameObject:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  serializedVersion: 5
+  m_Component:
+  - component: {fileID: 1900679273}
+  - component: {fileID: 1900679272}
+  m_Layer: 0
+  m_Name: Perception
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1900679272
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1900679271}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 500f30c1368ce4bf78a68c801c6580d7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  totalTilesToDestination: 0
+  totalTilesSurvivedOnWayToDestination: 0
+  totalDotsThatWereRemaining: 0
+  totalDotsEatenOnWayToDestination: 0
+--- !u!4 &1900679273
+Transform:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1900679271}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 5.4515076, y: -4.4460416, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 12
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1903698592
 GameObject:
   m_ObjectHideFlags: 0
@@ -107626,6 +107738,7 @@ MonoBehaviour:
   bad: {fileID: 21300090, guid: 734dfd90660d4074b8d2832f55efca34, type: 3}
   hitting: 0
   walls: []
+  positionOfTileUnderMe: {x: 0, y: 0}
 --- !u!212 &1935633876
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -109156,6 +109269,7 @@ MonoBehaviour:
   bad: {fileID: 21300090, guid: 734dfd90660d4074b8d2832f55efca34, type: 3}
   hitting: 0
   walls: []
+  positionOfTileUnderMe: {x: 0, y: 0}
 --- !u!212 &1965271211
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -109882,6 +109996,7 @@ MonoBehaviour:
   bad: {fileID: 21300090, guid: 734dfd90660d4074b8d2832f55efca34, type: 3}
   hitting: 0
   walls: []
+  positionOfTileUnderMe: {x: 0, y: 0}
 --- !u!212 &1975497700
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -111705,6 +111820,7 @@ MonoBehaviour:
   bad: {fileID: 21300090, guid: 734dfd90660d4074b8d2832f55efca34, type: 3}
   hitting: 0
   walls: []
+  positionOfTileUnderMe: {x: 0, y: 0}
 --- !u!212 &2002305399
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -112352,6 +112468,7 @@ MonoBehaviour:
   bad: {fileID: 21300090, guid: 734dfd90660d4074b8d2832f55efca34, type: 3}
   hitting: 0
   walls: []
+  positionOfTileUnderMe: {x: 0, y: 0}
 --- !u!212 &2017433338
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -112797,6 +112914,7 @@ MonoBehaviour:
   bad: {fileID: 21300090, guid: 734dfd90660d4074b8d2832f55efca34, type: 3}
   hitting: 0
   walls: []
+  positionOfTileUnderMe: {x: 0, y: 0}
 --- !u!212 &2028471784
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -113273,6 +113391,7 @@ MonoBehaviour:
   bad: {fileID: 21300090, guid: 734dfd90660d4074b8d2832f55efca34, type: 3}
   hitting: 0
   walls: []
+  positionOfTileUnderMe: {x: 0, y: 0}
 --- !u!212 &2042796545
 SpriteRenderer:
   m_ObjectHideFlags: 0

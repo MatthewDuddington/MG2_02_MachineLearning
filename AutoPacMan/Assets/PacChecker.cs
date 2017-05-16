@@ -57,10 +57,15 @@ public class PacChecker : MonoBehaviour {
             // Update the wall presence bool array
             wallPerception [x, y] = checker.hitting;
 
-            // Update the PerceptionInfo list of the 48 tiles surroundign PacMan
-            int tileListIndex = checkerIndex - 1;
-            if (checkerIndex > (windowSize * windowSize * 0.5) - 1) { checker = checkers [checkerIndex].GetComponent<IndividualWallChecker>(); }
-            PerceptionInfo.Get.UpdateSurroundingDestinationTileList (tileListIndex, checker.positionOfTileUnderMe);
+            if (checkerIndex != windowSize * windowSize)
+            {
+               // print("poasfjaspodfjaspodfjzds");
+
+                // Update the PerceptionInfo list of the 48 tiles surrounding PacMan
+                int tileListIndex = checkerIndex - 1;
+                if (checkerIndex > (windowSize * windowSize * 0.5) - 1) { checker = checkers[checkerIndex].GetComponent<IndividualWallChecker>(); }
+                PerceptionInfo.Get.UpdateSurroundingDestinationTileList(tileListIndex, checker.positionOfTileUnderMe);
+            }
         }
     }
 

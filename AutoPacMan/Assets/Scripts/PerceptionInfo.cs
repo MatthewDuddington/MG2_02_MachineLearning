@@ -42,8 +42,9 @@ public class PerceptionInfo : MonoBehaviour {
 	}
 	
 
-	public static void UpdatePerception () {
+	public void UpdatePerception () {
     // Refresh closest dot
+        print("asdfasdf");
 
     // Refresh ghosts positions
 
