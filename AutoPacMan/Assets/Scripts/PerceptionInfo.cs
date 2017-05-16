@@ -23,11 +23,11 @@ public class PerceptionInfo : MonoBehaviour {
 
 
   // ERROR INFO POINTS
-  private int totalTilesToDestination;
-  private int totalTilesEnteredOnWayToDestination;
+  public int totalTilesToDestination;
+  public int totalTilesSurvivedOnWayToDestination;
 
-  private int totalDotsThatWereRemaining;
-  private int totalDotsEatenOnWayToDestination;
+  public int totalDotsThatWereRemaining;
+  public int totalDotsEatenOnWayToDestination;
 
 
 	void Start () {
@@ -64,8 +64,8 @@ public class PerceptionInfo : MonoBehaviour {
   }
 
   // Call from some external class to increase tiles entered counter
-  public void TileEntered() {
-    totalTilesEnteredOnWayToDestination++;
+  public void TileSurvived() {
+    totalTilesSurvivedOnWayToDestination++;
   }
   
   private void SetDotsRemaining(int dotsRemaining) {
