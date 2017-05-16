@@ -37,6 +37,11 @@ public class PacmanMovement : TileMove
         pacChecker = GetComponent<PacChecker>();
     }
 
+    void OnEnable()
+    {
+        dest = transform.position;
+    }
+
     void OnTriggerEnter2D(Collider2D col)
     {
         if (col.gameObject.tag == "Dot")
