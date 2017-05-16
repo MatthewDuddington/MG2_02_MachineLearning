@@ -36,18 +36,11 @@ public class PacManBrain : MonoBehaviour {
     return PerceptionInfo.Get.GetValidDestination (desinationIndex);
   }
 
-  public void ArriveAtDestination() {
-    // Use if we need to add some reward to the network
-  }
-
-  public void LearnFromFailure() {
-    double errorValue;
-    errorValue = 1;  // TODO actually calculate meaningful error
-    nn.UpdateWeightsSingle(errorValue, learnRate, momentum, weightDecay); // find better weights
+  public void LearnFromDesision() {
+    nn.UpdateWeightsSingle(CalculateError (), learnRate, momentum, weightDecay); // find better weights
   }
 
   private double[] BuildInputs() {
-
     int inputIndex = 0;
     
     double[] Dot = PerceptionInfo.Get.Dot;
@@ -70,6 +63,14 @@ public class PacManBrain : MonoBehaviour {
     }
 
     return inputArray;
+  }
+
+  private double CalculateError() {
+    PerceptionInfo data = PerceptionInfo.Get;
+    double survivalError = ((data.totalTilesSurvivedOnWayToDestination / data.totalTilesToDestination) - 1) * 2;
+    double effectivenessError = (data.totalDotsEatenOnWayToDestination / data.totalTilesToDestination);
+    double lateGameEffectivenessBias = (data.totalDotsEatenOnWayToDestination * 2 / data.totalDotsThatWereRemaining);
+    return survivalError + (effectivenessError * lateGameEffectivenessBias);
   }
   
 
