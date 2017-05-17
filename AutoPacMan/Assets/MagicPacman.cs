@@ -41,6 +41,7 @@ public class MagicPacman : TileMove
     {
         transform.position = PacAI.transform.position;
         moveChecker = moveCheckerGraphic.position = (Vector2)PacAI.transform.position;
+        moveChecker = moveCheckerGraphic.position = PacManBrain.Get.ChooseDestination();
     }
     void Start()
     {
