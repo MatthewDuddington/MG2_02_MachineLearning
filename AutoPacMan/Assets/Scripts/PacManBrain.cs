@@ -9,9 +9,9 @@ public class PacManBrain : MonoBehaviour {
 
   static public PacManBrain Get;  // Easy access to the brain class instance (no singleton check)
 
-  public int numInput;
-  public int numHidden;
-  public int numOutput;
+  public int numInput = 58;
+  public int numHidden = 58;
+  public int numOutput = 48;
 
   public double learnRate = 0.05;
   public double momentum = 0.01;
