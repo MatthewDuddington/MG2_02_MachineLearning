@@ -2,6 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System.Xml.Serialization;
 
 public class PacManBrain : MonoBehaviour {
 
@@ -15,10 +16,20 @@ public class PacManBrain : MonoBehaviour {
   public double momentum = 0.01;
   public double weightDecay = 0.0001;
 
-  private  NeuralNetwork nn;
+  private NeuralNetwork nn;
+  private NetworkData dataToLoad;
 
   double[] inputArray;
   private bool firstInputBuild = true;
+
+  private static string dataPath = string.Empty;
+
+  public GenerationsContainer generationsContainer = new GenerationsContainer ();
+
+  // Set the saved data location
+  void Awake() {
+    dataPath = System.IO.Path.Combine (Application.dataPath, "Resources/generations.xml");
+  }
 
   void Start () {
     if (Get != null) { Debug.LogError ("More than one PacManBrain in scene"); }
@@ -26,8 +37,19 @@ public class PacManBrain : MonoBehaviour {
 
     inputArray = new double[numInput];
 
+    CreateNewNetwork ();
+  }
+
+  public void CreateNewNetwork() {
     nn = new NeuralNetwork(numInput, numHidden, numOutput);
     nn.InitializeWeights();
+  }
+
+  public void LoadSavedNetwork(int generation, NetworkData dataToLoad) {
+    nn = new NeuralNetwork(dataToLoad);
+    numInput = nn.savedData.numInput;
+    numHidden = nn.savedData.numHidden;
+    numOutput = nn.savedData.numOutput;
   }
 
   // Returns the [x,y] position for the next destination the neural network has determined for PacMan
@@ -38,6 +60,7 @@ public class PacManBrain : MonoBehaviour {
 
   public void LearnFromDesision() {
     nn.UpdateWeightsSingle(CalculateError (), learnRate, momentum, weightDecay); // find better weights
+    nn.SaveLearnedValues();
   }
 
   private double[] BuildInputs() {
@@ -114,7 +137,13 @@ public class PacManBrain : MonoBehaviour {
     double predictionValue;
     double outputGradient;
 
-    public NeuralNetwork(int numInput, int numHidden, int numOutput)
+    int generation;
+
+    public NetworkData savedData = new NetworkData();
+
+    public NeuralNetwork(int numInput,
+                         int numHidden,
+                         int numOutput)
     {
       rnd = new System.Random(0); // for InitializeWeights() and Shuffle()
 
@@ -141,6 +170,42 @@ public class PacManBrain : MonoBehaviour {
       this.hiddenPreviousBiasesDelta = new double[numHidden];
       this.hiddenToOutputPreviousWeightsDelta = MakeMatrix(numHidden, numOutput);
       this.outputPreviousBiasesDelta = new double[numOutput];
+
+      this.generation = 0;
+      this.savedData.numInput = numInput;
+      this.savedData.numHidden = numHidden;
+      this.savedData.numOutput = numOutput;
+    } // constructor
+
+    public NeuralNetwork(NetworkData dataToLoad)
+    {
+      rnd = new System.Random(0); // for InitializeWeights() and Shuffle()
+
+      this.numInput = dataToLoad.numInput;
+      this.numHidden = dataToLoad.numHidden;
+      this.numOutput = dataToLoad.numOutput;
+
+      this.inputs = dataToLoad.inputs;
+
+      this.inputToHiddenWeights = dataToLoad.inputToHiddenWeights;
+      this.hiddenBiases = dataToLoad.hiddenBiases;
+      this.hiddenOutputs = dataToLoad.hiddenOutputs;
+
+      this.hiddenToOutputWeights = dataToLoad.hiddenToOutputWeights;
+      this.outputBiases = dataToLoad.outputBiases;
+
+      this.outputs = dataToLoad.outputs;
+
+      // back-prop related arrays below
+      this.hiddenGradients = new double[numHidden];
+      this.outputGradients = new double[numOutput];
+
+      this.inputToHiddenPreviousWeightsDelta = dataToLoad.inputToHiddenPreviousWeightsDelta;
+      this.hiddenPreviousBiasesDelta = dataToLoad.hiddenPreviousBiasesDelta;
+      this.hiddenToOutputPreviousWeightsDelta = dataToLoad.hiddenToOutputPreviousWeightsDelta;
+      this.outputPreviousBiasesDelta = dataToLoad.outputPreviousBiasesDelta;
+
+      this.generation = dataToLoad.generation;
     } // constructor
 
     private static double[][] MakeMatrix(int rows, int cols) // helper for ctor
@@ -203,6 +268,34 @@ public class PacManBrain : MonoBehaviour {
       for (int i = 0; i < outputBiases.Length; ++i)
         result[k++] = outputBiases[i];
       return result;
+    }
+
+    public void SaveLearnedValues() {
+      savedData.generation = generation;
+
+      savedData.inputs = inputs;
+      savedData.inputToHiddenWeights = inputToHiddenWeights;
+
+      savedData.hiddenBiases = hiddenBiases;
+      savedData.hiddenOutputs = hiddenOutputs;
+      savedData.hiddenToOutputWeights = hiddenToOutputWeights;
+
+      savedData.outputBiases = outputBiases;
+      savedData.outputs = outputs;
+
+      savedData.inputToHiddenPreviousWeightsDelta = inputToHiddenPreviousWeightsDelta;
+      savedData.hiddenPreviousBiasesDelta = hiddenPreviousBiasesDelta;
+      savedData.hiddenToOutputPreviousWeightsDelta = hiddenToOutputPreviousWeightsDelta;
+      savedData.outputPreviousBiasesDelta = outputPreviousBiasesDelta;
+
+
+      /*
+      PlayerPrefs.SetInt ("Generations", PlayerPrefs.GetInt ("Generations") + 1);
+      if (PlayerPrefs.GetInt ("Generations") % 10 == 0) {
+        string arrayName = "inputToHiddenWeights Generation: " + PlayerPrefs.GetInt ("Generations").ToString ();
+        PlayerPrefsX.SetIntArray (arrayName, inputToHiddenWeights);
+      }
+      */
     }
 
     // ----------------------------------------------------------------------------------------
@@ -463,5 +556,55 @@ public class PacManBrain : MonoBehaviour {
     }
 
   }
+
+}
+
+public class NetworkData {
+
+  [XmlAttribute("Generation")]
+  public int generation;
+
+  [XmlElement("numInput")]
+  public int numInput;
+
+  [XmlElement("numHidden")]
+  public int numHidden;
+
+  [XmlElement("numOutput")]
+  public int numOutput;
+
+  [XmlElement("inputs")]
+  public double[] inputs;
+
+  [XmlElement("inputToHiddenWeights")]
+  public double[][] inputToHiddenWeights;
+
+  [XmlElement("hiddenBiases")]
+  public double[] hiddenBiases;
+
+  [XmlElement("hiddenOutputs")]
+  public double[] hiddenOutputs;
+
+  [XmlElement("hiddenToOutputWeights")]
+  public double[][] hiddenToOutputWeights;
+
+  [XmlElement("outputBiases")]
+  public double[] outputBiases;
+
+  [XmlElement("outputs")]
+  public double[] outputs;
+
+  [XmlElement("inputToHiddenPreviousWeightsDelta")]
+  public double[][] inputToHiddenPreviousWeightsDelta;
+
+  [XmlElement("hiddenPreviousBiasesDelta")]
+  public double[] hiddenPreviousBiasesDelta;
+
+  [XmlElement("hiddenToOutputPreviousWeightsDelta")]
+  public double[][] hiddenToOutputPreviousWeightsDelta;
+
+  [XmlElement("outputPreviousBiasesDelta")]
+  public double[] outputPreviousBiasesDelta;
+
 
 }
