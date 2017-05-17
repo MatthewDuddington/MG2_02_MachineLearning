@@ -26,7 +26,7 @@ public class DataHandler {
     ClearGenerations ();
   }
 
-  public GenerationsContainer LoadGenerations(string dataPath) {
+  public static GenerationsContainer LoadGenerations(string dataPath) {
     XmlSerializer serializer = new XmlSerializer (typeof(GenerationsContainer));
 
     FileStream stream = new FileStream (dataPath, FileMode.Open);  // Erase existing data and override
@@ -39,7 +39,7 @@ public class DataHandler {
     return generations;
   }
 
-  public void SaveGenerations(string dataPath, GenerationsContainer generationsContainer) {
+  public static void SaveGenerations(string dataPath, GenerationsContainer generationsContainer) {
     XmlSerializer serializer = new XmlSerializer (typeof(GenerationsContainer));
 
     FileStream stream = new FileStream (dataPath, FileMode.Truncate);  // Erase existing data and override
