@@ -21,6 +21,7 @@ public class DataHandler {
   public static void AddGenerationToSavedData(string path, NetworkData data) {
     generationsContainer.generations.Add (data);
 
+    Debug.Log ("Saving generations to container...");
     SaveGenerations (path, generationsContainer);
 
     ClearGenerations ();
@@ -53,5 +54,53 @@ public class DataHandler {
   public static void ClearGenerations() {
     generationsContainer.generations.Clear ();
   }
+
+}
+
+public class NetworkData {
+
+  [XmlAttribute("Generation")]
+  public int generation;
+
+
+  [XmlElement("numInput")]
+  public int numInput;
+
+  [XmlElement("numHidden")]
+  public int numHidden;
+
+  [XmlElement("numOutput")]
+  public int numOutput;
+
+
+  [XmlElement("inputToHiddenWeights")]
+  public double[][] inputToHiddenWeights;
+
+
+  [XmlElement("hiddenBiases")]
+  public double[] hiddenBiases;
+
+  [XmlElement("hiddenOutputs")]
+  public double[] hiddenOutputs;
+
+  [XmlElement("hiddenToOutputWeights")]
+  public double[][] hiddenToOutputWeights;
+
+
+  [XmlElement("outputBiases")]
+  public double[] outputBiases;
+
+
+  [XmlElement("inputToHiddenPreviousWeightsDelta")]
+  public double[][] inputToHiddenPreviousWeightsDelta;
+
+  [XmlElement("hiddenPreviousBiasesDelta")]
+  public double[] hiddenPreviousBiasesDelta;
+
+  [XmlElement("hiddenToOutputPreviousWeightsDelta")]
+  public double[][] hiddenToOutputPreviousWeightsDelta;
+
+  [XmlElement("outputPreviousBiasesDelta")]
+  public double[] outputPreviousBiasesDelta;
 
 }
