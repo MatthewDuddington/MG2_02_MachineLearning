@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class MagicPacman : TileMove
 {
+    public float offTimer = 0;
     public int tilesPassedThrough = 0;
     [Header("Animator")]
     Animator anim;
@@ -53,18 +54,15 @@ public class MagicPacman : TileMove
 
     void LateUpdate()
     {
-        if (transform.position == targetTileGraphic.position)
+        offTimer += Time.deltaTime;
+
+        if (transform.position == targetTileGraphic.position && offTimer > 0.1f)        //if hit final tile!!!
         {
-            //hit end final tile!!!
-            //print("HIT THAT BAD BOY");
-
-            //PacManBrain.Get.LearnFromDesision();
-
-            //PerceptionInfo.Get.UpdatePerception();
 
             PacAI.tilesToGoThrough = tilesPassedThrough;
             tilesPassedThrough = 0;
-           // gameObject.SetActive(false);
+            gameObject.SetActive(false);
+            offTimer = 0;
 
         }
 
@@ -106,84 +104,44 @@ public class MagicPacman : TileMove
 
                     if (isValidMove(Vector2.up) && upDistance < rightDistance && upDistance < downDistance && upDistance < leftDistance)
                     {
-                        if (moveVec != Vector2.down)
+                        //if (moveVec != Vector2.down)
                         {
                             moveVec = Vector2.up;
                         }
-                        else
-                        {
-                            if (leftDistance <= downDistance && leftDistance <= rightDistance && isValidMove(Vector2.left))
-                            {
-                                moveVec = Vector2.left;
-                            }
-                            if (rightDistance <= upDistance && rightDistance <= leftDistance && isValidMove(Vector2.right))
-                            {
-                                moveVec = Vector2.right;
-                            }
-                        }
+                        
 
                     }
                     if (isValidMove(Vector2.down) && downDistance < rightDistance && downDistance < upDistance && downDistance < leftDistance)
                     {
-                        if (moveVec != Vector2.up)
+                        //if (moveVec != Vector2.up)
                         {
                             moveVec = Vector2.down;         //all good.
                         }
-                        else        //uh oh
-                        {
-                            if (leftDistance <= upDistance && leftDistance <= rightDistance && isValidMove(Vector2.left))
-                            {
-                                moveVec = Vector2.left;
-                            }
-                            if (rightDistance <= upDistance && rightDistance <= leftDistance && isValidMove(Vector2.right))
-                            {
-                                moveVec = Vector2.right;
-                            }
-                        }
+                        
                     }
                     if (isValidMove(Vector2.right) && rightDistance < upDistance && rightDistance < downDistance && rightDistance < leftDistance)
                     {
 
-                        if (moveVec != Vector2.left)
+                        //if (moveVec != Vector2.left)
                         {
                             moveVec = Vector2.right;
                         }
-                        else
-                        {
-                            if (upDistance <= downDistance && upDistance <= leftDistance && isValidMove(Vector2.up))
-                            {
-                                moveVec = Vector2.up;
-                            }
-                            if (downDistance <= upDistance && downDistance <= leftDistance && isValidMove(Vector2.down))
-                            {
-                                moveVec = Vector2.down;
-                            }
-                        }
+                        
                     }
                     if (isValidMove(Vector2.left) && leftDistance < rightDistance && leftDistance < downDistance && leftDistance < upDistance)
                     {
-                        if (moveVec != Vector2.right)
+                        //if (moveVec != Vector2.right)
                         {
                             moveVec = Vector2.left;
                         }
-                        else
-                        {
-                            if (upDistance <= downDistance && upDistance <= rightDistance && isValidMove(Vector2.up))
-                            {
-                                moveVec = Vector2.up;
-                            }
-                            if (downDistance <= upDistance && downDistance <= rightDistance && isValidMove(Vector2.down))
-                            {
-                                moveVec = Vector2.down;
-                            }
-                        }
+                        
                     }
                 }
             }
 
 
             MoveChecker();
-
+            
             //actual movement
             moveTo(moveChecker, speed);
         }

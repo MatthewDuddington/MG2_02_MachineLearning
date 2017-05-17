@@ -47645,7 +47645,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &855725847
 Transform:
   m_ObjectHideFlags: 0
@@ -66694,6 +66694,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b4b69d68e25ca3e4bae8e47433041bb3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  offTimer: 0
   tilesPassedThrough: 0
   Pacman: {fileID: 0}
   PacAI: {fileID: 1462893549}

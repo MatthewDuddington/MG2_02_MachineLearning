@@ -147,77 +147,37 @@ public class PacmanAI : TileMove
 
                     if (isValidMove(Vector2.up) && upDistance < rightDistance && upDistance < downDistance && upDistance < leftDistance)
                     {
-                        if (moveVec != Vector2.down)
+                        //if (moveVec != Vector2.down)
                         {
                             moveVec = Vector2.up;
                         }
-                        else
-                        {
-                            if (leftDistance <= downDistance && leftDistance <= rightDistance && isValidMove(Vector2.left))
-                            {
-                                moveVec = Vector2.left;
-                            }
-                            if (rightDistance <= upDistance && rightDistance <= leftDistance && isValidMove(Vector2.right))
-                            {
-                                moveVec = Vector2.right;
-                            }
-                        }
+                        
 
                     }
                     if (isValidMove(Vector2.down) && downDistance < rightDistance && downDistance < upDistance && downDistance < leftDistance)
                     {
-                        if (moveVec != Vector2.up)
+                        //if (moveVec != Vector2.up)
                         {
                             moveVec = Vector2.down;         //all good.
                         }
-                        else        //uh oh
-                        {
-                            if (leftDistance <= upDistance && leftDistance <= rightDistance && isValidMove(Vector2.left))
-                            {
-                                moveVec = Vector2.left;
-                            }
-                            if (rightDistance <= upDistance && rightDistance <= leftDistance && isValidMove(Vector2.right))
-                            {
-                                moveVec = Vector2.right;
-                            }
-                        }
+                        
                     }
                     if (isValidMove(Vector2.right) && rightDistance < upDistance && rightDistance < downDistance && rightDistance < leftDistance)
                     {
 
-                        if (moveVec != Vector2.left)
+                        //if (moveVec != Vector2.left)
                         {
                             moveVec = Vector2.right;
                         }
-                        else
-                        {
-                            if (upDistance <= downDistance && upDistance <= leftDistance && isValidMove(Vector2.up))
-                            {
-                                moveVec = Vector2.up;
-                            }
-                            if (downDistance <= upDistance && downDistance <= leftDistance && isValidMove(Vector2.down))
-                            {
-                                moveVec = Vector2.down;
-                            }
-                        }
+                        
                     }
                     if (isValidMove(Vector2.left) && leftDistance < rightDistance && leftDistance < downDistance && leftDistance < upDistance)
                     {
-                        if (moveVec != Vector2.right)
+                        //if (moveVec != Vector2.right)
                         {
                             moveVec = Vector2.left;
                         }
-                        else
-                        {
-                            if (upDistance <= downDistance && upDistance <= rightDistance && isValidMove(Vector2.up))
-                            {
-                                moveVec = Vector2.up;
-                            }
-                            if (downDistance <= upDistance && downDistance <= rightDistance && isValidMove(Vector2.down))
-                            {
-                                moveVec = Vector2.down;
-                            }
-                        }
+                        
                     }
                 }
             }
