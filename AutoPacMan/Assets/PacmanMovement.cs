@@ -50,7 +50,8 @@ public class PacmanMovement : TileMove
             pacChecker.GetNextClosestDot();
           //  Destroy(col.gameObject);
             score += 10;
-            transform.GetChild(0).GetComponent<AudioSource>().Play();
+            int asdf = Random.Range(0, 3);
+            transform.GetChild(asdf).GetComponent<AudioSource>().Play();
         }
         if (col.gameObject.tag == "PowerPellet")
         {
@@ -59,14 +60,16 @@ public class PacmanMovement : TileMove
 
             score += 100;
             gsc.Scare();
-            transform.GetChild(0).GetComponent<AudioSource>().Play();
+            int asdf = Random.Range(0, 3);
+            transform.GetChild(asdf).GetComponent<AudioSource>().Play();
         }
         if (col.gameObject.tag == "Ghost")
         {
             if (col.GetComponent<Ghost2>().myState == Ghost2.Statey.Scared)
             {
                 score += 200;
-                transform.GetChild(0).GetComponent<AudioSource>().Play();
+                int asdf = Random.Range(0, 3);
+                transform.GetChild(asdf).GetComponent<AudioSource>().Play();
                 col.GetComponent<Ghost2>().Eaten();
             }
             if (col.GetComponent<Ghost2>().myState == Ghost2.Statey.Eaten)
