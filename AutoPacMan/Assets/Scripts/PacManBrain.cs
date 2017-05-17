@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using System.Xml.Serialization;
+using System.IO;
 
 public class PacManBrain : MonoBehaviour {
 
@@ -16,15 +17,14 @@ public class PacManBrain : MonoBehaviour {
   public double momentum = 0.01;
   public double weightDecay = 0.0001;
 
+  public int generationToLoad;
+
   private NeuralNetwork nn;
-  private NetworkData dataToLoad;
 
   double[] inputArray;
   private bool firstInputBuild = true;
 
   private static string dataPath = string.Empty;
-
-  public GenerationsContainer generationsContainer = new GenerationsContainer ();
 
   // Set the saved data location
   void Awake() {
@@ -45,11 +45,21 @@ public class PacManBrain : MonoBehaviour {
     nn.InitializeWeights();
   }
 
-  public void LoadSavedNetwork(int generation, NetworkData dataToLoad) {
+  public void LoadNetwork() {
+    NetworkData dataToLoad = DataHandler.LoadGenerationData (dataPath, generationToLoad);
+
     nn = new NeuralNetwork(dataToLoad);
+
+    // This just keeps the UI values consistant
     numInput = nn.savedData.numInput;
     numHidden = nn.savedData.numHidden;
     numOutput = nn.savedData.numOutput;
+  }
+
+  public void SaveNetwork() {
+    nn.SaveLearnedValues ();
+
+    DataHandler.AddGenerationToSavedData (dataPath, nn.savedData);
   }
 
   // Returns the [x,y] position for the next destination the neural network has determined for PacMan
@@ -287,7 +297,6 @@ public class PacManBrain : MonoBehaviour {
       savedData.hiddenPreviousBiasesDelta = hiddenPreviousBiasesDelta;
       savedData.hiddenToOutputPreviousWeightsDelta = hiddenToOutputPreviousWeightsDelta;
       savedData.outputPreviousBiasesDelta = outputPreviousBiasesDelta;
-
 
       /*
       PlayerPrefs.SetInt ("Generations", PlayerPrefs.GetInt ("Generations") + 1);

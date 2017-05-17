@@ -8,6 +8,6 @@ public class GenerationsContainer {
 
   [XmlArray("Generations")]
   [XmlArrayItem("Generation")]
-  public List<NetworkData> Generations = new List<NetworkData> ();
+  public List<NetworkData> generations = new List<NetworkData> ();
 
 }
