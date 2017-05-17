@@ -60,7 +60,7 @@ public class PerceptionInfo : MonoBehaviour {
     //SetDotsRemaining ( LukesOtherAwesomeFunction() );
   }
   
-  private void SetTilesToDestination(int tilesToDestination) {
+  public void SetTilesToDestination(int tilesToDestination) {
     totalTilesToDestination = tilesToDestination;
   }
 
@@ -69,7 +69,7 @@ public class PerceptionInfo : MonoBehaviour {
     totalTilesSurvivedOnWayToDestination++;
   }
   
-  private void SetDotsRemaining(int dotsRemaining) {
+  public void SetDotsRemaining(int dotsRemaining) {
     totalDotsThatWereRemaining = dotsRemaining;
   }
 

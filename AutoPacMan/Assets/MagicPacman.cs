@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class MagicPacman : TileMove
 {
+    int dotsRemaining;
     public float offTimer = 0;
     public int tilesPassedThrough = 0;
     [Header("Animator")]
@@ -32,6 +33,8 @@ public class MagicPacman : TileMove
     public Transform[] intersectionsPos;
 
     float upDistance, downDistance, leftDistance, rightDistance;
+
+    public GameObject[] dots;
     // Use this for initialization
 
     void OnEnable()
@@ -41,6 +44,7 @@ public class MagicPacman : TileMove
     }
     void Start()
     {
+        dots = GameObject.FindGameObjectsWithTag("Dot");
         Pacman = GetComponent<PacmanMovement>();
         anim = GetComponent<Animator>();
         startPosition = transform.position;
@@ -58,8 +62,20 @@ public class MagicPacman : TileMove
 
         if (transform.position == targetTileGraphic.position && offTimer > 0.1f)        //if hit final tile!!!
         {
+            dotsRemaining = 0;
+
+            foreach (GameObject d in dots)
+            {
+                if (d.active)
+                {
+                    dotsRemaining++;
+                }
+            }
+
+            PerceptionInfo.Get.SetDotsRemaining(dotsRemaining);
 
             PacAI.tilesToGoThrough = tilesPassedThrough;
+            PerceptionInfo.Get.SetTilesToDestination(tilesPassedThrough);
             tilesPassedThrough = 0;
             gameObject.SetActive(false);
             offTimer = 0;

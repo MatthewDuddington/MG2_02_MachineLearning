@@ -5,6 +5,8 @@ using UnityEngine;
 public class PacmanAI : TileMove
 {
     public int tilesToGoThrough;
+    public int currentTilesGoneThrough;
+    public int howManyDotsIAte = 0;
     public GameObject magicPacman;
     [Header("Animator")]
     Animator anim;
@@ -61,6 +63,7 @@ public class PacmanAI : TileMove
             //  Destroy(col.gameObject);
             score += 10;
             transform.GetChild(0).GetComponent<AudioSource>().Play();
+            howManyDotsIAte++;
             PerceptionInfo.Get.DotEaten();
         }
         if (col.gameObject.tag == "PowerPellet")
@@ -100,12 +103,15 @@ public class PacmanAI : TileMove
         {
             //hit end final tile!!!
             print("HIT THAT BAD BOY");
+            currentTilesGoneThrough = 0;
+            howManyDotsIAte = 0;
 
             magicPacman.SetActive(true);
 
             PacManBrain.Get.LearnFromDesision();
 
             PerceptionInfo.Get.UpdatePerception();
+
 
         }
 
@@ -147,37 +153,19 @@ public class PacmanAI : TileMove
 
                     if (isValidMove(Vector2.up) && upDistance < rightDistance && upDistance < downDistance && upDistance < leftDistance)
                     {
-                        //if (moveVec != Vector2.down)
-                        {
-                            moveVec = Vector2.up;
-                        }
-                        
-
+                            moveVec = Vector2.up;                       
                     }
                     if (isValidMove(Vector2.down) && downDistance < rightDistance && downDistance < upDistance && downDistance < leftDistance)
                     {
-                        //if (moveVec != Vector2.up)
-                        {
                             moveVec = Vector2.down;         //all good.
-                        }
-                        
                     }
                     if (isValidMove(Vector2.right) && rightDistance < upDistance && rightDistance < downDistance && rightDistance < leftDistance)
                     {
-
-                        //if (moveVec != Vector2.left)
-                        {
                             moveVec = Vector2.right;
-                        }
-                        
                     }
                     if (isValidMove(Vector2.left) && leftDistance < rightDistance && leftDistance < downDistance && leftDistance < upDistance)
                     {
-                        //if (moveVec != Vector2.right)
-                        {
                             moveVec = Vector2.left;
-                        }
-                        
                     }
                 }
             }
@@ -201,11 +189,12 @@ public class PacmanAI : TileMove
         moveChecker = transform.position;
     }
 
-    void MoveChecker()
+    void MoveChecker()                 
     {
         if (moveChecker == (Vector2)transform.position)         //every time he hits a tile
         {
             PerceptionInfo.Get.TileSurvived();
+            currentTilesGoneThrough++;
             //if you can, move forward
             if (isValidMove(moveVec))
             {
