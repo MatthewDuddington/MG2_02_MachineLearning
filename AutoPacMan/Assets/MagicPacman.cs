@@ -191,6 +191,44 @@ public class MagicPacman : TileMove
             {
                 print("HIT CORNER");
                 //right
+                //
+                //
+                //
+                if (upDistance <= downDistance && upDistance <= leftDistance && upDistance <= rightDistance && isValidMove(Vector2.up))
+                {
+                    moveVec = Vector2.up;
+                }
+                else if (downDistance <= upDistance && downDistance <= leftDistance && downDistance <= rightDistance && isValidMove(Vector2.down))
+                {
+                    moveVec = Vector2.down;
+                }
+                else if (leftDistance <= upDistance && leftDistance <= rightDistance && leftDistance <= downDistance && isValidMove(Vector2.left))
+                {
+                    moveVec = Vector2.left;
+                }
+                else if (rightDistance <= upDistance && rightDistance <= leftDistance && rightDistance <= downDistance && isValidMove(Vector2.right))
+                {
+                    moveVec = Vector2.right;
+                }
+
+                else if (isValidMove(Vector2.up))
+                {
+                    moveVec = Vector2.up;
+                }
+                else if (isValidMove(Vector2.down))
+                {
+                    moveVec = Vector2.down;
+                }
+                else if (isValidMove(Vector2.left))
+                {
+                    moveVec = Vector2.left;
+                }
+                else
+                {
+                    moveVec = Vector2.right;
+                }
+
+                /*
                 if (moveVec == Vector2.right && isValidMove(Vector2.down)) //if down is free?
                 {
                     if (downDistance < upDistance && isValidMove(Vector2.down))
@@ -291,6 +329,7 @@ public class MagicPacman : TileMove
 
                     moveChecker += moveVec;
                 }
+                 * */
 
             }
 

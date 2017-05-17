@@ -206,7 +206,60 @@ public class PacmanAI : TileMove
             {
                 print("HIT CORNER");
                 //right
-                if (moveVec == Vector2.right && isValidMove(Vector2.down)) //if down is free?
+
+                if (upDistance <= downDistance && upDistance <= leftDistance && upDistance <= rightDistance && isValidMove(Vector2.up))
+                {
+                    print("1");
+                    moveVec = Vector2.up;
+                }
+                else if (downDistance <= upDistance && downDistance <= leftDistance && downDistance <= rightDistance && isValidMove(Vector2.down))
+                {
+                    print("2");
+
+                    moveVec = Vector2.down;
+                }
+                else if (leftDistance <= upDistance && leftDistance <= rightDistance && leftDistance <= downDistance && isValidMove(Vector2.left))
+                {
+                    print("3");
+
+                    moveVec = Vector2.left;
+                }
+                else if (rightDistance <= upDistance && rightDistance <=leftDistance && rightDistance <= downDistance && isValidMove(Vector2.right))
+                {
+                    print("4");
+
+                    moveVec = Vector2.right;
+                }
+
+                else if (isValidMove(Vector2.up))
+                {
+                    print("5");
+
+                    moveVec = Vector2.up;
+                }
+                else if (isValidMove(Vector2.down))
+                {
+                    print("6");
+
+                    moveVec = Vector2.down;
+                }
+                else if (isValidMove(Vector2.left))
+                {
+                    print("7");
+
+                    moveVec = Vector2.left;
+                }
+                else
+                {
+                    print("8");
+
+                    moveVec = Vector2.right;
+                }
+
+                //
+                //
+               
+                /*if (moveVec == Vector2.right && isValidMove(Vector2.down)) //if down is free?
                 {
                     if (downDistance < upDistance && isValidMove(Vector2.down))
                         moveVec = Vector2.down;
@@ -306,6 +359,7 @@ public class PacmanAI : TileMove
 
                     moveChecker += moveVec;
                 }
+                 * */
 
             }
 
