@@ -94,35 +94,37 @@ public class PacmanAI : TileMove
             }
             else
             {
-                print("AISFHASIFHASIFHASIFHAISFHASIFHASIFHASIFH");
-
-                PacManBrain.Get.LearnFromDesision();
+                //print("AISFHASIFHASIFHASIFHAISFHASIFHASIFHASIFH");
+                Debug.Log("Decision failed. Learning...");
+                PacManBrain.Get.LearnFromDecision();
+                Debug.Log ("Restarting level...");
                 Application.LoadLevel(Application.loadedLevel);
                // Pacman.isAlive = false;
             }
         }
     }
 
-
     void LateUpdate()
     {
         if (transform.position == targetTileGraphic.position)
         {
             //hit end final tile!!!
-            print("HIT THAT BAD BOY");
-            currentTilesGoneThrough = 0;
-            howManyDotsIAte = 0;
+            if (PacManBrain.Get.NetworkIsEnabled ()) {
+                Debug.Log ("Reached destination tile");
 
-            magicPacman.SetActive(true);
+                PacManBrain.Get.LearnFromDecision ();
 
-            PacManBrain.Get.LearnFromDesision();
+                PerceptionInfo.Get.UpdatePerception ();
 
-            PerceptionInfo.Get.UpdatePerception();
-
+                currentTilesGoneThrough = 0;
+                howManyDotsIAte = 0;
+                magicPacman.SetActive (true);
+            }
 
         }
 
     }
+
     // Update is called once per frame
     void Update()
     {

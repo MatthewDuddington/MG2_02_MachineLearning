@@ -6,6 +6,8 @@ public class PerceptionInfo : MonoBehaviour {
 
   static public PerceptionInfo Get;  // Easy access to the perception info class instance (no singleton check)
 
+  private PacChecker pacChecker;
+
   private Vector2[] ValidDestinationTiles;  // [x,y] positions of all possible tiles PacMan can choose to travel into
 
 
@@ -13,13 +15,18 @@ public class PerceptionInfo : MonoBehaviour {
   // x    -1 Down to +1 Up      (Crunching between 25 and 1?)
   // y    -1 Left to +1 Right   (Crunching between 28 and 1?)
   // We could use inverse square to emphasise importance of closer proximities?
-  private Vector2 closestDot;
-  private Vector2 ghostA;
-  private Vector2 ghostB;
-  private Vector2 ghostC;
-  private Vector2 ghostD;
+  public double closestDotHorizontal;
+  public double closestDotVertical;
+  public double ghostAHorizontal;
+  public double ghostAVertical;
+  public double ghostBHorizontal;
+  public double ghostBVertical;
+  public double ghostCHorizontal;
+  public double ghostCVertical;
+  public double ghostDHorizontal;
+  public double ghostDVertical;
 
-  private bool[] WallPerceptionWindow;
+  public bool[,] WallPerceptionWindow;
 
 
   // ERROR INFO POINTS
@@ -34,6 +41,8 @@ public class PerceptionInfo : MonoBehaviour {
     if (Get != null) { Debug.LogError ("More than one PerceptionInfo in scene"); }
     else { Get = this; }
 
+    pacChecker = GameObject.FindObjectOfType<PacChecker> ();
+
     /*     // Switch for the two variations (try adding a second '/' at the start of this line)
     ValidDestinationTiles = new Vector2[298];  // 298 for whole map. Acts like a pure map destination.
     /*/
@@ -44,22 +53,25 @@ public class PerceptionInfo : MonoBehaviour {
 
 	public void UpdatePerception () {
     // Refresh closest dot
-        print("asdfasdf");
+    pacChecker.ClosestDotCheck();
 
     // Refresh ghosts positions
+    pacChecker.GhostsCheck();
 
     // Refresh wall perception window bool array
+    pacChecker.WallCheck();
   }
 
 
-  public void UpdateErrorCheckInfo() {
-    // Refresh number of tiles to destination
-    //SetTilesToDestination ( LukesAwesomeFunction() );
+//  public void UpdateErrorCheckInfo() {
+//    // Refresh number of tiles to destination
+//    //SetTilesToDestination ( LukesAwesomeFunction() );
+//
+//    // Refresh number of dots remaining
+//    //SetDotsRemaining ( LukesOtherAwesomeFunction() );
+//  }
 
-    // Refresh number of dots remaining
-    //SetDotsRemaining ( LukesOtherAwesomeFunction() );
-  }
-  
+  // Set from MagicPac class
   public void SetTilesToDestination(int tilesToDestination) {
     totalTilesToDestination = tilesToDestination;
   }
@@ -68,7 +80,8 @@ public class PerceptionInfo : MonoBehaviour {
   public void TileSurvived() {
     totalTilesSurvivedOnWayToDestination++;
   }
-  
+
+  // Set from MagicPac class
   public void SetDotsRemaining(int dotsRemaining) {
     totalDotsThatWereRemaining = dotsRemaining;
   }
@@ -81,9 +94,10 @@ public class PerceptionInfo : MonoBehaviour {
   public double[] Walls {
     get { 
       double[] returnData = new double[WallPerceptionWindow.Length];
-      for (int i = 0; i < WallPerceptionWindow.Length; i++) {
-        if (WallPerceptionWindow [i]) { returnData [i] = 1.0; }
-        else { returnData [i] = 0.0; }
+      int returnDataIndex = 0;
+      foreach (bool isWall in WallPerceptionWindow) {
+        if (isWall) { returnData [returnDataIndex++] = 1.0; }
+        else { returnData [returnDataIndex++] = 0.0; }
       }
       return returnData;
     }
@@ -92,8 +106,8 @@ public class PerceptionInfo : MonoBehaviour {
   public double[] Dot {
     get {
       double[] returnData = new double[2];
-      returnData [0] = closestDot.x;
-      returnData [1] = closestDot.y;
+      returnData [0] = closestDotHorizontal;
+      returnData [1] = closestDotVertical;
       return returnData;
     }
   }
@@ -101,14 +115,14 @@ public class PerceptionInfo : MonoBehaviour {
   public double[] Ghosts {
     get {
       double[] returnData = new double[8];
-      returnData [0] = ghostA.x;
-      returnData [1] = ghostA.y;
-      returnData [2] = ghostB.x;
-      returnData [3] = ghostB.y;
-      returnData [4] = ghostC.x;
-      returnData [5] = ghostC.y;
-      returnData [6] = ghostD.x;
-      returnData [7] = ghostD.y;
+      returnData [0] = ghostAHorizontal;
+      returnData [1] = ghostAVertical;
+      returnData [2] = ghostBHorizontal;
+      returnData [3] = ghostBVertical;
+      returnData [4] = ghostCHorizontal;
+      returnData [5] = ghostCVertical;
+      returnData [6] = ghostDHorizontal;
+      returnData [7] = ghostDVertical;
       return returnData;
     }
   }

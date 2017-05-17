@@ -41,7 +41,11 @@ public class MagicPacman : TileMove
     {
         transform.position = PacAI.transform.position;
         moveChecker = moveCheckerGraphic.position = (Vector2)PacAI.transform.position;
-        moveChecker = moveCheckerGraphic.position = PacManBrain.Get.ChooseDestination();
+        if (PacManBrain.Get.NetworkIsEnabled ()) {
+          moveChecker = moveCheckerGraphic.position = PacManBrain.Get.ChooseDestination ();
+        } else {
+          moveChecker = moveCheckerGraphic.position = new Vector2 (PacAI.transform.position.x, PacAI.transform.position.y);
+        }
     }
     void Start()
     {
