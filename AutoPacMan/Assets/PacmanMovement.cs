@@ -215,6 +215,8 @@ public class PacmanMovement : TileMove
         transform.position = new Vector2(0.5f, -4f);
                     dest = transform.position;
                     extraBool = false;
+          Application.LoadLevel(Application.loadedLevel);
+
     }
 
     // PacManLearningController passes in the decided input using this function

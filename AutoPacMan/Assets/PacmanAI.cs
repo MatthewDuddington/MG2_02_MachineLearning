@@ -89,6 +89,8 @@ public class PacmanAI : TileMove
             }
             else
             {
+                print("AISFHASIFHASIFHASIFHAISFHASIFHASIFHASIFH");
+
                 PacManBrain.Get.LearnFromDesision();
                 Application.LoadLevel(Application.loadedLevel);
                // Pacman.isAlive = false;

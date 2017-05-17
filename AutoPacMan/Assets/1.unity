@@ -47645,7 +47645,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &855725847
 Transform:
   m_ObjectHideFlags: 0
@@ -66742,6 +66742,7 @@ MonoBehaviour:
   - {fileID: 0}
   - {fileID: 0}
   - {fileID: 0}
+  dots: []
 --- !u!4 &1187947403
 Transform:
   m_ObjectHideFlags: 0
@@ -82002,6 +82003,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   tilesToGoThrough: 0
+  currentTilesGoneThrough: 0
+  howManyDotsIAte: 0
   magicPacman: {fileID: 1187947397}
   Pacman: {fileID: 0}
   pacDest: {fileID: 0}
