@@ -119,6 +119,8 @@ public class PacmanAI : TileMove
                 currentTilesGoneThrough = 0;
                 howManyDotsIAte = 0;
                 magicPacman.SetActive (true);
+
+                PacManBrain.Get.ChooseDestination ();  // Luke - where should this vec2 return be passed to?
             }
 
         }

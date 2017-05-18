@@ -47,7 +47,7 @@ public class PacmanMovement : TileMove
         if (col.gameObject.tag == "Dot")
         {
             col.gameObject.SetActive(false);
-            pacChecker.GetNextClosestDot();
+            //pacChecker.GetNextClosestDot();
           //  Destroy(col.gameObject);
             score += 10;
             int asdf = Random.Range(0, 3);
