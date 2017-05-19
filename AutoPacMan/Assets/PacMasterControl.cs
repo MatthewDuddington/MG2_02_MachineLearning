@@ -8,7 +8,7 @@ public class PacMasterControl : MonoBehaviour {
     public playerState myPlayerState;
     PacmanMovement pacMovement;
     PacmanAI pacAI;
-//    bool canPress = true;
+       bool canPress = true;
 
     void Start()
     {
