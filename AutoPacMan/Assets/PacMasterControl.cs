@@ -18,7 +18,7 @@ public class PacMasterControl : MonoBehaviour {
 
     void Update()
     {
-        if ( Input.GetKeyDown(KeyCode.Space)
+        if ( Input.GetKey(KeyCode.Space)
           && transform.position.x % 0.5f == 0
           && transform.position.y % 0.5f == 0)
         {
