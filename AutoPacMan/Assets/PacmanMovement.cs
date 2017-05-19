@@ -159,7 +159,7 @@ public class PacmanMovement : TileMove
             if (transform.position == dest)
             {
                 //does the sexy 2d array of bools;
-                pacChecker.WallCheck();
+                //pacChecker.WallCheck();
 
                 if ((aiInputVector.x == 1) || (Input.GetKey(KeyCode.RightArrow) || Input.GetKey(KeyCode.D)) && isValidMove(Vector2.right))
                 {

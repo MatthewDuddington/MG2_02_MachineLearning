@@ -102,12 +102,12 @@ public class PacChecker : MonoBehaviour {
 
                 // Ignoring the pacman tile
                 //
-                if (checkerIndex < middleValue)
+                if (checkerIndex < middleValue - 1)
                 {
                     wallPerceptionClippedForInputs[checkerIndex] = wallPerception[x,y];
 //                    PerceptionInfo.Get.UpdateSurroundingDestinationTileList(checkerIndex, checker.positionOfTileUnderMe);          print(checker.positionOfTileUnderMe);
                 }
-                else if (checkerIndex > middleValue + 1)
+                else if (checkerIndex > middleValue)
                 {
                     wallPerceptionClippedForInputs[checkerIndex - 1] = wallPerception[x,y];
 //                    PerceptionInfo.Get.UpdateSurroundingDestinationTileList(checkerIndex - 1, checker.positionOfTileUnderMe);

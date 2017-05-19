@@ -415,7 +415,7 @@ public class Ghost2 : TileMove
             }
             else                //hit a corner
             {
-                print("HIT CORNER");
+//                print("HIT CORNER");
                 //right
                 if (moveVec == Vector2.right && isValidMove(Vector2.down)) //if down is free?
                 {

@@ -152,6 +152,7 @@ public class PacManBrain : MonoBehaviour {
   public class NeuralNetwork
   {
     private static System.Random rnd;
+    private static int seed = 0;
 
     private int numInput;
     private int numHidden;
@@ -191,7 +192,7 @@ public class PacManBrain : MonoBehaviour {
                          int numHidden,
                          int numOutput)
     {
-      rnd = new System.Random(0); // for InitializeWeights() and Shuffle()
+      rnd = new System.Random(seed); // for InitializeWeights() and Shuffle()
 
       this.numInput = numInput;
       this.numHidden = numHidden;
@@ -227,7 +228,7 @@ public class PacManBrain : MonoBehaviour {
     // Used when recreating network from loaded data
     public NeuralNetwork(NetworkData dataToLoad)
     {
-      rnd = new System.Random(0); // for InitializeWeights() and Shuffle()
+      rnd = new System.Random(seed); // for InitializeWeights() and Shuffle()
 
       this.numInput = dataToLoad.numInput;
       this.numHidden = dataToLoad.numHidden;
