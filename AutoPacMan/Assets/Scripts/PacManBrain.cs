@@ -152,7 +152,7 @@ public class PacManBrain : MonoBehaviour {
   public class NeuralNetwork
   {
     private static System.Random rnd;
-    private static int seed = 0;
+    private static int seed = 25;
 
     private int numInput;
     private int numHidden;

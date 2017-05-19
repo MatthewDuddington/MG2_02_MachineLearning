@@ -131,6 +131,7 @@ public class PerceptionInfo : MonoBehaviour {
   }
 
   public Vector2 GetValidDestination(int destinationIndex) {
+    Vector2 newDestination = Vector2.zero;
 
     // If the proposed destination is a tile with a wall in it, search for the nearest tile that is empty
     if (WallPerceptionWindow[destinationIndex]) {
@@ -157,13 +158,22 @@ public class PerceptionInfo : MonoBehaviour {
 
       // Return the closest tile position which didnt have a wall
       Debug.Log("Position aiming for is index " + nextNearestIndex + " pos " + nextNearestPos);
-      return nextNearestPos;
+      newDestination = nextNearestPos;
     }
     else {
       // Otherwise the original proposed tile is fine, so just return it
       Debug.Log("Proposed tile is valid...");
-      return TilesSurroundingPacMan [destinationIndex];
+      newDestination = TilesSurroundingPacMan [destinationIndex];
     }
+
+    if (newDestination.x > 14) {
+      newDestination.x -= 28;
+    }
+    else if (newDestination.x < -14) {
+      newDestination.x += 28;
+    }
+
+    return newDestination;
   }
 
   public void UpdateSurroundingDestinationTileList(int tileIndex, Vector2 tilePosition) {
