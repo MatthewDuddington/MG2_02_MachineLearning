@@ -9,7 +9,7 @@ public class MattButtons : MonoBehaviour {
       Save ();
     else if (Input.GetKeyDown (KeyCode.L))
       Load ();
-    else if (Input.GetKey (KeyCode.P))
+    else if (Input.GetKey (KeyCode.Minus))
     {
       if (Input.GetKeyDown(KeyCode.Equals))
         PacManBrain.Get.CreateNewNetwork ();

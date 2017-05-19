@@ -47,7 +47,7 @@ public class PacmanAI : TileMove
     {
         Pacman = GetComponent<PacmanMovement>();
         anim = GetComponent<Animator>();
-        magicPacman = GameObject.FindObjectOfType<MagicPacman>();
+//        magicPacman = GameObject.FindObjectOfType<MagicPacman>();
         startPosition = transform.position;
         moveChecker = transform.position;
         intersections = GameObject.FindGameObjectsWithTag("Intersection");
@@ -168,7 +168,7 @@ public class PacmanAI : TileMove
             {
                 if (transform.position == intersectionsPos[i].transform.position)
                 {
-                    print("HIT AN INTERSECTION");
+//                    print("HIT AN INTERSECTION");
 
                     if (isValidMove(Vector2.up) && upDistance < rightDistance && upDistance < downDistance && upDistance < leftDistance)
                     {
@@ -221,54 +221,54 @@ public class PacmanAI : TileMove
             }
             else                //hit a corner
             {
-                print("HIT CORNER");
+//                print("HIT CORNER");
                 //right
 
                 if (upDistance <= downDistance && upDistance <= leftDistance && upDistance <= rightDistance && isValidMove(Vector2.up))
                 {
-                    print("1");
+//                    print("1");
                     moveVec = Vector2.up;
                 }
                 else if (downDistance <= upDistance && downDistance <= leftDistance && downDistance <= rightDistance && isValidMove(Vector2.down))
                 {
-                    print("2");
+//                    print("2");
 
                     moveVec = Vector2.down;
                 }
                 else if (leftDistance <= upDistance && leftDistance <= rightDistance && leftDistance <= downDistance && isValidMove(Vector2.left))
                 {
-                    print("3");
+//                    print("3");
 
                     moveVec = Vector2.left;
                 }
                 else if (rightDistance <= upDistance && rightDistance <=leftDistance && rightDistance <= downDistance && isValidMove(Vector2.right))
                 {
-                    print("4");
+//                    print("4");
 
                     moveVec = Vector2.right;
                 }
 
                 else if (isValidMove(Vector2.up))
                 {
-                    print("5");
+//                    print("5");
 
                     moveVec = Vector2.up;
                 }
                 else if (isValidMove(Vector2.down))
                 {
-                    print("6");
+//                    print("6");
 
                     moveVec = Vector2.down;
                 }
                 else if (isValidMove(Vector2.left))
                 {
-                    print("7");
+//                    print("7");
 
                     moveVec = Vector2.left;
                 }
                 else
                 {
-                    print("8");
+//                    print("8");
 
                     moveVec = Vector2.right;
                 }

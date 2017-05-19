@@ -117,7 +117,7 @@ public class MagicPacman : TileMove
             {
                 if (transform.position == intersectionsPos[i].transform.position)
                 {
-                    print("HIT AN INTERSECTION");
+//                    print("HIT AN INTERSECTION");
 
                     if (isValidMove(Vector2.up) && upDistance < rightDistance && upDistance < downDistance && upDistance < leftDistance)
                     {
@@ -187,7 +187,7 @@ public class MagicPacman : TileMove
             }
             else                //hit a corner
             {
-                print("HIT CORNER");
+//                print("HIT CORNER");
                 //right
                 //
                 //
