@@ -137,25 +137,27 @@ public class PerceptionInfo : MonoBehaviour {
       Debug.Log("Proposed tile " + destinationIndex + " had wall. Searching for next best tile...");
 
       Vector2 testDestination = TilesSurroundingPacMan [destinationIndex];
-      Vector2 nextNearsetPos = new Vector2(-100, - 100);  // Instantiate with obvious wrong value to check for bugs if not overwritten
+      Vector2 nextNearestPos = new Vector2(-100, - 100);  // Instantiate with obvious wrong value to check for bugs if not overwritten
+      int nextNearestIndex = 0;
       float minDist = Mathf.Infinity;
 
       for (int i = 0; i < TilesSurroundingPacMan.Length; i++)  // For each possible destination tile surrounding PacMan...
       {
         float dist = Vector2.Distance(TilesSurroundingPacMan[i], testDestination);  // Get the distance between that tile and the original suggested destination
-        print("Tile index " + i + "and pos " + TilesSurroundingPacMan[i] + " with distance of " + dist + " is there a wall..." + WallPerceptionWindow[i]);
+//        print("Tile index " + i + "and pos " + TilesSurroundingPacMan[i] + " with distance of " + dist + " is there a wall..." + WallPerceptionWindow[i]);
         if ( dist < minDist  // If this is the smallest distance yet...
           && WallPerceptionWindow[i] != true)  // ...and the tile is not a wall...
         {
 //          Debug.Log("Proposing tile: " + i);
-          print (TilesSurroundingPacMan[i]);
-          nextNearsetPos = TilesSurroundingPacMan[i];  // Propose this as the next best tile
+          nextNearestPos = TilesSurroundingPacMan[i];  // Propose this as the next best tile
+          nextNearestIndex = i;
           minDist = dist;  // Update the smallest distance found
         }
       }
 
       // Return the closest tile position which didnt have a wall
-      return nextNearsetPos;
+      Debug.Log("Position aiming for is index " + nextNearestIndex + " pos " + nextNearestPos);
+      return nextNearestPos;
     }
     else {
       // Otherwise the original proposed tile is fine, so just return it
@@ -181,7 +183,7 @@ public class PerceptionInfo : MonoBehaviour {
           float xPos = pacChecker.transform.position.x + x;
           float yPos = pacChecker.transform.position.y + y;
           TilesSurroundingPacMan[tileListIndex] = new Vector2(xPos, yPos);
-          print (TilesSurroundingPacMan[tileListIndex]);
+//          print (TilesSurroundingPacMan[tileListIndex]);
           tileListIndex++;
         }
       }
