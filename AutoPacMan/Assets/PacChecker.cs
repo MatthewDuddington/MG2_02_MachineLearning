@@ -87,13 +87,30 @@ public class PacChecker : MonoBehaviour {
 
     public void WallCheck() //called by pacMovement;
     {
+        float middleValue = windowSize * windowSize * 0.5f;
         int checkerIndex = 0;
+
+        bool[] wallPerceptionClippedForInputs = new bool[(windowSize * windowSize) - 1];
+
         for (int y = 0; y < windowSize; y++) {
             for (int x = 0; x < windowSize; x++) {
-                IndividualWallChecker checker = checkers [checkerIndex++].GetComponent<IndividualWallChecker>();
+                // Get a reference to the next wall checker
+                IndividualWallChecker checker = checkers [checkerIndex].GetComponent<IndividualWallChecker>();
                 
-                // Update the wall presence bool array
+                // Update the wall presence or lack of
                 wallPerception [x, y] = checker.hitting;
+
+                // Array passed to inputs needs to ignore the pacman tile
+                if (checkerIndex < middleValue)
+                {
+                    wallPerceptionClippedForInputs[checkerIndex] = wallPerception[x,y];
+                }
+                else if (checkerIndex > middleValue + 1)
+                {
+                    wallPerceptionClippedForInputs[checkerIndex - 1] = wallPerception[x,y];
+                }
+
+                checkerIndex++;        
 
                 if (checkerIndex != windowSize * windowSize)
                 {
@@ -101,13 +118,16 @@ public class PacChecker : MonoBehaviour {
 
                     // Update the PerceptionInfo list of the 48 tiles surrounding PacMan
                     int tileListIndex = checkerIndex - 1;
-                    if (checkerIndex > (windowSize * windowSize * 0.5) - 1) { checker = checkers[checkerIndex].GetComponent<IndividualWallChecker>(); }
+                    if (checkerIndex > (windowSize * windowSize * 0.5) - 1)
+                    {
+                        checker = checkers[checkerIndex].GetComponent<IndividualWallChecker>();
+                    }
                     PerceptionInfo.Get.UpdateSurroundingDestinationTileList(tileListIndex, checker.positionOfTileUnderMe);
                 }
             }
         }
         
-        PerceptionInfo.Get.WallPerceptionWindow = wallPerception;
+        PerceptionInfo.Get.WallPerceptionWindow = wallPerceptionClippedForInputs;
     }
 
     

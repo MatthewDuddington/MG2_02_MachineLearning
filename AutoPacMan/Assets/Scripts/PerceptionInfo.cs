@@ -8,7 +8,7 @@ public class PerceptionInfo : MonoBehaviour {
 
   private PacChecker pacChecker;
 
-  private Vector2[] ValidDestinationTiles;  // [x,y] positions of all possible tiles PacMan can choose to travel into
+  private Vector2[] TilesSurroundingPacMan;  // [x,y] positions of all possible tiles PacMan can choose to travel into
 
 
   // INPUT VECTORS
@@ -26,7 +26,7 @@ public class PerceptionInfo : MonoBehaviour {
   public double ghostDHorizontal;
   public double ghostDVertical;
 
-  public bool[,] WallPerceptionWindow;
+  public bool[] WallPerceptionWindow;
 
 
   // ERROR INFO POINTS
@@ -46,7 +46,7 @@ public class PerceptionInfo : MonoBehaviour {
     /*     // Switch for the two variations (try adding a second '/' at the start of this line)
     ValidDestinationTiles = new Vector2[298];  // 298 for whole map. Acts like a pure map destination.
     /*/
-    ValidDestinationTiles = new Vector2[48];  // 48 if constrained to only destinations within the 7x7 perception window. Acts more like a compass heading.
+    TilesSurroundingPacMan = new Vector2[48];  // 48 if constrained to only destinations within the 7x7 perception window. Acts more like a compass heading.
     //*/
 	}
 	
@@ -128,11 +128,40 @@ public class PerceptionInfo : MonoBehaviour {
   }
 
   public Vector2 GetValidDestination(int destinationIndex) {
-    return ValidDestinationTiles [destinationIndex];
+
+    // If the proposed destination is a tile with a wall in it, search for the nearest tile that is empty
+    if (WallPerceptionWindow[destinationIndex]) {
+      Debug.Log("Proposed tile " + destinationIndex + " had wall. Searching for next best tile...");
+
+      Vector2 testDestination = TilesSurroundingPacMan [destinationIndex];
+      Vector2 nextNearsetPos = new Vector2(-100, - 100);  // Instantiate with obvious wrong value to check for bugs if not overwritten
+      float minDist = Mathf.Infinity;
+
+      for (int i = 0; i < TilesSurroundingPacMan.Length; i++)  // For each possible destination tile surrounding PacMan...
+      {
+        float dist = Vector2.Distance(TilesSurroundingPacMan[i], testDestination);  // Get the distance between that tile and the original suggested destination
+        print("Tile pos " + TilesSurroundingPacMan[i] + " with distance of " + dist + " is there a wall..." + WallPerceptionWindow[i]);
+        if ( dist < minDist  // If this is the smallest distance yet...
+          && WallPerceptionWindow[i] != true)  // ...and the tile is not a wall...
+        {
+          Debug.Log("Proposing tile: " + i);
+          nextNearsetPos = TilesSurroundingPacMan[i];  // Propose this as the next best tile
+          minDist = dist;  // Update the smallest distance found
+        }
+      }
+
+      // Return the closest tile position which didnt have a wall
+      return nextNearsetPos;
+    }
+    else {
+      // Otherwise the original proposed tile is fine, so just return it
+      Debug.Log("Proposed tile is valid...");
+      return TilesSurroundingPacMan [destinationIndex];
+    }
   }
 
   public void UpdateSurroundingDestinationTileList(int tileIndex, Vector2 tilePosition) {
-    ValidDestinationTiles[tileIndex] = tilePosition;
+    TilesSurroundingPacMan[tileIndex] = tilePosition;
   }
 
 }
