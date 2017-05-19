@@ -74,7 +74,9 @@ public class PacManBrain : MonoBehaviour {
   // Returns the [x,y] position for the next destination the neural network has determined for PacMan
   public Vector2 ChooseDestination() {
     int desinationIndex = nn.MakePrediction(BuildInputs(), learnRate, momentum, weightDecay);
-    return PerceptionInfo.Get.GetValidDestination (desinationIndex);
+    Vector2 nextDestination = PerceptionInfo.Get.GetValidDestination (desinationIndex);
+    print(nextDestination);
+    return nextDestination;
   }
 
   // Recalculates the weights, biases and deltas in the network via back propagation

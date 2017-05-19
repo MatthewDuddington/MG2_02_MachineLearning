@@ -140,11 +140,12 @@ public class PerceptionInfo : MonoBehaviour {
       for (int i = 0; i < TilesSurroundingPacMan.Length; i++)  // For each possible destination tile surrounding PacMan...
       {
         float dist = Vector2.Distance(TilesSurroundingPacMan[i], testDestination);  // Get the distance between that tile and the original suggested destination
-        print("Tile pos " + TilesSurroundingPacMan[i] + " with distance of " + dist + " is there a wall..." + WallPerceptionWindow[i]);
+//        print("Tile pos " + TilesSurroundingPacMan[i] + " with distance of " + dist + " is there a wall..." + WallPerceptionWindow[i]);
         if ( dist < minDist  // If this is the smallest distance yet...
           && WallPerceptionWindow[i] != true)  // ...and the tile is not a wall...
         {
           Debug.Log("Proposing tile: " + i);
+          print (TilesSurroundingPacMan[i]);
           nextNearsetPos = TilesSurroundingPacMan[i];  // Propose this as the next best tile
           minDist = dist;  // Update the smallest distance found
         }
