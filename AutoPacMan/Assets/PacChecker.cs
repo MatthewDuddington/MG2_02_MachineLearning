@@ -46,7 +46,7 @@ public class PacChecker : MonoBehaviour {
         Vector2 otherPos = otherTile.transform.position;
         Vector2 pacPos = transform.position;
         
-    double differenceX = pacPos.x - otherPos.x;
+        double differenceX = pacPos.x - otherPos.x;
         // If diff is -ve then the other must be right of pacman
         
         // Return as proportion of max possible horizontal offset - no minus 2 here because of the extra tunnel exit tiles on each side 
@@ -76,13 +76,13 @@ public class PacChecker : MonoBehaviour {
     public void GhostsCheck()
     {
         PerceptionInfo.Get.ghostAHorizontal = DetermineNormalisedHorizontal (redGhost);
-        PerceptionInfo.Get.ghostAHorizontal = DetermineNormalisedVertical (redGhost);
+        PerceptionInfo.Get.ghostAVertical = DetermineNormalisedVertical (redGhost);
         PerceptionInfo.Get.ghostBHorizontal = DetermineNormalisedHorizontal (pinkGhost);
-        PerceptionInfo.Get.ghostBHorizontal = DetermineNormalisedVertical (pinkGhost);
+        PerceptionInfo.Get.ghostBVertical = DetermineNormalisedVertical (pinkGhost);
         PerceptionInfo.Get.ghostCHorizontal = DetermineNormalisedHorizontal (orangeGhost);
-        PerceptionInfo.Get.ghostCHorizontal = DetermineNormalisedVertical (orangeGhost);
+        PerceptionInfo.Get.ghostCVertical = DetermineNormalisedVertical (orangeGhost);
         PerceptionInfo.Get.ghostDHorizontal = DetermineNormalisedHorizontal (blueGhost);
-        PerceptionInfo.Get.ghostDHorizontal = DetermineNormalisedVertical (blueGhost);
+        PerceptionInfo.Get.ghostDVertical = DetermineNormalisedVertical (blueGhost);
     }
 
     public void WallCheck() //called by pacMovement;

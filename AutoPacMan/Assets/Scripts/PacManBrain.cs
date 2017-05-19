@@ -575,6 +575,9 @@ public class PacManBrain : MonoBehaviour {
       // train a back-prop style NN classifier using learning rate and momentum
       // weight decay reduces the magnitude of a weight value over time unless that value
       // is constantly increased
+//      foreach (double value in inputData) {
+//        print(value);
+//      }
 
       if (inputData.Length != numInput)
         Debug.LogError ("Wrong number of inputs being passed into training");
@@ -584,9 +587,9 @@ public class PacManBrain : MonoBehaviour {
 
       yValues = this.ComputeOutputs(xValues); // copy xValues in, compute outputs (store them internally)
 
-      predictionIndex = MaxIndex (yValues);
-      predictionValue = yValues [predictionIndex];
-      return predictionIndex;
+      this.predictionIndex = MaxIndex (yValues);
+      this.predictionValue = yValues [this.predictionIndex];
+      return this.predictionIndex;
     } // Train
 
     private static int MaxIndex(double[] vector) // helper for Accuracy()
