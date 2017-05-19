@@ -1,4 +1,6 @@
-﻿using System.Collections;
+﻿/*
+
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -76,12 +78,10 @@ public class PerceptionMap : MonoBehaviour {
     return map [x, y];
   }
 
-  /*
-  public perceptableObject ReadMapTileType(int x, int y) {
-    if (x > mapSizeX - 1 || y > mapSizeY - 1) { Debug.LogError ("Map reference attempting to be read is out of bounds"); }
-    return 
-  }
-  */
+//  public perceptableObject ReadMapTileType(int x, int y) {
+//    if (x > mapSizeX - 1 || y > mapSizeY - 1) { Debug.LogError ("Map reference attempting to be read is out of bounds"); }
+//    return 
+//  }
 
   public void DeclarePosition(Vector2 objectPosition, perceptableObject objectType) {
     //TODO Calculate the grid position of the object based on its world position
@@ -93,3 +93,5 @@ public class PerceptionMap : MonoBehaviour {
   }
 
 }
+
+*/
