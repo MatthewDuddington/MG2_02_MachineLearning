@@ -105,14 +105,12 @@ public class PacChecker : MonoBehaviour {
                 if (checkerIndex < middleValue)
                 {
                     wallPerceptionClippedForInputs[checkerIndex] = wallPerception[x,y];
-                    PerceptionInfo.Get.UpdateSurroundingDestinationTileList(checkerIndex, checker.positionOfTileUnderMe);
-          print(checker.positionOfTileUnderMe);
+//                    PerceptionInfo.Get.UpdateSurroundingDestinationTileList(checkerIndex, checker.positionOfTileUnderMe);          print(checker.positionOfTileUnderMe);
                 }
                 else if (checkerIndex > middleValue + 1)
                 {
                     wallPerceptionClippedForInputs[checkerIndex - 1] = wallPerception[x,y];
-                    PerceptionInfo.Get.UpdateSurroundingDestinationTileList(checkerIndex - 1, checker.positionOfTileUnderMe);
-          print(checker.positionOfTileUnderMe);
+//                    PerceptionInfo.Get.UpdateSurroundingDestinationTileList(checkerIndex - 1, checker.positionOfTileUnderMe);
                 }
 
                 checkerIndex++;        

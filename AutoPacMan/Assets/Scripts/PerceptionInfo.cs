@@ -60,6 +60,9 @@ public class PerceptionInfo : MonoBehaviour {
 
     // Refresh wall perception window bool array
     pacChecker.WallCheck();
+
+    // Refresh position record of tiles surrounding pacman
+    UpdateSurroundingTiles();
   }
 
 
@@ -162,7 +165,22 @@ public class PerceptionInfo : MonoBehaviour {
   }
 
   public void UpdateSurroundingDestinationTileList(int tileIndex, Vector2 tilePosition) {
-    TilesSurroundingPacMan[tileIndex] = tilePosition;
+    //TilesSurroundingPacMan[tileIndex] = tilePosition;
+  }
+
+  private void UpdateSurroundingTiles() {
+    int tileListIndex = 0;
+
+    for (int y = 3; y > -4; y--) {
+      for (int x = -3; x < 4; x++) {
+        if (x + y != 0) {
+          float xPos = pacChecker.transform.position.x + x;
+          float yPos = pacChecker.transform.position.y + y;
+          TilesSurroundingPacMan[tileListIndex] = new Vector2(xPos, yPos);
+          print (TilesSurroundingPacMan[tileListIndex]);
+        }
+      }
+    }
   }
 
 }
