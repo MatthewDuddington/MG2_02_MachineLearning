@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿/*
+using UnityEngine;
 using System.Collections;
 using SharpNeat.Phenomes;
 
@@ -64,3 +65,4 @@ public class PacManLearningController : UnitController {
     return 0;
   }
 }
+*/

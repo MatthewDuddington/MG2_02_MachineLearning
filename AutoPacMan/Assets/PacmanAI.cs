@@ -11,12 +11,13 @@ public class PacmanAI : TileMove
     [Header("Animator")]
     Animator anim;
     public PacmanMovement Pacman;
+    public PacMasterControl pacMasterControl;
 
     [Header("Colour / States")]
     bool canTurnBool = true;
 
     [Header("Movement / Targets")]
-    public Transform pacDest;
+//    public Transform pacDest;  // Seems not to be used anywhere?
     public Vector2 targetTile;
     public Transform targetTileGraphic;
     public Vector2 moveChecker;
@@ -42,6 +43,7 @@ public class PacmanAI : TileMove
         moveCheckerGraphic.transform.position = transform.position;
         moveChecker = moveCheckerGraphic.position;
     }
+
     void Start()
     {
         Pacman = GetComponent<PacmanMovement>();
@@ -96,7 +98,7 @@ public class PacmanAI : TileMove
             {
                 //print("AISFHASIFHASIFHASIFHAISFHASIFHASIFHASIFH");
                 Debug.Log("Decision failed. Learning...");
-                PacManBrain.Get.LearnFromDecision();
+                PacManBrain.Get.LearnFromDecision(true);
                 Debug.Log ("Restarting level...");
                 Application.LoadLevel(Application.loadedLevel);
                // Pacman.isAlive = false;
@@ -109,10 +111,10 @@ public class PacmanAI : TileMove
         if (transform.position == targetTileGraphic.position)
         {
             //hit end final tile!!!
-            if (PacManBrain.Get.NetworkIsEnabled ()) {
+            if (pacMasterControl.myPlayerState == PacMasterControl.playerState.AI) {
                 Debug.Log ("Reached destination tile");
 
-                PacManBrain.Get.LearnFromDecision ();
+                PacManBrain.Get.LearnFromDecision (false);  // Learning when not dead
 
                 PerceptionInfo.Get.UpdatePerception ();
 

@@ -29,7 +29,7 @@ public class PacChecker : MonoBehaviour {
         Vector3 currentPos = transform.position;
         foreach (Transform t in enemies)
         {
-            if (t.gameObject.active)
+            if (t.gameObject.activeSelf)
             {
                 float dist = Vector3.Distance(t.position, currentPos);
                 if (dist < minDist)
@@ -46,7 +46,7 @@ public class PacChecker : MonoBehaviour {
         Vector2 otherPos = otherTile.transform.position;
         Vector2 pacPos = transform.position;
         
-        double differenceX = pacPos.x - otherPos.x;
+    double differenceX = pacPos.x - otherPos.x;
         // If diff is -ve then the other must be right of pacman
         
         // Return as proportion of max possible horizontal offset - no minus 2 here because of the extra tunnel exit tiles on each side 

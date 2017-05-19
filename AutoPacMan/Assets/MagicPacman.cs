@@ -41,7 +41,7 @@ public class MagicPacman : TileMove
     {
         transform.position = PacAI.transform.position;
         moveChecker = moveCheckerGraphic.position = (Vector2)PacAI.transform.position;
-        if (PacManBrain.Get.NetworkIsEnabled ()) {
+        if (PacManBrain.Get) {
           moveChecker = moveCheckerGraphic.position = PacManBrain.Get.ChooseDestination ();
         } else {
           moveChecker = moveCheckerGraphic.position = new Vector2 (PacAI.transform.position.x, PacAI.transform.position.y);
@@ -71,7 +71,7 @@ public class MagicPacman : TileMove
 
             foreach (GameObject d in dots)
             {
-                if (d.active)
+                if (d.activeSelf)
                 {
                     dotsRemaining++;
                 }

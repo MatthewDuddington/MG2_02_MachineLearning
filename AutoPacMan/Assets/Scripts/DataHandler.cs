@@ -59,10 +59,15 @@ public class DataHandler {
 
 public class NetworkData {
 
+  // Generations track the individual saved versions of the network
   [XmlAttribute("Generation")]
   public int generation;
 
+  // Iterations track the number of times a particular generation has been restarted (without defining a new generation)
+  [XmlElement("Iterations")]
+  public int iterations;
 
+  
   [XmlElement("numInput")]
   public int numInput;
 
