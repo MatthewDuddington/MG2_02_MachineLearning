@@ -41,12 +41,8 @@ public class MagicPacman : TileMove
     {
         transform.position = PacAI.transform.position;
         moveChecker = moveCheckerGraphic.position = (Vector2)PacAI.transform.position;
-        if (PacManBrain.Get) {
-          moveChecker = moveCheckerGraphic.position = PacManBrain.Get.ChooseDestination ();
-        } else {
-          moveChecker = moveCheckerGraphic.position = new Vector2 (PacAI.transform.position.x, PacAI.transform.position.y);
-        }
     }
+
     void Start()
     {
         dots = GameObject.FindGameObjectsWithTag("Dot");
@@ -129,8 +125,6 @@ public class MagicPacman : TileMove
                         {
                             moveVec = Vector2.up;
                         }
-                        
-
                     }
                     if (isValidMove(Vector2.down) && downDistance < rightDistance && downDistance < upDistance && downDistance < leftDistance)
                     {

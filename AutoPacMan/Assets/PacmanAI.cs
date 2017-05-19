@@ -7,7 +7,7 @@ public class PacmanAI : TileMove
     public int tilesToGoThrough;
     public int currentTilesGoneThrough;
     public int howManyDotsIAte = 0;
-    public GameObject magicPacman;
+    public MagicPacman magicPacman;
     [Header("Animator")]
     Animator anim;
     public PacmanMovement Pacman;
@@ -34,7 +34,6 @@ public class PacmanAI : TileMove
     public Transform[] intersectionsPos;
 
     float upDistance, downDistance, leftDistance, rightDistance;
-    // Use this for initialization
 
     void OnEnable()
     {
@@ -48,6 +47,7 @@ public class PacmanAI : TileMove
     {
         Pacman = GetComponent<PacmanMovement>();
         anim = GetComponent<Animator>();
+        magicPacman = GameObject.FindObjectOfType<MagicPacman>();
         startPosition = transform.position;
         moveChecker = transform.position;
         intersections = GameObject.FindGameObjectsWithTag("Intersection");
@@ -120,9 +120,15 @@ public class PacmanAI : TileMove
 
                 currentTilesGoneThrough = 0;
                 howManyDotsIAte = 0;
-                magicPacman.SetActive (true);
 
-                PacManBrain.Get.ChooseDestination ();  // Luke - where should this vec2 return be passed to?
+                // Update destination
+                Vector2 newDestination = PacManBrain.Get.ChooseDestination ();
+                Vector3 newDestinationV3 = new Vector3(newDestination.x, newDestination.y, 0);
+                targetTileGraphic.position = newDestinationV3;
+
+                // Give magicPacMan the new destination to scout out the route to
+                magicPacman.targetTileGraphic.position = newDestination;
+                magicPacman.gameObject.SetActive (true);
             }
 
         }
@@ -266,11 +272,16 @@ public class PacmanAI : TileMove
 
                     moveVec = Vector2.right;
                 }
+            }
+        }
+    }
+}
 
-                //
-                //
-               
-                /*if (moveVec == Vector2.right && isValidMove(Vector2.down)) //if down is free?
+
+//
+//
+
+/*if (moveVec == Vector2.right && isValidMove(Vector2.down)) //if down is free?
                 {
                     if (downDistance < upDistance && isValidMove(Vector2.down))
                         moveVec = Vector2.down;
@@ -370,11 +381,4 @@ public class PacmanAI : TileMove
 
                     moveChecker += moveVec;
                 }
-                 * */
-
-            }
-
-        }
-    }
-}
-
+* */

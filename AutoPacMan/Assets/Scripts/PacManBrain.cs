@@ -340,13 +340,11 @@ public class PacManBrain : MonoBehaviour {
       savedData.hiddenToOutputPreviousWeightsDelta = hiddenToOutputPreviousWeightsDelta;
       savedData.outputPreviousBiasesDelta = outputPreviousBiasesDelta;
 
-      /*
-      PlayerPrefs.SetInt ("Generations", PlayerPrefs.GetInt ("Generations") + 1);
-      if (PlayerPrefs.GetInt ("Generations") % 10 == 0) {
-        string arrayName = "inputToHiddenWeights Generation: " + PlayerPrefs.GetInt ("Generations").ToString ();
-        PlayerPrefsX.SetIntArray (arrayName, inputToHiddenWeights);
-      }
-      */
+//      PlayerPrefs.SetInt ("Generations", PlayerPrefs.GetInt ("Generations") + 1);
+//      if (PlayerPrefs.GetInt ("Generations") % 10 == 0) {
+//        string arrayName = "inputToHiddenWeights Generation: " + PlayerPrefs.GetInt ("Generations").ToString ();
+//        PlayerPrefsX.SetIntArray (arrayName, inputToHiddenWeights);
+//      }
     }
 
     // ----------------------------------------------------------------------------------------
