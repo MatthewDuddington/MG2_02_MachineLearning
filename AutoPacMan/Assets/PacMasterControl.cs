@@ -16,7 +16,7 @@ public class PacMasterControl : MonoBehaviour {
         pacAI = GetComponent<PacmanAI>();
     }
 
-    void Update()
+ /*   void Update()
     {
         if ( Input.GetKey(KeyCode.Space)
           && transform.position.x % 0.5f == 0
@@ -37,35 +37,35 @@ public class PacMasterControl : MonoBehaviour {
             }
         }
     }
+  * */
 
 
-// Is it ok to use getKeyDown instead of setting canPress??
+// Is it ok to use getKeyDown instead of setting canPress?? no matt, no it isnt
+    void Update()
+    {
+        if (Input.GetKey(KeyCode.Space) && canPress && transform.position.x % 0.5f == 0 && transform.position.y % 0.5f == 0)
+        {
+            if (myPlayerState == playerState.AI)
+            {
+                myPlayerState = playerState.PLAYER;
+                pacAI.enabled = false;
+                pacMovement.enabled = true;
+            }
+            else
+            {
+                myPlayerState = playerState.AI;
 
-//    void Update()
-//    {
-//        if (Input.GetKey(KeyCode.Space) && canPress && transform.position.x % 0.5f == 0 && transform.position.y % 0.5f == 0)
-//        {
-//            if (myPlayerState == playerState.AI)
-//            {
-//                myPlayerState = playerState.PLAYER;
-//                pacAI.enabled = false;
-//                pacMovement.enabled = true;
-//            }
-//            else
-//            {
-//                myPlayerState = playerState.AI;
-//
-//
-//                pacAI.enabled = true;
-//                pacMovement.enabled = false;
-//
-//            }
-//            canPress = false;
-//        }
-//
-//        if (Input.GetKeyUp(KeyCode.Space))
-//        {
-//            canPress = true;
-//        }
-//    }
+
+                pacAI.enabled = true;
+                pacMovement.enabled = false;
+
+            }
+            canPress = false;
+        }
+
+        if (Input.GetKeyUp(KeyCode.Space))
+        {
+            canPress = true;
+        }
+    }
 }
