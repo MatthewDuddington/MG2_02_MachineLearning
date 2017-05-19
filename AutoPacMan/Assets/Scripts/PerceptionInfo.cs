@@ -143,11 +143,11 @@ public class PerceptionInfo : MonoBehaviour {
       for (int i = 0; i < TilesSurroundingPacMan.Length; i++)  // For each possible destination tile surrounding PacMan...
       {
         float dist = Vector2.Distance(TilesSurroundingPacMan[i], testDestination);  // Get the distance between that tile and the original suggested destination
-//        print("Tile pos " + TilesSurroundingPacMan[i] + " with distance of " + dist + " is there a wall..." + WallPerceptionWindow[i]);
+        print("Tile index " + i + "and pos " + TilesSurroundingPacMan[i] + " with distance of " + dist + " is there a wall..." + WallPerceptionWindow[i]);
         if ( dist < minDist  // If this is the smallest distance yet...
           && WallPerceptionWindow[i] != true)  // ...and the tile is not a wall...
         {
-          Debug.Log("Proposing tile: " + i);
+//          Debug.Log("Proposing tile: " + i);
           print (TilesSurroundingPacMan[i]);
           nextNearsetPos = TilesSurroundingPacMan[i];  // Propose this as the next best tile
           minDist = dist;  // Update the smallest distance found
@@ -173,11 +173,16 @@ public class PerceptionInfo : MonoBehaviour {
 
     for (int y = 3; y > -4; y--) {
       for (int x = -3; x < 4; x++) {
-        if (x + y != 0) {
+        bool isMiddle = false;
+        if (x == 0 && y == 0) { 
+          isMiddle = true;
+        }
+        if (!isMiddle) {
           float xPos = pacChecker.transform.position.x + x;
           float yPos = pacChecker.transform.position.y + y;
           TilesSurroundingPacMan[tileListIndex] = new Vector2(xPos, yPos);
           print (TilesSurroundingPacMan[tileListIndex]);
+          tileListIndex++;
         }
       }
     }

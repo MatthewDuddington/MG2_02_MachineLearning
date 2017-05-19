@@ -6,11 +6,11 @@ public class IndividualWallChecker : MonoBehaviour {
 
     public Sprite good;
     public Sprite bad;
-    public bool hitting;
+//    public bool hitting;
     SpriteRenderer spr;
     public Transform[] walls;
 
-    public Vector2 positionOfTileUnderMe;
+//    public Vector2 positionOfTileUnderMe;
 
     void Start()
     {
@@ -56,16 +56,30 @@ public class IndividualWallChecker : MonoBehaviour {
         }
     }
      * */
+
+  public bool hitting {
+    get { 
+      Collider2D[] cols = Physics2D.OverlapPointAll(transform.position);
+      foreach(Collider2D col in cols) {
+        if (col.gameObject.tag == "Wall") {
+          return true;
+        }
+      }
+      // else
+      return false;
+    }
+  }
+    
     void OnTriggerExit2D(Collider2D col)
     {
 
         if (col.gameObject.tag == "Wall")
         {
-            hitting = false;
+//            hitting = false;
             spr.sprite = bad;
         }
 
-        outsideMap ();
+//        outsideMap ();
 
     }
     void OnTriggerStay2D(Collider2D col)
@@ -73,15 +87,15 @@ public class IndividualWallChecker : MonoBehaviour {
 
         if (col.gameObject.tag == "Wall")
         {
-            hitting = true;
+//            hitting = true;
             spr.sprite = good;
         }
 
-        positionOfTileUnderMe = col.transform.position;
+//        positionOfTileUnderMe = col.transform.position;
 
     }
-
-    void outsideMap() {
-        positionOfTileUnderMe = Vector2.one * - 1;
-    }
+//
+//    void outsideMap() {
+//        positionOfTileUnderMe = Vector2.one * - 1;
+//    }
 }
