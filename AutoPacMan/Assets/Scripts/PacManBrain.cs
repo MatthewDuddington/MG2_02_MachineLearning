@@ -23,6 +23,8 @@ public class PacManBrain : MonoBehaviour {
   public int seed = 25;
   public int generationToLoad;
   public string userIdForTrainingData = "guestUserName";
+
+  public int displayIterations;
   
   public double learnRate = 0.05;
   public double momentum = 0.01;
@@ -60,25 +62,21 @@ public class PacManBrain : MonoBehaviour {
     }
 
     inputArray = new double[numInput];
-
-    if (activeBrainmode == BrainMode.SupervisedTraining) {
-      // Setup new network to learn from this player
-      nn = new NeuralNetwork(numInput, numHidden, numOutput, seed);
-
-      // In supervised training mode only save the network values to xml file every once in a while
-//      StartCoroutine(PeriodicalylSaveNetwork());
-    }
   }
 
   void Start() {
     if (activeBrainmode == BrainMode.PlayLikeMe) {
       LoadNetwork();
     }
+//    else if (activeBrainmode == BrainMode.SupervisedTraining) {
+//      // In supervised training mode only save the network values to xml file every once in a while
+//      //      StartCoroutine(PeriodicalylSaveNetwork());
+//    }
   }
 
   void Update() {
     // If ungergoing supervised training learn from every frame
-    if (activeBrainmode == BrainMode.SupervisedTraining) {
+    if (activeBrainmode == BrainMode.SupervisedTraining && nn != null) {
       nn.MakePrediction(BuildInputs());
 
       // Get the current player input (as a network-output comparison-ready double array)
@@ -86,15 +84,17 @@ public class PacManBrain : MonoBehaviour {
 
       // If the player isn't pressing any key just ignore and dont update learning
       if (playerTrainingInput != null) {
-        //print("Training input: " + playerTrainingInput[0] + ", " + playerTrainingInput[1] + ", " + playerTrainingInput[2] + ", " + playerTrainingInput[3]);
+        print("Training input: " + playerTrainingInput[0] + ", " + playerTrainingInput[1] + ", " + playerTrainingInput[2] + ", " + playerTrainingInput[3]);
         nn.UpdateWeights(playerTrainingInput, learnRate, momentum, weightDecay);
         nn.SaveLearnedValues();
 
+        displayIterations = nn.savedData.iterations;
+
         // Start a new generation only every n data points to prevent file from ballooning
-        if (nn.savedData.iterations > 500) {
+        if (nn.savedData.iterations > 300) {
           nn.savedData.generation += 1;
           nn.savedData.iterations = 0;
-          DataHandler.LoadGenerationData(dataPath, 0);
+          //DataHandler.LoadGenerationData(dataPath, 0);
           SaveNetwork();
         }
         else {
@@ -136,6 +136,9 @@ public class PacManBrain : MonoBehaviour {
 
     Debug.Log ("Populating network with random weights");
     nn.InitializeWeights();
+
+    nn.SaveLearnedValues();
+    SaveNetwork();
   }
 
   // Recreate network from saved data - done on each new loading of the level
