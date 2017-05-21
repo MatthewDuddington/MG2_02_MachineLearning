@@ -38,8 +38,6 @@ public class PacManBrain : MonoBehaviour {
   private static string dataPath = string.Empty;
   public float delayBetweenSaves = 1.0f;
 
-  private double[] noInput = new double[] { 0,0,0,0 };
-
   // Set the saved data location
   void Awake() {
     if (Get != null) { Debug.LogError ("More than one PacManBrain in scene"); }
@@ -68,7 +66,13 @@ public class PacManBrain : MonoBehaviour {
       nn = new NeuralNetwork(numInput, numHidden, numOutput, seed);
 
       // In supervised training mode only save the network values to xml file every once in a while
-      StartCoroutine(PeriodicalylSaveNetwork());
+//      StartCoroutine(PeriodicalylSaveNetwork());
+    }
+  }
+
+  void Start() {
+    if (activeBrainmode == BrainMode.PlayLikeMe) {
+      LoadNetwork();
     }
   }
 
@@ -81,15 +85,28 @@ public class PacManBrain : MonoBehaviour {
       double[] playerTrainingInput = PerceptionInfo.Get.GetPlayerTrainingInput();
 
       // If the player isn't pressing any key just ignore and dont update learning
-      if (playerTrainingInput != noInput) {
+      if (playerTrainingInput != null) {
+        //print("Training input: " + playerTrainingInput[0] + ", " + playerTrainingInput[1] + ", " + playerTrainingInput[2] + ", " + playerTrainingInput[3]);
         nn.UpdateWeights(playerTrainingInput, learnRate, momentum, weightDecay);
         nn.SaveLearnedValues();
+
+        // Start a new generation only every n data points to prevent file from ballooning
+        if (nn.savedData.iterations > 500) {
+          nn.savedData.generation += 1;
+          nn.savedData.iterations = 0;
+          DataHandler.LoadGenerationData(dataPath, 0);
+          SaveNetwork();
+        }
+        else {
+          //SaveNetwork();
+        }
       }
     }
   }
 
   // If playing using learned network from supervised training then pass predicted direction to pacman
   public Vector2 GetDirectionForPacMan() {
+    print("get direction");
     int predictedDirection = nn.MakePrediction(BuildInputs());
 
     switch (predictedDirection) {
@@ -141,7 +158,7 @@ public class PacManBrain : MonoBehaviour {
 //    Debug.Log ("Learning values...");
 //    nn.SaveLearnedValues ();
 
-    Debug.Log ("Adding generation to data list...");
+//    Debug.Log ("Adding generation to data list...");
     DataHandler.AddGenerationToSavedData (dataPath, nn.savedData);
   }
 
@@ -375,14 +392,7 @@ public class PacManBrain : MonoBehaviour {
 
     // For use with Supervised Training mode
     public void SaveLearnedValues() {
-      // Only start a new generation in the xml every 30 updates (prevent balooning file size)
-      if (savedData.iterations + 1 > 30) {
-        generation += 1;
-        savedData.iterations = 0;
-      }
-      else {
-        savedData.iterations += 1;
-      }
+      savedData.iterations += 1;
 
       savedData.inputToHiddenWeights = inputToHiddenWeights;
 

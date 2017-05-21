@@ -271,12 +271,12 @@ public class PacmanAI : TileMove
 
           //warp
 
-          if (transform.position.x < -15.5f)
+          if (transform.position.x <= -15.5f)
           {
             transform.position = new Vector2(transform.position.x + 31f, transform.position.y);
             dest = new Vector3(Mathf.Round(transform.position.x) - 0.5f, Mathf.Round(transform.position.y), 0);
           }
-          if (transform.position.x > 15.5f)
+          if (transform.position.x >= 15.5f)
           {
             transform.position = new Vector2(transform.position.x - 31f, transform.position.y);
             dest = new Vector3(Mathf.Round(transform.position.x) + 0.5f, Mathf.Round(transform.position.y), 0);
@@ -294,15 +294,15 @@ public class PacmanAI : TileMove
           //bug fix
           Vector2 dir = dest - this.transform.position;
 
+      // THIS IS WHERE THE OUTPUT DIRECTION IS TAKEN FROM THE NETWORK
+      moveVec2 = PacManBrain.Get.GetDirectionForPacMan();
+      print("Network thinks: " + moveVec2);
+
           // recheck the keys for a new movement
           if (transform.position == dest)
           {
             //does the sexy 2d array of bools;
             //pacChecker.WallCheck();
-
-// THIS IS WHERE THE OUTPUT DIRECTION IS TAKEN FROM THE NETWORK
-            moveVec2 = PacManBrain.Get.GetDirectionForPacMan();
-
 
             if (isValidMove(moveVec2 + dir))
             {
@@ -447,11 +447,6 @@ public class PacmanAI : TileMove
             }
         }
     }
-
-  // Taken from PacMove as needed for AI trained movement
-
-
-
 }
 
 

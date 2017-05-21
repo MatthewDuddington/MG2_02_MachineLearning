@@ -48930,7 +48930,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &855725847
 Transform:
   m_ObjectHideFlags: 0
@@ -83921,6 +83921,8 @@ MonoBehaviour:
   - {fileID: 0}
   - {fileID: 0}
   - {fileID: 0}
+  moveVec2: {x: 0, y: 0}
+  destTransform: {fileID: 67017134}
 --- !u!114 &1462893550
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -108233,11 +108235,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cb0b210df2a3b453b9edf54b95712352, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  brainMode: 1
+  brainMode: 2
   pacMasterControl: {fileID: 1462893550}
   seed: 25
   generationToLoad: 0
-  userIdForTrainingData: guestUserName
+  userIdForTrainingData: Matthew
   learnRate: 0.05
   momentum: 0.01
   weightDecay: 0.0001

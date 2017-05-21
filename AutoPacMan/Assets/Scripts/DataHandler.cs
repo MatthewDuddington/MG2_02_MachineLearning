@@ -21,7 +21,7 @@ public class DataHandler {
   public static void AddGenerationToSavedData(string path, NetworkData data) {
     generationsContainer.generations.Add (data);
 
-    Debug.Log ("Saving generations to container...");
+//    Debug.Log ("Saving generations to container...");
     SaveGenerations (path, generationsContainer);
 
     ClearGenerations ();

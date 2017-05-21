@@ -292,7 +292,7 @@ public class Ghost2 : TileMove
             {
                 if (transform.position == intersectionsPos[i].transform.position)
                 {
-                    print("HIT AN INTERSECTION");
+//                    print("HIT AN INTERSECTION");
 
                     if (isValidMove(Vector2.up) && upDistance < rightDistance && upDistance < downDistance && upDistance < leftDistance)
                     {

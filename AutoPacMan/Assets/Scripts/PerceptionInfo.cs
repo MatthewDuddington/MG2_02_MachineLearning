@@ -239,7 +239,7 @@ public class PerceptionInfo : MonoBehaviour {
 //      }
 //    }
     else {
-      return new double[] { 0,0,0,0 };
+      return null;
     }
   }
 
