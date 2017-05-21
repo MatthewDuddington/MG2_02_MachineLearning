@@ -7,41 +7,115 @@ using System.IO;
 
 public class PacManBrain : MonoBehaviour {
 
+  public enum BrainMode { UnsupervisedTraining, SupervisedTraining, PlayLikeMe }
+  public BrainMode activeBrainmode { get; private set; }
+
+  public BrainMode brainMode = BrainMode.UnsupervisedTraining;
+
   static public PacManBrain Get;  // Easy access to the brain class instance (no singleton check)
 
-  public int numInput = 58;
-  public int numHidden = 58;
-  public int numOutput = 48;
+  public PacMasterControl pacMasterControl;
 
-  public double learnRate = 0.05;
-  public double momentum = 0.01;
-  public double weightDecay = 0.0001;
-
-  public int generationToLoad;
+  public bool networkIsEnabled { get; private set; }
 
   private NeuralNetwork nn;
 
-  double[] inputArray;
+  public int seed = 25;
+  public int generationToLoad;
+  public string userIdForTrainingData = "guestUserName";
+  
+  public double learnRate = 0.05;
+  public double momentum = 0.01;
+  public double weightDecay = 0.0001;
+  
+  private int numInput;
+  private int numHidden;
+  private int numOutput;
+  
+  private double[] inputArray;
   private bool firstInputBuild = true;
 
   private static string dataPath = string.Empty;
+  public float delayBetweenSaves = 1.0f;
 
-  private bool networkIsEnabled = false;
+  private double[] noInput = new double[] { 0,0,0,0 };
 
   // Set the saved data location
   void Awake() {
     if (Get != null) { Debug.LogError ("More than one PacManBrain in scene"); }
     else { Get = this; }
 
-    dataPath = System.IO.Path.Combine (Application.dataPath, "Resources/generations.xml");
+    activeBrainmode = brainMode;
+
+    // Setup network with values for correct mode
+    if (activeBrainmode == BrainMode.UnsupervisedTraining) {
+      dataPath = System.IO.Path.Combine (Application.dataPath, "Resources/unsupervisedLearning_generations.xml");
+      numInput = 58;
+      numHidden = 58;
+      numOutput = 48;
+    }
+    else if (activeBrainmode == BrainMode.SupervisedTraining || activeBrainmode == BrainMode.PlayLikeMe) {
+      dataPath = System.IO.Path.Combine (Application.dataPath, "Resources/supervisedLearning_generations_" + userIdForTrainingData + ".xml");
+      numInput = 58;
+      numHidden = 58;
+      numOutput = 4;
+    }
 
     inputArray = new double[numInput];
+
+    if (activeBrainmode == BrainMode.SupervisedTraining) {
+      // Setup new network to learn from this player
+      nn = new NeuralNetwork(numInput, numHidden, numOutput, seed);
+
+      // In supervised training mode only save the network values to xml file every once in a while
+      StartCoroutine(PeriodicalylSaveNetwork());
+    }
   }
+
+  void Update() {
+    // If ungergoing supervised training learn from every frame
+    if (activeBrainmode == BrainMode.SupervisedTraining) {
+      nn.MakePrediction(BuildInputs());
+
+      // Get the current player input (as a network-output comparison-ready double array)
+      double[] playerTrainingInput = PerceptionInfo.Get.GetPlayerTrainingInput();
+
+      // If the player isn't pressing any key just ignore and dont update learning
+      if (playerTrainingInput != noInput) {
+        nn.UpdateWeights(playerTrainingInput, learnRate, momentum, weightDecay);
+        nn.SaveLearnedValues();
+      }
+    }
+  }
+
+  // If playing using learned network from supervised training then pass predicted direction to pacman
+  public Vector2 GetDirectionForPacMan() {
+    int predictedDirection = nn.MakePrediction(BuildInputs());
+
+    switch (predictedDirection) {
+    case 0:
+      return Vector2.left;
+      break;
+    case 1:
+      return Vector2.right;
+      break;
+    case 2:
+      return Vector2.up;
+      break;
+    case 3:
+      return Vector2.down;
+      break;
+    }
+
+    // Should never reach this
+    return Vector2.zero;
+  }
+
 
   // Build new network from scratch - should only be done once when first starting the experiment
   public void CreateNewNetwork() {
     Debug.Log ("Creating brand new network from scratch");
-    nn = new NeuralNetwork(numInput, numHidden, numOutput);
+    nn = new NeuralNetwork(numInput, numHidden, numOutput, seed);
 
     Debug.Log ("Populating network with random weights");
     nn.InitializeWeights();
@@ -73,9 +147,9 @@ public class PacManBrain : MonoBehaviour {
 
   // Returns the [x,y] position for the next destination the neural network has determined for PacMan
   public Vector2 ChooseDestination() {
-    int desinationIndex = nn.MakePrediction(BuildInputs(), learnRate, momentum, weightDecay);
+    int desinationIndex = nn.MakePrediction(BuildInputs());
     Vector2 nextDestination = PerceptionInfo.Get.GetValidDestination (desinationIndex);
-    print(nextDestination);
+//    print(nextDestination);
     return nextDestination;
   }
 
@@ -126,11 +200,6 @@ public class PacManBrain : MonoBehaviour {
     return survivalError + (effectivenessError * lateGameEffectivenessBias);
   }
 
-  // Checks if the network is in an enabled state
-  public bool NetworkIsEnabled() {
-    return networkIsEnabled;
-  }
-
   public void StartNetwork() {
     networkIsEnabled = true;
     // TODO start the network
@@ -141,18 +210,27 @@ public class PacManBrain : MonoBehaviour {
     networkIsEnabled = false;
   }
 
+  private IEnumerator PeriodicalylSaveNetwork() {
+    while (true) {
+      yield return new WaitForSeconds(delayBetweenSaves);
+      SaveNetwork();
+    }
+  }
+
 
   //
-  //  Neural Network code adapted from James McCaffrey's 2013 Build talk Developing neural networks using Visual Studio
-  //  youtube.com/watch?v=-zT1Zi_ukSk
+  //  Neural Network code adapted from James McCaffrey's 2013 Build talk "Developing neural networks using Visual Studio"
   //  www.quaetrix.com/Build2013.html
+  //  (c) James McCaffrey 2013
+  //  youtube.com/watch?v=-zT1Zi_ukSk
+  //
+  //  Additional code and comments by Matthew Duddington 2017
   //
   /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
   public class NeuralNetwork
   {
     private static System.Random rnd;
-    private static int seed = 25;
 
     private int numInput;
     private int numHidden;
@@ -161,24 +239,24 @@ public class PacManBrain : MonoBehaviour {
     private double[] inputs;
 
     private double[][] inputToHiddenWeights; // input-hidden
-    private double[] hiddenBiases;
-    private double[] hiddenOutputs;
+    private double[]   hiddenBiases;
+    private double[]   hiddenOutputs;
 
     private double[][] hiddenToOutputWeights; // hidden-output
-    private double[] outputBiases;
+    private double[]   outputBiases;
 
     private double[] outputs;
 
     // back-prop specific arrays (these could be local to method UpdateWeights)
-//    private double[] outputGradients; // output gradients for back-propagation
-    private double outputGradient;
+    private double[] outputGradients; // output gradients for back-propagation
+    private double   outputGradient;
     private double[] hiddenGradients; // hidden gradients for back-propagation
 
     // back-prop momentum specific arrays (could be local to method Train)
     private double[][] inputToHiddenPreviousWeightsDelta;  // for momentum with back-propagation
-    private double[] hiddenPreviousBiasesDelta;
+    private double[]   hiddenPreviousBiasesDelta;
     private double[][] hiddenToOutputPreviousWeightsDelta;
-    private double[] outputPreviousBiasesDelta;
+    private double[]   outputPreviousBiasesDelta;
 
     int predictionIndex;
     double predictionValue;
@@ -190,7 +268,8 @@ public class PacManBrain : MonoBehaviour {
     // Used when building a brand new network for the very first time
     public NeuralNetwork(int numInput,
                          int numHidden,
-                         int numOutput)
+                         int numOutput,
+                         int seed)
     {
       rnd = new System.Random(seed); // for InitializeWeights() and Shuffle()
 
@@ -211,7 +290,7 @@ public class PacManBrain : MonoBehaviour {
 
       // back-prop related arrays below
       this.hiddenGradients = new double[numHidden];
-//      this.outputGradients = new double[numOutput];
+      this.outputGradients = new double[numOutput];
 
       this.inputToHiddenPreviousWeightsDelta = MakeMatrix(numInput, numHidden);
       this.hiddenPreviousBiasesDelta = new double[numHidden];
@@ -219,7 +298,11 @@ public class PacManBrain : MonoBehaviour {
       this.outputPreviousBiasesDelta = new double[numOutput];
 
       this.generation = 0;
+
       this.savedData.iterations = 0;
+
+      // Save the data that doesnt change during learning
+      this.savedData.seed = seed;
       this.savedData.numInput = numInput;
       this.savedData.numHidden = numHidden;
       this.savedData.numOutput = numOutput;
@@ -228,7 +311,7 @@ public class PacManBrain : MonoBehaviour {
     // Used when recreating network from loaded data
     public NeuralNetwork(NetworkData dataToLoad)
     {
-      rnd = new System.Random(seed); // for InitializeWeights() and Shuffle()
+      rnd = new System.Random(dataToLoad.seed); // for InitializeWeights() and Shuffle()
 
       this.numInput = dataToLoad.numInput;
       this.numHidden = dataToLoad.numHidden;
@@ -247,7 +330,7 @@ public class PacManBrain : MonoBehaviour {
 
       // back-prop related arrays below
       this.hiddenGradients = new double[numHidden];
-//      this.outputGradients = new double[numOutput];
+      this.outputGradients = new double[numOutput];
 
       this.inputToHiddenPreviousWeightsDelta = dataToLoad.inputToHiddenPreviousWeightsDelta;
       this.hiddenPreviousBiasesDelta = dataToLoad.hiddenPreviousBiasesDelta;
@@ -263,6 +346,56 @@ public class PacManBrain : MonoBehaviour {
       for (int r = 0; r < result.Length; ++r)
         result[r] = new double[cols];
       return result;
+    }
+
+    // For use with Unsupervised Training mode
+    public void SaveLearnedValues(bool didDecisionFail) {
+      savedData.iterations += 1;
+
+      // Save a new generation after it fails (i.e. dies from a ghost), but only after attempting a few iterations (i.e. decisions) 
+      if (didDecisionFail && savedData.iterations > 10) {
+        generation += 1;
+      }
+
+      savedData.generation = generation;
+
+      savedData.inputToHiddenWeights = inputToHiddenWeights;
+
+      savedData.hiddenBiases = hiddenBiases;
+      savedData.hiddenOutputs = hiddenOutputs;
+      savedData.hiddenToOutputWeights = hiddenToOutputWeights;
+
+      savedData.outputBiases = outputBiases;
+
+      savedData.inputToHiddenPreviousWeightsDelta = inputToHiddenPreviousWeightsDelta;
+      savedData.hiddenPreviousBiasesDelta = hiddenPreviousBiasesDelta;
+      savedData.hiddenToOutputPreviousWeightsDelta = hiddenToOutputPreviousWeightsDelta;
+      savedData.outputPreviousBiasesDelta = outputPreviousBiasesDelta;
+    }
+
+    // For use with Supervised Training mode
+    public void SaveLearnedValues() {
+      // Only start a new generation in the xml every 30 updates (prevent balooning file size)
+      if (savedData.iterations + 1 > 30) {
+        generation += 1;
+        savedData.iterations = 0;
+      }
+      else {
+        savedData.iterations += 1;
+      }
+
+      savedData.inputToHiddenWeights = inputToHiddenWeights;
+
+      savedData.hiddenBiases = hiddenBiases;
+      savedData.hiddenOutputs = hiddenOutputs;
+      savedData.hiddenToOutputWeights = hiddenToOutputWeights;
+
+      savedData.outputBiases = outputBiases;
+
+      savedData.inputToHiddenPreviousWeightsDelta = inputToHiddenPreviousWeightsDelta;
+      savedData.hiddenPreviousBiasesDelta = hiddenPreviousBiasesDelta;
+      savedData.hiddenToOutputPreviousWeightsDelta = hiddenToOutputPreviousWeightsDelta;
+      savedData.outputPreviousBiasesDelta = outputPreviousBiasesDelta;
     }
 
     // ----------------------------------------------------------------------------------------
@@ -298,56 +431,6 @@ public class PacManBrain : MonoBehaviour {
       for (int i = 0; i < initialWeights.Length; ++i)
         initialWeights[i] = (hi - lo) * rnd.NextDouble() + lo;
       this.SetWeights(initialWeights);
-    }
-
-//    public double[] GetWeights()
-//    {
-//      // returns the current set of wweights, presumably after training
-//      int numWeights = (numInput * numHidden) + (numHidden * numOutput) + numHidden + numOutput;
-//      double[] result = new double[numWeights];
-//      int k = 0;
-//      for (int i = 0; i < inputToHiddenWeights.Length; ++i)
-//        for (int j = 0; j < inputToHiddenWeights[0].Length; ++j)
-//          result[k++] = inputToHiddenWeights[i][j];
-//      for (int i = 0; i < hiddenBiases.Length; ++i)
-//        result[k++] = hiddenBiases[i];
-//      for (int i = 0; i < hiddenToOutputWeights.Length; ++i)
-//        for (int j = 0; j < hiddenToOutputWeights[0].Length; ++j)
-//          result[k++] = hiddenToOutputWeights[i][j];
-//      for (int i = 0; i < outputBiases.Length; ++i)
-//        result[k++] = outputBiases[i];
-//      return result;
-//    }
-
-    public void SaveLearnedValues(bool didDecisionFail) {
-      savedData.iterations += 1;
-
-      // Save a new generation after it fails (i.e. dies from a ghost), but only after attempting a few iterations (i.e. decisions) 
-      if (didDecisionFail && savedData.iterations > 10)
-      {
-        generation += 1;
-      }
-
-      savedData.generation = generation;
-
-      savedData.inputToHiddenWeights = inputToHiddenWeights;
-
-      savedData.hiddenBiases = hiddenBiases;
-      savedData.hiddenOutputs = hiddenOutputs;
-      savedData.hiddenToOutputWeights = hiddenToOutputWeights;
-
-      savedData.outputBiases = outputBiases;
-
-      savedData.inputToHiddenPreviousWeightsDelta = inputToHiddenPreviousWeightsDelta;
-      savedData.hiddenPreviousBiasesDelta = hiddenPreviousBiasesDelta;
-      savedData.hiddenToOutputPreviousWeightsDelta = hiddenToOutputPreviousWeightsDelta;
-      savedData.outputPreviousBiasesDelta = outputPreviousBiasesDelta;
-
-//      PlayerPrefs.SetInt ("Generations", PlayerPrefs.GetInt ("Generations") + 1);
-//      if (PlayerPrefs.GetInt ("Generations") % 10 == 0) {
-//        string arrayName = "inputToHiddenWeights Generation: " + PlayerPrefs.GetInt ("Generations").ToString ();
-//        PlayerPrefsX.SetIntArray (arrayName, inputToHiddenWeights);
-//      }
     }
 
     // ----------------------------------------------------------------------------------------
@@ -417,85 +500,89 @@ public class PacManBrain : MonoBehaviour {
 
     // ----------------------------------------------------------------------------------------
 
-//    public void UpdateWeights(double errorValue, double learnRate, double momentum, double weightDecay)
-//    {
-//      // update the weights and biases using back-propagation, with target values, eta (learning rate),
-//      // alpha (momentum).
-//      // assumes that SetWeights and ComputeOutputs have been called and so all the internal arrays
-//      // and matrices have values (other than 0.0)
-//
-//      // 1. compute output gradients
-//      for (int i = 0; i < outputGradients.Length; ++i)
-//      {
-//        // derivative of softmax = (1 - y) * y (same as log-sigmoid)
-//        double derivative = (1 - outputs[i]) * outputs[i]; 
-//        // 'mean squared error version' includes (1-y)(y) derivative
-//        outputGradients[i] = derivative * (tValues[i] - outputs[i]); 
-//      }
-//
-//      // 2. compute hidden gradients
-//      for (int i = 0; i < hiddenGradients.Length; ++i)
-//      {
-//        // derivative of tanh = (1 - y) * (1 + y)
-//        double derivative = (1 - hiddenOutputs[i]) * (1 + hiddenOutputs[i]); 
-//        double sum = 0.0;
-//        for (int j = 0; j < numOutput; ++j) // each hidden delta is the sum of numOutput terms
-//        {
-//          double x = outputGradients[j] * hiddenToOutputWeights[i][j];
-//          sum += x;
-//        }
-//        hiddenGradients[i] = derivative * sum;
-//      }
-//
-//      // 3a. update hidden weights (gradients must be computed right-to-left but weights
-//      // can be updated in any order)
-//      for (int i = 0; i < inputToHiddenWeights.Length; ++i) // 0..2 (3)
-//      {
-//        for (int j = 0; j < inputToHiddenWeights[0].Length; ++j) // 0..3 (4)
-//        {
-//          double delta = learnRate * hiddenGradients[j] * inputs[i]; // compute the new delta
-//          inputToHiddenWeights[i][j] += delta; // update. note we use '+' instead of '-'. this can be very tricky.
-//          // now add momentum using previous delta. on first pass old value will be 0.0 but that's OK.
-//          inputToHiddenWeights[i][j] += momentum * inputToHiddenPreviousWeightsDelta[i][j]; 
-//          inputToHiddenWeights[i][j] -= (weightDecay * inputToHiddenWeights[i][j]); // weight decay
-//          inputToHiddenPreviousWeightsDelta[i][j] = delta; // don't forget to save the delta for momentum 
-//        }
-//      }
-//
-//      // 3b. update hidden biases
-//      for (int i = 0; i < hiddenBiases.Length; ++i)
-//      {
-//        double delta = learnRate * hiddenGradients[i] * 1.0; // t1.0 is constant input for bias; could leave out
-//        hiddenBiases[i] += delta;
-//        hiddenBiases[i] += momentum * hiddenPreviousBiasesDelta[i]; // momentum
-//        hiddenBiases[i] -= (weightDecay * hiddenBiases[i]); // weight decay
-//        hiddenPreviousBiasesDelta[i] = delta; // don't forget to save the delta
-//      }
-//
-//      // 4. update hidden-output weights
-//      for (int i = 0; i < hiddenToOutputWeights.Length; ++i)
-//      {
-//        for (int j = 0; j < hiddenToOutputWeights[0].Length; ++j)
-//        {
-//          // see above: hOutputs are inputs to the nn outputs
-//          double delta = learnRate * outputGradients[j] * hiddenOutputs[i];  
-//          hiddenToOutputWeights[i][j] += delta;
-//          hiddenToOutputWeights[i][j] += momentum * hiddenToOutputPreviousWeightsDelta[i][j]; // momentum
-//          hiddenToOutputWeights[i][j] -= (weightDecay * hiddenToOutputWeights[i][j]); // weight decay
-//          hiddenToOutputPreviousWeightsDelta[i][j] = delta; // save
-//        }
-//      }
-//
-//      // 4b. update output biases
-//      for (int i = 0; i < outputBiases.Length; ++i)
-//      {
-//        double delta = learnRate * outputGradients[i] * 1.0;
-//        outputBiases[i] += delta;
-//        outputBiases[i] += momentum * outputPreviousBiasesDelta[i]; // momentum
-//        outputBiases[i] -= (weightDecay * outputBiases[i]); // weight decay
-//        outputPreviousBiasesDelta[i] = delta; // save
-//      }
-//    }  // UpdateWeights
+    public void UpdateWeights(double[] trainingValues, double learnRate, double momentum, double weightDecay)
+    {
+      // update the weights and biases using back-propagation, with target values, eta (learning rate),
+      // alpha (momentum).
+      // assumes that SetWeights and ComputeOutputs have been called and so all the internal arrays
+      // and matrices have values (other than 0.0)
+      if (trainingValues.Length != numOutput)
+        Debug.LogError("target values not same Length as output in UpdateWeights");
+
+      // 1. compute output gradients
+      for (int i = 0; i < outputGradients.Length; ++i)
+      {
+        // derivative of softmax = (1 - y) * y (same as log-sigmoid)
+        double derivative = (1 - outputs[i]) * outputs[i]; 
+        // 'mean squared error version' includes (1-y)(y) derivative
+        outputGradients[i] = derivative * (trainingValues[i] - outputs[i]); 
+      }
+
+      // 2. compute hidden gradients
+      for (int i = 0; i < hiddenGradients.Length; ++i)
+      {
+        // derivative of tanh = (1 - y) * (1 + y)
+        double derivative = (1 - hiddenOutputs[i]) * (1 + hiddenOutputs[i]); 
+        double sum = 0.0;
+        for (int j = 0; j < numOutput; ++j) // each hidden delta is the sum of numOutput terms
+        {
+          double x = outputGradients[j] * hiddenToOutputWeights[i][j];
+          sum += x;
+        }
+        hiddenGradients[i] = derivative * sum;
+      }
+
+      // 3a. update hidden weights (gradients must be computed right-to-left but weights
+      // can be updated in any order)
+      for (int i = 0; i < inputToHiddenWeights.Length; ++i) // 0..2 (3)
+      {
+        for (int j = 0; j < inputToHiddenWeights[0].Length; ++j) // 0..3 (4)
+        {
+          double delta = learnRate * hiddenGradients[j] * inputs[i]; // compute the new delta
+          inputToHiddenWeights[i][j] += delta; // update. note we use '+' instead of '-'. this can be very tricky.
+          // now add momentum using previous delta. on first pass old value will be 0.0 but that's OK.
+          inputToHiddenWeights[i][j] += momentum * inputToHiddenPreviousWeightsDelta[i][j]; 
+          inputToHiddenWeights[i][j] -= (weightDecay * inputToHiddenWeights[i][j]); // weight decay
+          inputToHiddenPreviousWeightsDelta[i][j] = delta; // don't forget to save the delta for momentum 
+        }
+      }
+
+      // 3b. update hidden biases
+      for (int i = 0; i < hiddenBiases.Length; ++i)
+      {
+        double delta = learnRate * hiddenGradients[i] * 1.0; // t1.0 is constant input for bias; could leave out
+        hiddenBiases[i] += delta;
+        hiddenBiases[i] += momentum * hiddenPreviousBiasesDelta[i]; // momentum
+        hiddenBiases[i] -= (weightDecay * hiddenBiases[i]); // weight decay
+        hiddenPreviousBiasesDelta[i] = delta; // don't forget to save the delta
+      }
+
+      // 4. update hidden-output weights
+      for (int i = 0; i < hiddenToOutputWeights.Length; ++i)
+      {
+        for (int j = 0; j < hiddenToOutputWeights[0].Length; ++j)
+        {
+          // see above: hOutputs are inputs to the nn outputs
+          double delta = learnRate * outputGradients[j] * hiddenOutputs[i];  
+          hiddenToOutputWeights[i][j] += delta;
+          hiddenToOutputWeights[i][j] += momentum * hiddenToOutputPreviousWeightsDelta[i][j]; // momentum
+          hiddenToOutputWeights[i][j] -= (weightDecay * hiddenToOutputWeights[i][j]); // weight decay
+          hiddenToOutputPreviousWeightsDelta[i][j] = delta; // save
+        }
+      }
+
+      // 4b. update output biases
+      for (int i = 0; i < outputBiases.Length; ++i)
+      {
+        double delta = learnRate * outputGradients[i] * 1.0;
+        outputBiases[i] += delta;
+        outputBiases[i] += momentum * outputPreviousBiasesDelta[i]; // momentum
+        outputBiases[i] -= (weightDecay * outputBiases[i]); // weight decay
+        outputPreviousBiasesDelta[i] = delta; // save
+      }
+    } // UpdateWeights
+
+    // ----------------------------------------------------------------------------------------
 
     public void UpdateWeightsSingle(double errorValue_, double learnRate, double momentum, double weightDecay)
     {
@@ -571,14 +658,11 @@ public class PacManBrain : MonoBehaviour {
 
     // ----------------------------------------------------------------------------------------
 
-    public int MakePrediction(double[] inputData, double learnRate, double momentum, double weightDecay)
+    public int MakePrediction(double[] inputData)
     {
       // train a back-prop style NN classifier using learning rate and momentum
       // weight decay reduces the magnitude of a weight value over time unless that value
       // is constantly increased
-//      foreach (double value in inputData) {
-//        print(value);
-//      }
 
       if (inputData.Length != numInput)
         Debug.LogError ("Wrong number of inputs being passed into training");

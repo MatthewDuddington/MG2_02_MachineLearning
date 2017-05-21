@@ -67,6 +67,9 @@ public class NetworkData {
   [XmlElement("Iterations")]
   public int iterations;
 
+
+  [XmlElement("seed")]
+  public int seed;
   
   [XmlElement("numInput")]
   public int numInput;

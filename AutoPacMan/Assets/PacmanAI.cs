@@ -55,6 +55,11 @@ public class PacmanAI : TileMove
         {
             intersectionsPos[i] = intersections[i].transform;
         }
+
+        // COPYED FROM PACMANMOVE (SEE UPDATE COPY BELOW)
+        dest = transform.position;
+        rb = GetComponent<Rigidbody2D>();
+        anim = GetComponent<Animator>();
     }
 
     void OnTriggerEnter2D(Collider2D col)
@@ -96,19 +101,22 @@ public class PacmanAI : TileMove
             }
             else
             {
-                //print("AISFHASIFHASIFHASIFHAISFHASIFHASIFHASIFH");
-                Debug.Log("Decision failed. Learning...");
-                PacManBrain.Get.LearnFromDecision(true);
-                Debug.Log ("Restarting level...");
-                Application.LoadLevel(Application.loadedLevel);
-               // Pacman.isAlive = false;
+                if (PacManBrain.Get.activeBrainmode == PacManBrain.BrainMode.UnsupervisedTraining) {
+                    //print("AISFHASIFHASIFHASIFHAISFHASIFHASIFHASIFH");
+                    Debug.Log("Decision failed. Learning...");
+                    PacManBrain.Get.LearnFromDecision(true);
+                    Debug.Log ("Restarting level...");
+                    Application.LoadLevel(Application.loadedLevel);
+                    // Pacman.isAlive = false;
+                }
             }
         }
     }
 
     void LateUpdate()
     {
-        if (transform.position == targetTileGraphic.position)
+        if ( PacManBrain.Get.activeBrainmode == PacManBrain.BrainMode.UnsupervisedTraining
+          && transform.position == targetTileGraphic.position)
         {
             //hit end final tile!!!
             if (pacMasterControl.myPlayerState == PacMasterControl.playerState.AI) {
@@ -147,15 +155,21 @@ public class PacmanAI : TileMove
                     moveVec = Vector2.down;
                 }
             }
-
         }
-
     }
+
+    public Vector2 moveVec2;
+    Vector2 actualVec2;
+    Rigidbody2D rb;
+    float destTimer;
+    public Transform destTransform;
+    Vector3 dest = Vector3.zero;
 
     // Update is called once per frame
     void Update()
     {
-        if (Pacman.isAlive)
+        if ( Pacman.isAlive
+          && PacManBrain.Get.activeBrainmode == PacManBrain.BrainMode.UnsupervisedTraining)
         {
             anim.Play("Pac_Move");
 
@@ -179,44 +193,133 @@ public class PacmanAI : TileMove
                 transform.position = new Vector2(transform.position.x - 31f, transform.position.y);
                 moveChecker = new Vector3(Mathf.Round(transform.position.x) + 0.5f, Mathf.Round(transform.position.y), 0);
             }
-
+        
             //if he hits an intersection
-            for (int i = 0; i < intersections.Length; i++)
+            if (PacManBrain.Get.activeBrainmode == PacManBrain.BrainMode.UnsupervisedTraining)
             {
-                if (transform.position == intersectionsPos[i].transform.position)
+                for (int i = 0; i < intersections.Length; i++)
                 {
-//                    print("HIT AN INTERSECTION");
+                    if (transform.position == intersectionsPos[i].transform.position)
+                    {
+//                      print("HIT AN INTERSECTION");
 
-                    if (isValidMove(Vector2.up) && upDistance < rightDistance && upDistance < downDistance && upDistance < leftDistance)
-                    {
-                            moveVec = Vector2.up;                       
-                    }
-                    if (isValidMove(Vector2.down) && downDistance < rightDistance && downDistance < upDistance && downDistance < leftDistance)
-                    {
-                            moveVec = Vector2.down;         //all good.
-                    }
-                    if (isValidMove(Vector2.right) && rightDistance < upDistance && rightDistance < downDistance && rightDistance < leftDistance)
-                    {
-                            moveVec = Vector2.right;
-                    }
-                    if (isValidMove(Vector2.left) && leftDistance < rightDistance && leftDistance < downDistance && leftDistance < upDistance)
-                    {
-                            moveVec = Vector2.left;
+                        if (isValidMove(Vector2.up) && upDistance < rightDistance && upDistance < downDistance && upDistance < leftDistance)
+                        {
+                                moveVec = Vector2.up;                       
+                        }
+                        if (isValidMove(Vector2.down) && downDistance < rightDistance && downDistance < upDistance && downDistance < leftDistance)
+                        {
+                                moveVec = Vector2.down;         //all good.
+                        }
+                        if (isValidMove(Vector2.right) && rightDistance < upDistance && rightDistance < downDistance && rightDistance < leftDistance)
+                        {
+                                moveVec = Vector2.right;
+                        }
+                        if (isValidMove(Vector2.left) && leftDistance < rightDistance && leftDistance < downDistance && leftDistance < upDistance)
+                        {
+                                moveVec = Vector2.left;
+                        }
                     }
                 }
             }
-
 
             MoveChecker();
 
             //actual movement
             moveTo(moveChecker, speed);
         }
+        else if ( Pacman.isAlive
+               && PacManBrain.Get.activeBrainmode == PacManBrain.BrainMode.PlayLikeMe)
+////////---START OF COPY FROM PACMANMOVE---////////
+        {
+          //rotations and animation setting
+          if (transform.position != dest)
+          {
+            if (moveVec2 == Vector2.right)
+            {
+              rb.rotation = 0;
+            }
+            if (moveVec2 == -Vector2.up)
+            {
+              rb.rotation = -90;
+            }
+            if (moveVec2 == -Vector2.right)
+            {
+              rb.rotation = 180;
+            }
+            if (moveVec2 == Vector2.up)
+            {
+              rb.rotation = 90;
+            }
+            if (anim.GetCurrentAnimatorStateInfo(0).IsName("Pac_Idle"))
+            {
+              anim.Play("Pac_Move");
+              destTimer = 0;
+            }
+          }
+          else
+          {
+            destTimer += Time.deltaTime;
+          }
+
+          if (destTimer >= 0.061f)
+          {
+            // print("stopped!");
+            anim.Play("Pac_Idle");
+          }
+
+
+          //warp
+
+          if (transform.position.x < -15.5f)
+          {
+            transform.position = new Vector2(transform.position.x + 31f, transform.position.y);
+            dest = new Vector3(Mathf.Round(transform.position.x) - 0.5f, Mathf.Round(transform.position.y), 0);
+          }
+          if (transform.position.x > 15.5f)
+          {
+            transform.position = new Vector2(transform.position.x - 31f, transform.position.y);
+            dest = new Vector3(Mathf.Round(transform.position.x) + 0.5f, Mathf.Round(transform.position.y), 0);
+          }
+          //
+          //visual guide for dest position -- debug only.
+          destTransform.position = dest;
+
+          //Input
+          //raw input
+//          actualVec2 = new Vector2(Input.GetAxisRaw("Horizontal"), Input.GetAxisRaw("Vertical"));
+//          actualVecText.text = "Actual: " + actualVec2;
+//          moveVecText.text = "MoveVec: " + moveVec2;
+
+          //bug fix
+          Vector2 dir = dest - this.transform.position;
+
+          // recheck the keys for a new movement
+          if (transform.position == dest)
+          {
+            //does the sexy 2d array of bools;
+            //pacChecker.WallCheck();
+
+// THIS IS WHERE THE OUTPUT DIRECTION IS TAKEN FROM THE NETWORK
+            moveVec2 = PacManBrain.Get.GetDirectionForPacMan();
+
+
+            if (isValidMove(moveVec2 + dir))
+            {
+              dest = this.transform.position + (Vector3)moveVec2;
+            }
+          }
+          
+          // Gets the offset from the destination to the current postion (change in direction)
+          moveTo(dest, speed);
+        }
+////////---END COPY FROM FROM PACMANMOVE---////////
         else
         {
             transform.position = startPosition;
             moveChecker = transform.position;
         }
+
     }
 
     public void Restart()
@@ -344,6 +447,11 @@ public class PacmanAI : TileMove
             }
         }
     }
+
+  // Taken from PacMove as needed for AI trained movement
+
+
+
 }
 
 

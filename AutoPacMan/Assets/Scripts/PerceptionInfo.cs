@@ -28,6 +28,8 @@ public class PerceptionInfo : MonoBehaviour {
 
   public bool[] WallPerceptionWindow;
 
+  public double[] playerTrainingInput;
+
 
   // ERROR INFO POINTS
   public int totalTilesToDestination;
@@ -43,11 +45,11 @@ public class PerceptionInfo : MonoBehaviour {
 
     pacChecker = GameObject.FindObjectOfType<PacChecker> ();
 
-    /*     // Switch for the two variations (try adding a second '/' at the start of this line)
-    ValidDestinationTiles = new Vector2[298];  // 298 for whole map. Acts like a pure map destination.
-    /*/
     TilesSurroundingPacMan = new Vector2[48];  // 48 if constrained to only destinations within the 7x7 perception window. Acts more like a compass heading.
-    //*/
+
+    if (PacManBrain.Get.activeBrainmode == PacManBrain.BrainMode.SupervisedTraining) {
+      playerTrainingInput = new double[4];
+    }
 	}
 	
 
@@ -135,7 +137,7 @@ public class PerceptionInfo : MonoBehaviour {
 
     // If the proposed destination is a tile with a wall in it, search for the nearest tile that is empty
     if (WallPerceptionWindow[destinationIndex]) {
-      Debug.Log("Proposed tile " + destinationIndex + " had wall. Searching for next best tile...");
+//      Debug.Log("Proposed tile " + destinationIndex + " had wall. Searching for next best tile...");
 
       Vector2 testDestination = TilesSurroundingPacMan [destinationIndex];
       Vector2 nextNearestPos = new Vector2(-100, - 100);  // Instantiate with obvious wrong value to check for bugs if not overwritten
@@ -157,12 +159,12 @@ public class PerceptionInfo : MonoBehaviour {
       }
 
       // Return the closest tile position which didnt have a wall
-      Debug.Log("Position aiming for is index " + nextNearestIndex + " pos " + nextNearestPos);
+//      Debug.Log("Position aiming for is index " + nextNearestIndex + " pos " + nextNearestPos);
       newDestination = nextNearestPos;
     }
     else {
       // Otherwise the original proposed tile is fine, so just return it
-      Debug.Log("Proposed tile is valid...");
+//      Debug.Log("Proposed tile is valid...");
       newDestination = TilesSurroundingPacMan [destinationIndex];
     }
 
@@ -197,6 +199,47 @@ public class PerceptionInfo : MonoBehaviour {
           tileListIndex++;
         }
       }
+    }
+  }
+
+  public double[] GetPlayerTrainingInput() {
+    Vector2 inputVector;
+
+    if (Input.GetAxisRaw("Horizontal") < 0) {
+//      inputVector = Vector2.left;
+      return new double[] { 1,0,0,0 };
+    }
+    else if (Input.GetAxisRaw("Horizontal") > 0) {
+//      inputVector = Vector2.right;
+      return new double[] { 0,1,0,0 };
+    }
+    else if (Input.GetAxisRaw("Vertical") > 0) {
+//      inputVector = Vector2.up;
+      return new double[] { 0,0,1,0 };
+    }
+    else if (Input.GetAxisRaw("Vertical") < 0) {
+//      inputVector = Vector2.down;
+      return new double[] { 0,0,0,1 };
+    }
+
+//    if (inputVector.y == 0) {
+//      if (inputVector.x == Vector2.left.x) {
+//        return new double[] { 1,0,0,0 };
+//      }
+//      else if (inputVector.x == Vector2.right.x) {
+//        return new double[] { 0,1,0,0 };
+//      }
+//    }
+//    else if(inputVector.x == 0) {
+//      if (inputVector.y == Vector2.up.y) {
+//        return new double[] { 0,0,1,0 };
+//      }
+//      else if(inputVector.y == Vector2.down.y) {
+//        return new double[] { 0,0,0,1 };
+//      }
+//    }
+    else {
+      return new double[] { 0,0,0,0 };
     }
   }
 
