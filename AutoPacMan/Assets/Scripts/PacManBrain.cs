@@ -68,16 +68,16 @@ public class PacManBrain : MonoBehaviour {
     if (activeBrainmode == BrainMode.PlayLikeMe) {
       LoadNetwork();
     }
-//    else if (activeBrainmode == BrainMode.SupervisedTraining) {
-//      // In supervised training mode only save the network values to xml file every once in a while
-//      //      StartCoroutine(PeriodicalylSaveNetwork());
-//    }
+    else if (activeBrainmode == BrainMode.SupervisedTraining) {
+      LoadNetwork();
+      // In supervised training mode only save the network values to xml file every once in a while
+      StartCoroutine(PeriodicalylSaveNetwork());
+    }
   }
 
   void Update() {
     // If ungergoing supervised training learn from every frame
     if (activeBrainmode == BrainMode.SupervisedTraining && nn != null) {
-      nn.MakePrediction(BuildInputs());
 
       // Get the current player input (as a network-output comparison-ready double array)
       double[] playerTrainingInput = PerceptionInfo.Get.GetPlayerTrainingInput();
@@ -85,21 +85,22 @@ public class PacManBrain : MonoBehaviour {
       // If the player isn't pressing any key just ignore and dont update learning
       if (playerTrainingInput != null) {
         print("Training input: " + playerTrainingInput[0] + ", " + playerTrainingInput[1] + ", " + playerTrainingInput[2] + ", " + playerTrainingInput[3]);
+        nn.MakePrediction(BuildInputs());
         nn.UpdateWeights(playerTrainingInput, learnRate, momentum, weightDecay);
         nn.SaveLearnedValues();
 
         displayIterations = nn.savedData.iterations;
 
         // Start a new generation only every n data points to prevent file from ballooning
-        if (nn.savedData.iterations > 300) {
-          nn.savedData.generation += 1;
-          nn.savedData.iterations = 0;
-          //DataHandler.LoadGenerationData(dataPath, 0);
-          SaveNetwork();
-        }
-        else {
-          //SaveNetwork();
-        }
+//        if (nn.savedData.iterations > 300) {
+//          nn.savedData.generation += 1;
+//          nn.savedData.iterations = 0;
+//          //DataHandler.LoadGenerationData(dataPath, 0);
+//          SaveNetwork();
+//        }
+//        else {
+//          //SaveNetwork();
+//        }
       }
     }
   }
@@ -233,7 +234,9 @@ public class PacManBrain : MonoBehaviour {
   private IEnumerator PeriodicalylSaveNetwork() {
     while (true) {
       yield return new WaitForSeconds(delayBetweenSaves);
-      SaveNetwork();
+      if (nn != null) {
+        SaveNetwork();
+      }
     }
   }
 
@@ -358,6 +361,8 @@ public class PacManBrain : MonoBehaviour {
       this.outputPreviousBiasesDelta = dataToLoad.outputPreviousBiasesDelta;
 
       this.generation = dataToLoad.generation;
+
+      this.savedData = dataToLoad;
     } // constructor
 
     private static double[][] MakeMatrix(int rows, int cols) // helper for ctor

@@ -15,7 +15,7 @@ public class DataHandler {
   public static NetworkData LoadGenerationData(string path, int generationIndex) {
     generationsContainer = LoadGenerations (path);
 
-    return generationsContainer.generations [generationIndex];
+    return generationsContainer.generations[0];  //TODO make container actually store a progressive series of generations
   }
 
   public static void AddGenerationToSavedData(string path, NetworkData data) {

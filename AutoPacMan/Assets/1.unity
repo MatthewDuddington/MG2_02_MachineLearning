@@ -108239,7 +108239,8 @@ MonoBehaviour:
   pacMasterControl: {fileID: 1462893550}
   seed: 25
   generationToLoad: 0
-  userIdForTrainingData: Matthew
+  userIdForTrainingData: Jen
+  displayIterations: 0
   learnRate: 0.05
   momentum: 0.01
   weightDecay: 0.0001
