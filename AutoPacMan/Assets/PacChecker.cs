@@ -1,4 +1,9 @@
-﻿using System.Collections;
+﻿//
+//  Code and comments (c) Luke Sanderson & Matthew Duddington 2017
+//
+////////////////////////////////////////////////////////////////////////////////
+
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -105,7 +110,7 @@ public class PacChecker : MonoBehaviour {
                 if (checkerIndex < middleValue - 1)
                 {
                     wallPerceptionClippedForInputs[checkerIndex] = wallPerception[x,y];
-//                    PerceptionInfo.Get.UpdateSurroundingDestinationTileList(checkerIndex, checker.positionOfTileUnderMe);          print(checker.positionOfTileUnderMe);
+//                    PerceptionInfo.Get.UpdateSurroundingDestinationTileList(checkerIndex, checker.positionOfTileUnderMe);
                 }
                 else if (checkerIndex > middleValue)
                 {

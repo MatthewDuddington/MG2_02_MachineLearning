@@ -108235,11 +108235,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cb0b210df2a3b453b9edf54b95712352, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  brainMode: 1
+  brainMode: 0
   pacMasterControl: {fileID: 1462893550}
   seed: 25
   generationToLoad: 0
-  userIdForTrainingData: Jen
+  userIdForTrainingData: Matthew
   displayIterations: 0
   learnRate: 0.05
   momentum: 0.01

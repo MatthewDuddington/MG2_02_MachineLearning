@@ -1,4 +1,9 @@
-﻿using System.Collections;
+﻿//
+//  Code and comments (c) Matthew Duddington 2017
+//
+////////////////////////////////////////////////////////////////////////////////
+
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -66,8 +71,7 @@ public class PerceptionInfo : MonoBehaviour {
     // Refresh position record of tiles surrounding pacman
     UpdateSurroundingTiles();
   }
-
-
+    
 //  public void UpdateErrorCheckInfo() {
 //    // Refresh number of tiles to destination
 //    //SetTilesToDestination ( LukesAwesomeFunction() );
@@ -147,7 +151,7 @@ public class PerceptionInfo : MonoBehaviour {
       for (int i = 0; i < TilesSurroundingPacMan.Length; i++)  // For each possible destination tile surrounding PacMan...
       {
         float dist = Vector2.Distance(TilesSurroundingPacMan[i], testDestination);  // Get the distance between that tile and the original suggested destination
-//        print("Tile index " + i + "and pos " + TilesSurroundingPacMan[i] + " with distance of " + dist + " is there a wall..." + WallPerceptionWindow[i]);
+//        Debug.Log("Tile index " + i + "and pos " + TilesSurroundingPacMan[i] + " with distance of " + dist + " is there a wall..." + WallPerceptionWindow[i]);
         if ( dist < minDist  // If this is the smallest distance yet...
           && WallPerceptionWindow[i] != true)  // ...and the tile is not a wall...
         {
@@ -179,7 +183,7 @@ public class PerceptionInfo : MonoBehaviour {
   }
 
   public void UpdateSurroundingDestinationTileList(int tileIndex, Vector2 tilePosition) {
-    //TilesSurroundingPacMan[tileIndex] = tilePosition;
+//    TilesSurroundingPacMan[tileIndex] = tilePosition;
   }
 
   private void UpdateSurroundingTiles() {
@@ -195,7 +199,7 @@ public class PerceptionInfo : MonoBehaviour {
           float xPos = pacChecker.transform.position.x + x;
           float yPos = pacChecker.transform.position.y + y;
           TilesSurroundingPacMan[tileListIndex] = new Vector2(xPos, yPos);
-//          print (TilesSurroundingPacMan[tileListIndex]);
+//          Debug.Log(TilesSurroundingPacMan[tileListIndex]);
           tileListIndex++;
         }
       }
@@ -203,7 +207,7 @@ public class PerceptionInfo : MonoBehaviour {
   }
 
   public double[] GetPlayerTrainingInput() {
-    Vector2 inputVector;
+//    Vector2 inputVector;
 
     if (Input.GetAxisRaw("Horizontal") < 0) {
 //      inputVector = Vector2.left;

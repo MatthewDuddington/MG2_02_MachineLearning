@@ -1,4 +1,14 @@
-﻿using System.Collections;
+﻿//  
+//  Adapted from code in Xenfinity's video:
+//  "How To Save Your Game In Unity with XML"
+//  (c) Xenfinity 2016
+//  youtube.com/watch?v=Y8Di-Q6qpU4
+//
+//  Additional code and comments by Matthew Duddington 2017
+//
+////////////////////////////////////////////////////////////////////////////////
+
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using System.Xml.Serialization;

@@ -13,7 +13,7 @@ public class MagicPacman : TileMove
     public PacmanAI PacAI;
 
     [Header("Colour / States")]
-    bool canTurnBool = true;
+//    bool canTurnBool = true;  // Never used?
 
     [Header("Movement / Targets")]
     public Transform pacDest;
@@ -177,11 +177,11 @@ public class MagicPacman : TileMove
             //actual movement
             moveTo(moveChecker, speed);
         }
-        else
-        {
-            transform.position = startPosition;
-            moveChecker = transform.position;
-        }
+//        else
+//        {
+//            transform.position = startPosition;
+//            moveChecker = transform.position;
+//        }
     }
 
     public void Restart()

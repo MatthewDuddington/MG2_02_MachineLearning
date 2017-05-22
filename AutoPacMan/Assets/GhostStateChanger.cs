@@ -7,7 +7,7 @@ public class GhostStateChanger : MonoBehaviour
 {
 
     public Ghost2[] ghosts;
-    int asdf = 0;
+//    int asdf = 0;
     public Text text;
     public float stateTimer;
     public float scaredTimer;

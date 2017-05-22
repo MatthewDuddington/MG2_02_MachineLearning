@@ -50,7 +50,7 @@ public class PacmanMovement : TileMove
             //pacChecker.GetNextClosestDot();
           //  Destroy(col.gameObject);
             score += 10;
-            int asdf = Random.Range(0, 3);
+//            int asdf = Random.Range(0, 3);
             //transform.GetChild(0).GetComponent<AudioSource>().Play();
         }
         if (col.gameObject.tag == "PowerPellet")
@@ -60,7 +60,7 @@ public class PacmanMovement : TileMove
 
             score += 100;
             gsc.Scare();
-            int asdf = Random.Range(0, 3);
+//            int asdf = Random.Range(0, 3);
            // transform.GetChild(asdf).GetComponent<AudioSource>().Play();
         }
         if (col.gameObject.tag == "Ghost")
@@ -68,7 +68,7 @@ public class PacmanMovement : TileMove
             if (col.GetComponent<Ghost2>().myState == Ghost2.Statey.Scared)
             {
                 score += 200;
-                int asdf = Random.Range(0, 3);
+//                int asdf = Random.Range(0, 3);
            //     transform.GetChild(asdf).GetComponent<AudioSource>().Play();
                 col.GetComponent<Ghost2>().Eaten();
             }
@@ -87,7 +87,8 @@ public class PacmanMovement : TileMove
     {
         if (Input.GetKeyDown(KeyCode.R))
         {
-            Application.LoadLevel(Application.loadedLevel);
+//            Application.LoadLevel(Application.loadedLevel);
+            UnityEngine.SceneManagement.SceneManager.LoadScene(UnityEngine.SceneManagement.SceneManager.GetActiveScene().name);  // Stop Unity complaining about obsolete functions
         }
         scoreText.text = ""+score;
         if (isAlive)
@@ -216,9 +217,10 @@ public class PacmanMovement : TileMove
     {
         isAlive = true;
         transform.position = new Vector2(0.5f, -4f);
-                    dest = transform.position;
-                    extraBool = false;
-          Application.LoadLevel(Application.loadedLevel);
+        dest = transform.position;
+        extraBool = false;
+//        Application.LoadLevel(Application.loadedLevel);
+        UnityEngine.SceneManagement.SceneManager.LoadScene(UnityEngine.SceneManagement.SceneManager.GetActiveScene().name);  // Stop Unity complaining about obsolete functions
 
     }
 

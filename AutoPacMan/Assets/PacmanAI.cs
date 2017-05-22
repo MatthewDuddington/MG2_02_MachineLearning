@@ -14,10 +14,10 @@ public class PacmanAI : TileMove
     public PacMasterControl pacMasterControl;
 
     [Header("Colour / States")]
-    bool canTurnBool = true;
+//    bool canTurnBool = true;  // Never used?
 
     [Header("Movement / Targets")]
-//    public Transform pacDest;  // Seems not to be used anywhere?
+//    public Transform pacDest;  // Never used?
     public Vector2 targetTile;
     public Transform targetTileGraphic;
     public Vector2 moveChecker;
@@ -37,7 +37,9 @@ public class PacmanAI : TileMove
 
     void OnEnable()
     {
-        PerceptionInfo.Get.UpdatePerception();
+        if (PerceptionInfo.Get != null) {
+            PerceptionInfo.Get.UpdatePerception();
+        }
 
         moveCheckerGraphic.transform.position = transform.position;
         moveChecker = moveCheckerGraphic.position;
@@ -67,7 +69,7 @@ public class PacmanAI : TileMove
         if (col.gameObject.tag == "Dot")
         {
             col.gameObject.SetActive(false);
-            //  Destroy(col.gameObject);
+//            Destroy(col.gameObject);
             score += 10;
 
             int asdf = Random.Range(0, 3);
@@ -77,7 +79,7 @@ public class PacmanAI : TileMove
         }
         if (col.gameObject.tag == "PowerPellet")
         {
-            //  Destroy(col.gameObject);
+//            Destroy(col.gameObject);
             col.gameObject.SetActive(false);
 
             score += 100;
@@ -102,12 +104,15 @@ public class PacmanAI : TileMove
             else
             {
                 if (PacManBrain.Get.activeBrainmode == PacManBrain.BrainMode.UnsupervisedTraining) {
-                    //print("AISFHASIFHASIFHASIFHAISFHASIFHASIFHASIFH");
+//                    print("AISFHASIFHASIFHASIFHAISFHASIFHASIFHASIFH");
                     Debug.Log("Decision failed. Learning...");
                     PacManBrain.Get.LearnFromDecision(true);
+
                     Debug.Log ("Restarting level...");
-                    Application.LoadLevel(Application.loadedLevel);
-                    // Pacman.isAlive = false;
+//                    Application.LoadLevel(Application.loadedLevel);
+                    UnityEngine.SceneManagement.SceneManager.LoadScene(UnityEngine.SceneManagement.SceneManager.GetActiveScene().name);  // Stop Unity complaining about obsolete functions
+
+//                    Pacman.isAlive = false;
                 }
             }
         }
@@ -185,12 +190,12 @@ public class PacmanAI : TileMove
             //warp through tunnels
             if (transform.position.x <= -15.5f)
             {
-                transform.position = new Vector2(transform.position.x + 31f, transform.position.y);
+                transform.position = new Vector2(transform.position.x + 30f, transform.position.y);
                 moveChecker = new Vector3(Mathf.Round(transform.position.x) - 0.5f, Mathf.Round(transform.position.y), 0);
             }
             if (transform.position.x >= 15.5f)
             {
-                transform.position = new Vector2(transform.position.x - 31f, transform.position.y);
+                transform.position = new Vector2(transform.position.x - 30f, transform.position.y);
                 moveChecker = new Vector3(Mathf.Round(transform.position.x) + 0.5f, Mathf.Round(transform.position.y), 0);
             }
         
@@ -302,7 +307,7 @@ public class PacmanAI : TileMove
           if (transform.position == dest)
           {
             //does the sexy 2d array of bools;
-            //pacChecker.WallCheck();
+//            pacChecker.WallCheck();
 
             if (isValidMove(moveVec2 + dir))
             {
