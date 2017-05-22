@@ -70,6 +70,10 @@ public class PerceptionInfo : MonoBehaviour {
 
     // Refresh position record of tiles surrounding pacman
     UpdateSurroundingTiles();
+
+    // Reset tile and dot counts
+    totalTilesSurvivedOnWayToDestination = 0;
+    totalDotsEatenOnWayToDestination = 0;
   }
     
 //  public void UpdateErrorCheckInfo() {

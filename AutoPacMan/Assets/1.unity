@@ -48930,7 +48930,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &855725847
 Transform:
   m_ObjectHideFlags: 0
@@ -108237,7 +108237,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   brainMode: 0
   pacMasterControl: {fileID: 1462893550}
-  seed: 25
+  seed: 26
   generationToLoad: 0
   userIdForTrainingData: Matthew
   displayIterations: 0

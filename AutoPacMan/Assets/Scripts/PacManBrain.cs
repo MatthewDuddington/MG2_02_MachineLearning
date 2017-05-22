@@ -79,6 +79,7 @@ public class PacManBrain : MonoBehaviour {
       StartCoroutine(PeriodicalylSaveNetwork());
     }
     else if (activeBrainmode == BrainMode.UnsupervisedTraining) {
+//      GameObject.FindObjectOfType<PacMasterControl>().SwitchMode();  // Start AI mode
       LoadNetwork();
     }
   }

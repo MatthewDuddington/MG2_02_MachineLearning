@@ -45,27 +45,29 @@ public class PacMasterControl : MonoBehaviour {
     {
         if (Input.GetKey(KeyCode.Space) && canPress && transform.position.x % 0.5f == 0 && transform.position.y % 0.5f == 0)
         {
-            if (myPlayerState == playerState.AI)
-            {
-                myPlayerState = playerState.PLAYER;
-                pacAI.enabled = false;
-                pacMovement.enabled = true;
-            }
-            else
-            {
-                myPlayerState = playerState.AI;
-
-
-                pacAI.enabled = true;
-                pacMovement.enabled = false;
-
-            }
+            SwitchMode();
             canPress = false;
         }
 
         if (Input.GetKeyUp(KeyCode.Space))
         {
             canPress = true;
+        }
+    }
+
+    public void SwitchMode() {
+        if (myPlayerState == playerState.AI)
+        {
+            myPlayerState = playerState.PLAYER;
+            pacAI.enabled = false;
+            pacMovement.enabled = true;
+        }
+        else
+        {
+            myPlayerState = playerState.AI;
+
+            pacAI.enabled = true;
+            pacMovement.enabled = false;
         }
     }
 }
