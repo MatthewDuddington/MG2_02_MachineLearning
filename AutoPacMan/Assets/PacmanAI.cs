@@ -299,24 +299,28 @@ public class PacmanAI : TileMove
           //bug fix
           Vector2 dir = dest - this.transform.position;
 
-      // THIS IS WHERE THE OUTPUT DIRECTION IS TAKEN FROM THE NETWORK
-      moveVec2 = PacManBrain.Get.GetDirectionForPacMan();
-      print("Network thinks: " + moveVec2);
+// THIS IS WHERE THE OUTPUT DIRECTION IS TAKEN FROM THE NETWORK
+          moveVec2 = PacManBrain.Get.GetDirectionForPacMan();
+          Debug.Log("Network thinks: " + moveVec2);
 
           // recheck the keys for a new movement
           if (transform.position == dest)
           {
             //does the sexy 2d array of bools;
 //            pacChecker.WallCheck();
-
-            if (isValidMove(moveVec2 + dir))
+            while(!isValidMove(moveVec2 + dir))
             {
-              dest = this.transform.position + (Vector3)moveVec2;
+              moveVec2 = PacManBrain.Get.GetNextBestDirectionForPacMan();
+              if (moveVec2 == Vector2.zero) {
+                Debug.Log("No valid direction found");
+                break;  // Prevent infitine loop
+              }
             }
-          }
-          
-          // Gets the offset from the destination to the current postion (change in direction)
-          moveTo(dest, speed);
+            Debug.Log("Network choosing next best as: " + moveVec2);
+            dest = this.transform.position + (Vector3)moveVec2;
+            
+            // Gets the offset from the destination to the current postion (change in direction)
+            moveTo(dest, speed);
         }
 ////////---END COPY FROM FROM PACMANMOVE---////////
         else
@@ -324,7 +328,7 @@ public class PacmanAI : TileMove
             transform.position = startPosition;
             moveChecker = transform.position;
         }
-
+      }
     }
 
     public void Restart()

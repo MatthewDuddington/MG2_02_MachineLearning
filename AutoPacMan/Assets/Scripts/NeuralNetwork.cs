@@ -479,7 +479,7 @@ public class NeuralNetwork {
 
   public int NextBiggestIndex(int previous) {
     // index of next best value
-    int nextIndex = 0;
+    int nextIndex = -1;
     double bigVal = this.outputs[previous];
     double nextVal = 0.0;
     for (int i = 0; i < outputs.Length; ++i)

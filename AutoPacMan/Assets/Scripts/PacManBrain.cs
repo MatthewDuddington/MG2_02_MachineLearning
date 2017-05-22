@@ -25,6 +25,8 @@ public class PacManBrain : MonoBehaviour {
 
   private NeuralNetwork nn;
 
+  private int predictedDirectionIndex;  // Stores in case we need to choose a sub prediction
+
   public int seed = 25;
   public int generationToLoad;
   public string userIdForTrainingData = "guestUserName";
@@ -117,9 +119,9 @@ public class PacManBrain : MonoBehaviour {
   // If playing using learned network from supervised training then pass predicted direction to pacman
   public Vector2 GetDirectionForPacMan() {
     print("get direction");
-    int predictedDirection = nn.MakePrediction(BuildInputs());
+    predictedDirectionIndex = nn.MakePrediction(BuildInputs());
 
-    switch (predictedDirection) {
+    switch (predictedDirectionIndex) {
     case 0:
       return Vector2.left;
     case 1:
@@ -128,6 +130,27 @@ public class PacManBrain : MonoBehaviour {
       return Vector2.up;
     case 3:
       return Vector2.down;
+    }
+
+    // Should never reach this
+    return Vector2.zero;
+  }
+
+  public Vector2 GetNextBestDirectionForPacMan() {
+    predictedDirectionIndex = nn.NextBiggestIndex(predictedDirectionIndex);
+
+    switch (predictedDirectionIndex) {
+    case 0:
+      return Vector2.left;
+    case 1:
+      return Vector2.right;
+    case 2:
+      return Vector2.up;
+    case 3:
+      return Vector2.down;
+    case -1:
+      // If we run out of posibilities report the error as (0,0)
+      return Vector2.zero;
     }
 
     // Should never reach this
